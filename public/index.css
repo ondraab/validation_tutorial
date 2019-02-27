@@ -1,33 +1,32 @@
-.main-title{
+.main-title > ul{
+
+}
+
+.main-title > h1{
     float: left;
-    background-color: #7FB069;
-    width: 100%;
-    padding-left: 10px;
-    color: #0D1F2D;
+    margin-top: 10px
 }
 
 .main-expandable-div {
     width: 95%;
     background-color: rgba(216, 229, 216, 1);
-    border-color: #5B7B7A;
-    border-width: 0;
     cursor: pointer;
     margin: 5px auto auto;
-    border-bottom-width: 2px;
-    border-style: solid;
     height: 50px;
+    box-shadow: 2px 2px #5B7B7A;
 }
 
 .expandable-element-title *{
     display: inline-block;
     font-size: larger;
-    font-family: Arial, sans-serif;
+    font-family: "Times New Roman",  serif;
     color: #0D1F2D;
 }
 
 .expandable-element-title h3{
     padding-left: 15px;
     float: left;
+    cursor: pointer;
 }
 
 .expandable-element-title h4{
@@ -38,25 +37,78 @@
     margin: 10px;
     padding: 0 7px;
     background-color: white;
+    box-shadow: 2px 2px #5B7B7A;
 }
 
 .collapsed-div {
-    border: 1px solid gray;
+    /*border: 1px solid gray;*/
+    /*border-bottom: 2px solid gray;*/
     width: 95%;
     background: #dfdfdf;
-    margin: auto;
+    margin: 5px auto auto;
 }
-.collapsed-div li{
-    /*float: left;*/
-}
-.collapsed-div div{
-    display: inline-block;
-    width: 70%;
+.collapsed-div p{
     float: left;
+    text-align: left;
+    margin: 10px
+}
+.collapsed-div > div:not(.form-div or #ramachandran-div or #litemol-div){
+    display: inline-block;
+    width: 80%;
+    float: left;
+    text-align: left;
+}
+
+.collapsed-div > div > div{
+    display: inline-block;
+    width: 80%;
+    float: left;
+    text-align: left;
+}
+
+
+.collapsed-div li{
+    margin-left: 10px;
 }
 
 .collapsed-div img{
     display: inline-block;
-    width: 15%;
-    margin: 5px;
+    width: 13%;
+    margin: 15px;
 }
+
+.form-div {
+    width: 50%;
+}
+
+form > button {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+form > input {
+    margin-left: 5px;
+}
+
+#component-main-div {
+    height: 1050px;
+}
+
+#ramachandran-div {
+    width: 50%;
+    height: 650px;
+    display: inline-block;
+}
+
+#rama-svg-container {
+    top: -30px;
+}
+
+#litemol-div {
+    width: 49%;
+    height: 650px;
+    display: inline-block;
+    position: relative;
+    margin-right: 10px;
+}
+

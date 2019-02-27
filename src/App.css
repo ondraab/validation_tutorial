@@ -1,5 +1,10 @@
-.App {
-  text-align: center;
+.main-title{
+  float: left;
+  background-color: rgb(109,171,73);
+  width: 100%;
+  padding-left: 10px;
+  position: fixed;
+  z-index: 1;
 }
 
 .App-logo {
@@ -25,4 +30,97 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.navbar {
+  width: 30%;
+  margin-bottom: 0;
+  padding: 0;
+  border: white 0;
+  display: block;
+  top: 0;
+  overflow: hidden;
+  float: right;
+}
+
+.navbar a {
+  width: 33%;
+  display: block;
+  float: right;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.navbar h3 {
+  line-height: 50px;
+  cursor: pointer;
+}
+
+.navbar h1 {
+  display: block;
+  float: left;
+}
+
+.navbar a:hover {
+  background-color: #4E8542;
+  cursor: pointer;
+}
+
+.nav-active {
+  background-color: #4E8542;
+  cursor: pointer;
+}
+
+.vertical-menu a {
+  background-color: #eee; /* Grey background color */
+  color: black; /* Black text color */
+  display: block; /* Make the links appear below each other */
+  padding: 12px; /* Add some padding */
+  text-decoration: none; /* Remove underline from links */
+}
+
+.vertical-menu a:hover {
+  background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.vertical-menu a.active {
+  background-color: rgb(109,171,73); /* Add a green color to the "active/current" link */
+  color: white;
+}
+
+.page-nav a:hover {
+    background: rgb(54,98 ,49);
+}
+
+.page-nav a.active {
+    background: rgba(54, 98, 49, 0.9);
+}
+
+.page-nav a {
+    display: block;
+    cursor: pointer;
+    width: 10px;
+    height: 25%;
+    background: rgba(54, 98, 49, 0.5);
+    border-bottom: 1px solid white;
+}
+.panel-heading .accordion-toggle:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+    content: "\e114";    /* adjust as needed, taken from bootstrap.css */
+    float: right;        /* adjust as needed */
+    color: grey;         /* adjust as needed */
+}
+.panel-heading .accordion-toggle.collapsed:after {
+    /* symbol for "collapsed" panels */
+    content: "\e080";    /* adjust as needed, taken from bootstrap.css */
+}
+
+.text-field{
+    background: #f5f5f5;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: justify;
+    width: 90%;
+    margin-top: 5px;
 }

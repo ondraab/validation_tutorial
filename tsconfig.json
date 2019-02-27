@@ -15,12 +15,14 @@
     "noImplicitThis": true,
     "noImplicitAny": true,
     "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "paths": {
-      "react-expandable": ["@types/index.d.ts"],
-    }
+      "react-expandable": ["@types/index.d.ts"]
+    },
+    "typeRoots": ["node_modules/@types"]
   },
   "exclude": [
     "node_modules",
