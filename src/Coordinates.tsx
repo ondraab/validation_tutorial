@@ -53,7 +53,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
         }
     }
 
-    public addClass(scrollTo: number) {
+    private addClass(scrollTo: number) {
         let active = document.getElementsByClassName('page-nav')[0].childNodes[scrollTo];
         // loop through all 'a' elements
         let a = document.getElementsByClassName('page-nav')[0].childNodes;
@@ -92,11 +92,6 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                     <NavLink to="/coordinates" activeClassName="nav-active">
                         <h3>
                             Coordinates
-                        </h3>
-                    </NavLink>
-                    <NavLink to="/ligands">
-                        <h3>
-                            Ligands
                         </h3>
                     </NavLink>
                 </div>

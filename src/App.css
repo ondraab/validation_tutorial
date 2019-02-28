@@ -124,3 +124,26 @@
     width: 90%;
     margin-top: 5px;
 }
+
+.grow {
+    transition: height 0.5s;
+    -webkit-transition: width .5s;
+    float: left;
+}
+.grow:hover h1{
+    width: 145px;
+    float: left;
+}
+
+.grow h1 {
+    max-width: 0;
+}
+
+.grow:hover {
+    width: 145px;
+    float: left;
+}
+
+.grow h1 {
+    -webkit-transform: rotate(90deg);
+}

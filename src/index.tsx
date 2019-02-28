@@ -5,17 +5,14 @@ import registerServiceWorker from './registerServiceWorker';
 import {Route} from "react-router";
 import {BrowserRouter} from "react-router-dom";
 import Coordinates from "./Coordinates";
-import Ligands from "./Ligands";
-// import App from "./App";
-
+import App from "./App";
 
 function run() {
     ReactDOM.render(
         <BrowserRouter>
             <div>
-                <Route exact path="/" component={Coordinates}/>
+                <Route exact path="/" component={App}/>
                 <Route path="/coordinates" component={Coordinates}/>
-                <Route path="/ligands" component={Ligands}/>
             </div>
         </BrowserRouter>,
     document.getElementById('root') as HTMLElement);
