@@ -30,7 +30,7 @@ class App extends React.Component< {}, ValidationStates> {
         this.state = {pdbId: '1cbs', models: ['1'], chains: ['A']};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this._pdbId = '1cbs'
+        this._pdbId = '1cbs';
     }
 
     private handleChange(event: any) {
@@ -61,12 +61,11 @@ class App extends React.Component< {}, ValidationStates> {
     }
 
 
-
     public render() {
         const url = (name: any, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
 
         return <div className="App">
-            <div className="main-title masthead">
+            <div className="main-title masthead" style={{height: '54px'}}>
                 <h1 className="white-color">Validation tutorial</h1>
                 <div className="navbar">
                     <NavLink to="/" activeClassName="nav-active">
@@ -82,17 +81,18 @@ class App extends React.Component< {}, ValidationStates> {
                 </div>
             </div>
             <div className="page-nav" style={{width: '10px', height: '95%', top: '54px', position: 'fixed', right: '17px', zIndex: 1}}>
-                <a className={"active grow"}
+                <a className={"active grow"} style={{position: 'absolute', top: 0, right: 0}}
                    onClick={() => this.addClass(0)}>
-                    <h1 style={{color: 'white'}}>Intro</h1>
+                    <h2 style={{color: 'white', position: 'absolute', top: 90}}>Introduction</h2>
                 </a>
-                <a
+                <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/4)-9, right: 0}}
                     onClick={() => this.addClass(1)}>
+                    <h2 style={{color: 'white', position: 'absolute', top: window.innerHeight/6}}>Review</h2>
                 </a>
-                <a
+                <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/2)-18, right: 0}}
                     onClick={() => this.addClass(2)}>
                 </a>
-                <a
+                <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/4 * 3)-27, right: 0}}
                     onClick={() => this.addClass(3)}>
                 </a>
 
@@ -116,38 +116,26 @@ class App extends React.Component< {}, ValidationStates> {
                     {/*
                        // @ts-ignore */}
                     <ParallaxLayer offset={1} speed={0.8} style={{ opacity: 0.1 }}>
-                        <img src="http://www.ebi.ac.uk/pdbe/sites/ebi.ac.uk.pdbe/files/images/logos/PDBe-logo-RGB_2013.png" style={{ display: 'block', width: '20%', marginLeft: '55%' }} />
-                        <img src="/src/protein-icon-2887050_640.png" style={{ display: 'block', width: '10%', marginLeft: '15%' }} />
                     </ParallaxLayer>
                     {/*
                        // @ts-ignore */}
                     <ParallaxLayer offset={1.75} speed={0.5} style={{ opacity: 0.1 }}>
-                        <img src="http://www.ebi.ac.uk/pdbe/sites/ebi.ac.uk.pdbe/files/images/logos/PDBe-logo-RGB_2013.png" style={{ display: 'block', width: '20%', marginLeft: '70%' }} />
-                        <img src="/src/protein-icon-2887050_640.png" style={{ display: 'block', width: '20%', marginLeft: '40%' }} />
                     </ParallaxLayer>
                     {/*
                        // @ts-ignore */}
                     <ParallaxLayer offset={1} speed={0.2} style={{ opacity: 0.2 }}>
-                        <img src="http://www.ebi.ac.uk/pdbe/sites/ebi.ac.uk.pdbe/files/images/logos/PDBe-logo-RGB_2013.png" style={{ display: 'block', width: '10%', marginLeft: '10%' }} />
-                        <img src="/src/protein-icon-2887050_640.png" style={{ display: 'block', width: '20%', marginLeft: '75%' }} />
                     </ParallaxLayer>
                     {/*
                        // @ts-ignore */}
                     <ParallaxLayer offset={1.6} speed={-0.1} style={{ opacity: 0.4 }}>
-                        <img src="http://www.ebi.ac.uk/pdbe/sites/ebi.ac.uk.pdbe/files/images/logos/PDBe-logo-RGB_2013.png" style={{ display: 'block', width: '20%', marginLeft: '60%' }} />
-                        <img src="/src/protein-icon-2887050_640.png" style={{ display: 'block', width: '25%', marginLeft: '30%' }} />
-                        <img src="/src/protein-icon-2887050_640.png" style={{ display: 'block', width: '10%', marginLeft: '80%' }} />
                     </ParallaxLayer>
                     {/*
                        // @ts-ignore */}
                     <ParallaxLayer offset={2.6} speed={0.4} style={{ opacity: 0.6 }}>
-                        <img src="http://www.ebi.ac.uk/pdbe/sites/ebi.ac.uk.pdbe/files/images/logos/PDBe-logo-RGB_2013.png" style={{ display: 'block', width: '20%', marginLeft: '5%' }} />
-                        <img src="/src/protein-icon-2887050_640.png" style={{ display: 'block', width: '15%', marginLeft: '75%' }} />
                     </ParallaxLayer>
                     {/*
                        // @ts-ignore */}
                     <ParallaxLayer offset={2.5} speed={-0.4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
-                        <img src={url('earth')} style={{ width: '60%' }} />
                     </ParallaxLayer>
 
                     <ParallaxLayer
@@ -167,43 +155,49 @@ class App extends React.Component< {}, ValidationStates> {
                        // @ts-ignore
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{width: '95%', marginTop:'50px'}}>
-                            <div style={{width: '50%', display: 'inline-block'}}>
-                            <h2>Intro</h2>
-                                <div className={"text-field"}>
+                            <div style={{width: '100%', display: 'inline-block'}}>
+                            <h2>Introduction</h2>
+                                <div className={"text-field-sq"}>
                                     <p style={{fontSize: '140%'}}>
-                                        The Protein Data Bank is the single global archive of
-                                        experimentally determined three-dimensional structures of
-                                        biological macromolecules. The PDB archives coordinate models and experimental
-                                        data for macromolecules determined by X-ray crystallography, nuclear magnetic
-                                        resonance (NMR), three-dimensional electron cryomicroscopy (3DEM)
-                                        and other structure-determination techniques.
+                                        Welcome to this practical about structure validation using publicly available resources.
+                                        The emphasis in this practical is on validation of crystal structures of proteins,
+                                        but some of the lessons extend to structures determined by other methods,
+                                        and to structures of biomacromolecules other than proteins.
+                                    </p>
+                                    <p style={{fontSize: '140%'}}>
+                                        Assessing the quality of a model is called validation. Validation is something
+                                        that needs to be done both by producers (crystallographers, NMR spectroscopists,
+                                        electron microscopists, etc.) and users (biologists, enzymologists, medicinal chemists, etc.)
+                                        of models. Note that we talk of models rather than structures, since a model is just a simplified
+                                        representation of a human being's hypothesis of what a molecule looks like
+                                        (a collection of point atoms, often even ignoring hydrogen atoms).
                                     </p>
                                 </div>
-                                <div className={"text-field"}>
-                                    <p style={{fontSize: '140%'}}>
-                                        The PDB database contains over 140 thousands structures of biological macromolecules
-                                        and complexes. About 90% of structures were determined using X-Ray.
-                                        These data are widely used by the structural biology
-                                        community itself, but the wider biomedical community has
-                                        also been making extensive use of PDB data for many years.
-                                    </p>
+                                <div className={"text-field-sq"}>
+
+                                    <h3>This practical and the resources it covers should help you to:</h3>
+                                    <ol style={{fontSize: '140%'}}>
+                                        <li>Read papers about protein crystal structures (errr, models) and understand the discussion of the model's quality (and ask relevant questions on this subject after hearing a protein crystallographer give a talk on a particular structure, or after reading a manuscript that you are asked to referee).</li>
+                                        <li>Find or generate quality-related information on a given protein model using web-based databases and servers.</li>
+                                        <li>Use this information to form a general opinion as to the overall quality of the model, as well as of certain aspects of it (e.g., the extent to which the presence or conformation of a bound ligand is supported by the crystallographic data).</li>
+                                        <li>Select the better of a set of related models (assuming there are noticeable differences in the quality of these models), e.g. for purposes of homology modelling, ligand design, mutant design, or molecular replacement calculations.</li>
+                                    </ol>
                                 </div>
-                                <div className={"text-field"}>
-                                    <p style={{fontSize: '140%'}}>
-                                        The deposited structures may have various quality. Before the deposition of strucutres,
-                                        the validation process is performed and validation report is generated. In VR, there is
-                                        a lot of information according to the quality of structure.
-                                    </p>
+                                <div className={"text-field-sq"}>
+
+                                    <h3>The following are useful links that you may want to explore:</h3>
+                                    <ul style={{fontSize: '140%'}}>
+                                        <li><a href={"http://spdbv.vital-it.ch/TheMolecularLevel/ModQual/index.html"}>A glossary of terms related to structural quality</a></li>
+                                        <li><a href={" http://www.ruppweb.org/Xray/101index.html"}>An introduction to protein crystallography</a></li>
+                                        <li><a href={"https://wwpdb.org/validation/validation-reports"}>List of wwPDB documents and resources related to validation and validation reports</a></li>
+                                        <li><a href={"https://wwpdb.org/task/validation-task-forces"}>Overview of wwPDB Validation Task Forces (VTFs) and their published recommendations</a></li>
+                                        <li>The websites of the wwPDB partners, <a href={"http://pdbe.org"}>PDBe</a>, <a href={"http://pdbj.org"}>PDBj</a> and <a href={"https://rcsb.org"}>RCSB PDB</a></li>
+                                        <li><a href={"http://scripts.iucr.org/cgi-bin/paper?S0907444999016364"}>An extensive review of validation in protein crystallography</a></li>
+                                    </ul>
                                 </div>
-                                <div className={"text-field"}>
-                                    <p style={{fontSize: '140%'}}>
-                                        In this tutorial we want to show you, how to work with information given in validation reports,
-                                        which tools are useful for determing the quality of model.
-                                    </p>
-                                </div>
+
                             </div>
                             <div style={{width: '50%', display: 'inline-block'}}>
-                                <img src="/src/2r4r_multipercentile_validation.svg" style={{display: 'inline-block', verticalAlign: 'top'}}/>
                                 {/*<div style={{width: '50%', display: 'inline-block'}}>*/}
                                     {/*<h4>Useful links</h4>*/}
                                     {/*<ul>*/}
