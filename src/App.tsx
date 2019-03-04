@@ -3,6 +3,7 @@ import './App.css';
 import './theme-ebi-research.css'
 import {NavLink} from "react-router-dom";
 import {Parallax, ParallaxLayer} from "react-spring/addons";
+import * as $ from 'jquery';
 
 interface ValidationStates {
     pdbId: string;
@@ -60,6 +61,41 @@ class App extends React.Component< {}, ValidationStates> {
         this.parallax.scrollTo(scrollTo)
     }
 
+    private listenScrollEvent() {
+        //@ts-ignore
+        let currPos = this.parallax.current / this.parallax.space;
+        if (currPos < 0.75) {
+            $('div.page-nav a').each((a: any) => {
+                $(this).removeClass('active');});
+            $('div.page-nav a:first').addClass('active');
+            console.log('1');
+        } else if (currPos >= 0.75 && currPos < 1.5) {
+            console.log('2');
+            $('div.page-nav a').each((a: any) => {
+                $(this).removeClass('active');
+                if (a == 1) {
+                    $(this).addClass('active');
+                }
+            })
+        } else if (currPos >= 1.5 && currPos < 2.25) {
+            console.log('3');
+            $('div.page-nav a').each((a: any) => {
+                $(this).removeClass('active');
+                if (a == 2) {
+                    $(this).addClass('active');
+                }
+            })
+        } else if (currPos >= 2.25) {
+            console.log('4');
+            $('div.page-nav a').each((a: any) => {
+                $(this).removeClass('active');
+                if (a == 3) {
+                    $(this).addClass('active');
+                }
+            })
+        }
+    }
+
 
     public render() {
         const url = (name: any, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
@@ -83,22 +119,24 @@ class App extends React.Component< {}, ValidationStates> {
             <div className="page-nav" style={{width: '10px', height: '95%', top: '54px', position: 'fixed', right: '17px', zIndex: 1}}>
                 <a className={"active grow"} style={{position: 'absolute', top: 0, right: 0}}
                    onClick={() => this.addClass(0)}>
-                    <h2 style={{color: 'white', position: 'absolute', top: 90}}>Introduction</h2>
+                    <h2 style={{color: 'white', position: 'absolute', top: 50}}>Introduction</h2>
                 </a>
                 <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/4)-9, right: 0}}
                     onClick={() => this.addClass(1)}>
-                    <h2 style={{color: 'white', position: 'absolute', top: window.innerHeight/6}}>Review</h2>
+                    <h2 style={{color: 'white', position: 'absolute', top: 50}}>Review I</h2>
                 </a>
                 <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/2)-18, right: 0}}
                     onClick={() => this.addClass(2)}>
+                    <h2 style={{color: 'white', position: 'absolute', top: 50}}>Review II</h2>
                 </a>
                 <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/4 * 3)-27, right: 0}}
                     onClick={() => this.addClass(3)}>
+                    <h2 style={{color: 'white', position: 'absolute', top: 50}}>Review III</h2>
                 </a>
 
             </div>
-            <div>
-                <Parallax ref={ref => (this.parallax = ref)} pages={3}>
+            <div id={"main-content"} onScroll={this.listenScrollEvent.bind(this)}>
+                <Parallax ref={ref => (this.parallax = ref)} pages={4}>
                     {/*
                        // @ts-ignore */}
                     <ParallaxLayer offset={1} speed={1} style={{ backgroundColor: '#aeaeae' }} />
@@ -206,38 +244,53 @@ class App extends React.Component< {}, ValidationStates> {
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{width: '95%'}}>
                             <h2>Before we start, let's review some important facts</h2>
-                            <div className={"text-field-sq"}>
-                                <p style={{fontSize: '140%'}}>
-                                    <b><a href={"http://profiles.ucsf.edu/james.holton"}>James Holton</a></b>,
-                                    while at Berkeley, produced a number of movies that demonstrate the
-                                    importance of resolution, amplitudes and phases for the quality of the resulting
-                                    electron-density map. James has kindly given permission to incorporate a couple of his
-                                    movies into this practical.
-                                </p>
+                            <div style={{display: 'flex'}}>
+                                <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
+                                    <p style={{fontSize: '140%'}}>
+                                        <b><a href={"http://profiles.ucsf.edu/james.holton"}>James Holton</a></b>,
+                                        while at Berkeley, produced a number of movies that demonstrate the
+                                        importance of resolution, amplitudes and phases for the quality of the resulting
+                                        electron-density map. James has kindly given permission to incorporate a couple of his
+                                        movies into this practical.
+                                    </p>
+                                </div>
+                                <div className={"text-field-sq video-field"} style={{display: 'inline-block', width: '49.5%'}}>
+                                    <p style={{fontSize: '140%', display: 'inline-block', verticalAlign: 'top', width: '50%'}}>
+                                        This movie displays a calculated electron density map, contoured at 1 sigma,
+                                        as the resolution limit is adjusted slowly from 0.5Å to 6Å. [...] The phases are
+                                        perfect, and so are the amplitudes (R-factor = 0.0%) for all the resolutions displayed.
+                                        Note that, even for a perfect map, you expect side chains to poke out of density at 3.5Å.
+                                    </p>
+                                    <video width={230} height={170} controls style={{display: 'inline-block', marginLeft: '20px'}}>
+                                        <source src={"/src/videos/jh_resol.mp4"} type={"video/mp4"}/>
+                                    </video>
+                                </div>
                             </div>
                             <div className={"text-field-sq video-field"}>
                                 <p style={{fontSize: '140%', display: 'inline-block', verticalAlign: 'top'}}>
-                                    "This movie displays a calculated electron density map, contoured at 1 sigma,
-                                    as the resolution limit is adjusted slowly from 0.5Å to 6Å. [...] The phases are
-                                    perfect, and so are the amplitudes (R-factor = 0.0%) for all the resolutions displayed.
-                                    Note that, even for a perfect map, you expect side chains to poke out of density at 3.5Å."
-                                </p>
-                                <video width={293} height={220} controls style={{display: 'inline-block', marginLeft: '20px'}}>
-                                    <source src={"/src/videos/jh_resol.mp4"} type={"video/mp4"}/>
-                                </video>
-                            </div>
-                            <div className={"text-field-sq video-field"}>
-                                <p style={{fontSize: '140%', display: 'inline-block', verticalAlign: 'top'}}>
-                                    "This movie displays the effect of calculating a map with "wrong" amplitudes. [...]
+                                    This movie displays the effect of calculating a map with "wrong" amplitudes. [...]
                                     The images in this movie represent the slow changing of all the amplitudes to a different
                                     set of randomly selected values while holding the phases constant. It is interesting to
                                     note that the map hardly changes at all until the R-factor gets higher than 30%.
                                     The maximum R-factor you can get for two random data sets is 75%, which is the end of
                                     the movie. Kinda spookey how it still looks traceable, isn't it? The resolution here is
-                                    1.5Å, and the phases are always perfect."
+                                    1.5Å, and the phases are always perfect.
                                 </p>
-                                <video width={293} height={220} controls style={{display: 'inline-block', marginLeft: '20px'}}>
+                                <video width={230} height={170} controls style={{display: 'inline-block', marginLeft: '20px'}}>
                                     <source src={"/src/videos/jh_ampli.mp4"} type={"video/mp4"}/>
+                                </video>
+                            </div>
+                            <div className={"text-field-sq video-field"}>
+                                <p style={{fontSize: '140%', display: 'inline-block', verticalAlign: 'top'}}>
+                                    This movie displays the effect of calculating a map with "wrong" phases. The "figure of merit" (
+                                    cosine of the error in the phase) is displayed as "m". The images in this movie were calculated by
+                                    merging a perfect calculated map with another map, calculated with the same amplitudes, but with phases
+                                    obtained from a model with randomly positioned atoms. Merging these two maps always preserves the amplitudes,
+                                    but changes the phases slowly to a new set of values. At what point do you think the map becomes untraceable?
+                                    The resolution here is 1.5Å, and the R-factor is always 0.0%.
+                                </p>
+                                <video width={230} height={170} controls style={{display: 'inline-block', marginLeft: '20px'}}>
+                                    <source src={"/src/videos/jh_phase.mp4"} type={"video/mp4"}/>
                                 </video>
                             </div>
                         </div>
@@ -248,7 +301,117 @@ class App extends React.Component< {}, ValidationStates> {
                         speed={-0}
                         // @ts-ignore
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <img src={url('clients-main')} style={{ width: '40%' }} />
+                        <div style={{width: '95%'}}>
+                            <div style={{display: 'flex'}}>
+                                <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
+                                    <p style={{fontSize: '140%'}}>
+                                        <b>If you look it up in a dictionary, "validation" is defined as:</b>
+                                    </p>
+                                    <ul style={{fontSize: '140%'}}>
+                                        <li>to declare or make legally valid</li>
+                                        <li>to mark with an indication of official sanction</li>
+                                        <li>to substantiate or verify</li>
+                                    </ul>
+                                </div>
+                                <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%'}}>
+                                    <p style={{fontSize: '140%', display: 'inline-block', verticalAlign: 'top'}}>
+                                        Many statistics, methods, and programs were developed from the 1990s onward to help identify
+                                        errors in protein models. These methods generally fall into two classes: one in which only
+                                        coordinates are considered (such methods often entail comparison of a model to information derived from structural databases),
+                                        and another in which both the model and the crystallographic data are taken into account.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className={"text-field-sq"}>
+                                <p style={{fontSize: '140%', verticalAlign: 'top'}}>
+                                    Alternatively, one can distinguish between "weak" methods that essentially measure
+                                    how well the refinement program has succeeded in imposing restraints (e.g.,
+                                    deviations from ideal geometry, conventional R-value) and "strong" ones that assess
+                                    aspects of the model that are "orthogonal" to the information used in refinement
+                                    (e.g., free R-value, patterns of non-bonded interactions, conformational torsion-angle distributions).
+                                </p>
+                                <p style={{fontSize: '140%', verticalAlign: 'top'}}>
+                                    An additional distinction can be made between methods that provide overall (global) statistics for a
+                                    model (such methods are suitable for monitoring the progress of the refinement and rebuilding process)
+                                    and those that provide information at the level of residues or atoms (such methods are more
+                                    useful for detecting local problems in a model).
+                                </p>
+                                <p style={{fontSize: '140%', verticalAlign: 'top'}}>
+                                    It is important to realise that almost all coordinate-based validation methods
+                                    detect outliers (i.e., atoms, residues or ligands with unusual properties): to
+                                    assess whether an outlier is an error in the model or whether it is a genuine,
+                                    but unusual, feature of the structure, one must inspect the (preferably unbiased)
+                                    electron-density maps! If an outlier is most likely an error in your model,
+                                    you probably want to try and fix it before depositing the model and submitting
+                                    your paper. If, on the other hand, it appears to be a genuine feature of your structure,
+                                    convincingly supported by the experimental data, you may even want to mention it in your paper.
+                                </p>
+                            </div>
+                            <div style={{display: 'flex'}}>
+                                <div className={"text-field-sq"} style={{display: 'inline-block', width: '46%', marginRight: 'auto'}}>
+                                    <p style={{fontSize: '140%'}}>
+                                        If you are interested in the overall quality of a model (e.g., to decide if
+                                            it's good enough to use as a starting point for comparative modelling),
+                                            strong and global quality indicators are most useful.
+                                        <b>Examples of such criteria are:</b>
+                                    </p>
+                                    <ul style={{fontSize: '140%'}}>
+                                        <li>Free R-value</li>
+                                        <li>Packing or clash score</li>
+                                        <li>Ramachandran plot</li>
+                                    </ul>
+                                </div>
+                                <div className={"text-field-sq"} style={{display: 'inline-block', width: '46%'}}>
+                                    <p style={{fontSize: '140%', display: 'inline-block', verticalAlign: 'top'}}>
+                                        If, on the other hand, you are interested in finding the local errors
+                                        (to decide if the active site of a protein has been modeled reliably enough
+                                        to use it for the design of ligands), strong and local methods are most suitable.
+                                        <b>Examples of these are:</b>
+                                    </p>
+                                    <ul style={{fontSize: '140%'}}>
+                                        <li>Real-space fit</li>
+                                        <li>Main-chain torsion-angle combinations (Ramachandran)</li>
+                                        <li>Side-chain torsion-angle combinations (rotamers)</li>
+                                    </ul>
+                                </div>
+                                <img className={"arrow"} src={"./src/arrow.png"} style={{height: '80px', display: 'inline-block'}}/>
+                            </div>
+                        </div>
+                    </ParallaxLayer>
+
+                    <ParallaxLayer
+                        offset={3}
+                        speed={-0}
+                        // @ts-ignore
+                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{width: '95%'}}>
+                            <div style={{display: 'flex'}}>
+                                <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
+                                    <p style={{fontSize: '140%'}}>
+                                        Unfortunately, in many (especially older) papers that describe macromolecular
+                                        crystal structures, "quality criteria" are quoted that do not necessarily
+                                        provide any indication whatsoever of the actual quality of the model. <b>Examples are:</b>
+                                    </p>
+                                    <ul style={{fontSize: '140%'}}>
+                                        <li>Conventional R-value</li>
+                                        <li>RMS deviation of bond lengths and angles from "ideal" values</li>
+                                        <li>Average temperature factor of the atoms in the model</li>
+                                    </ul>
+                                </div>
+                                <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%'}}>
+                                    <p style={{fontSize: '140%', verticalAlign: 'top'}}>
+                                        It is also important to realise that every quality check that a model
+                                        passes provides a necessary but insufficient indication of the model's correctness:
+                                        a good model makes sense in just about every respect.
+                                    </p>
+                                    <p style={{fontSize: '140%', verticalAlign: 'top'}}>
+                                        Fortunately, nowadays there are sensible validation reports available
+                                        for all structures in the PDB to help you assess their quality
+                                        (we will come back to these reports later in the practical).
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </ParallaxLayer>
                 </Parallax>
             </div>
@@ -337,6 +500,7 @@ class App extends React.Component< {}, ValidationStates> {
           {/*</Expandable>*/}
       </div>;
   }
+
 }
 
 export default App;
