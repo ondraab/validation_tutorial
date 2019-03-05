@@ -12,14 +12,24 @@ interface ValidationStates {
 }
 
 class App extends React.Component< {}, ValidationStates> {
+
     // @ts-ignore
     private parallax: Parallax | null;
+    private _activeTab: number;
     get pdbId(): string {
         return this._pdbId;
     }
 
     set pdbId(value: string) {
         this._pdbId = value;
+    }
+
+    get activeTab(): number {
+        return this._activeTab;
+    }
+
+    set activeTab(value: number) {
+        this._activeTab = value;
     }
 
     private _pdbId: string;
@@ -32,6 +42,7 @@ class App extends React.Component< {}, ValidationStates> {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this._pdbId = '1cbs';
+        this.activeTab = 0;
     }
 
     private handleChange(event: any) {
@@ -64,33 +75,45 @@ class App extends React.Component< {}, ValidationStates> {
     private listenScrollEvent() {
         //@ts-ignore
         let currPos = this.parallax.current / this.parallax.space;
-        if (currPos < 0.75) {
-            $('div.page-nav a').each((a: any) => {
-                $(this).removeClass('active');});
-            $('div.page-nav a:first').addClass('active');
-            console.log('1');
-        } else if (currPos >= 0.75 && currPos < 1.5) {
-            console.log('2');
-            $('div.page-nav a').each((a: any) => {
-                $(this).removeClass('active');
+        if (currPos < 0.75 && this.activeTab != 0) {
+            $('div.page-nav a').each((a: number, obj: any) => {
+                $(obj).removeClass('active').removeClass('onHover');});
+            $('div.page-nav a:first').addClass('active').addClass('onHover');
+            setTimeout(() => {
+                $('div.page-nav a:first').removeClass('onHover')
+            }, 2000);
+            this.activeTab = 0;
+        } else if (this.activeTab != 1 && currPos >= 0.75 && currPos < 1.5) {
+            $('div.page-nav a').each((a: number, obj: any) => {
+                $(obj).removeClass('active').removeClass('onHover');
                 if (a == 1) {
-                    $(this).addClass('active');
+                    $(obj).addClass('active').addClass('onHover');
+                    setTimeout(() => {
+                        $(obj).removeClass('onHover')
+                    }, 2000);
+                    this.activeTab = 1;
                 }
             })
-        } else if (currPos >= 1.5 && currPos < 2.25) {
-            console.log('3');
-            $('div.page-nav a').each((a: any) => {
-                $(this).removeClass('active');
+        } else if (this.activeTab != 2 && currPos >= 1.5 && currPos < 2.25) {
+            $('div.page-nav a').each((a: number, obj: any) => {
+                $(obj).removeClass('active').removeClass('onHover');
                 if (a == 2) {
-                    $(this).addClass('active');
+                    $(obj).addClass('active').addClass('onHover');
+                    setTimeout(() => {
+                        $(obj).removeClass('onHover')
+                    }, 2000);
+                    this.activeTab = 2;
                 }
             })
-        } else if (currPos >= 2.25) {
-            console.log('4');
-            $('div.page-nav a').each((a: any) => {
-                $(this).removeClass('active');
+        } else if (this.activeTab != 3 && currPos >= 2.25) {
+            $('div.page-nav a').each((a: number, obj: any) => {
+                $(obj).removeClass('active').removeClass('onHover');
                 if (a == 3) {
-                    $(this).addClass('active');
+                    $(obj).addClass('active').addClass('onHover');
+                    setTimeout(() => {
+                        $(obj).removeClass('onHover')
+                    }, 2000);
+                    this.activeTab = 3;
                 }
             })
         }
@@ -149,7 +172,6 @@ class App extends React.Component< {}, ValidationStates> {
                     {/*
                        // @ts-ignore */}
                     <ParallaxLayer offset={1.3} speed={-0.3} style={{ pointerEvents: 'none' }}>
-                        {/*<img src="/src/2018-11-19.png" style={{ width: '15%', marginLeft: '70%' }} />*/}
                     </ParallaxLayer>
                     {/*
                        // @ts-ignore */}
@@ -183,7 +205,6 @@ class App extends React.Component< {}, ValidationStates> {
                         style={{
                             backgroundSize: '80%',
                             backgroundPosition: 'center',
-                            backgroundImage: url('clients', true)
                         }}
                     />
 
@@ -254,14 +275,14 @@ class App extends React.Component< {}, ValidationStates> {
                                         movies into this practical.
                                     </p>
                                 </div>
-                                <div className={"text-field-sq video-field"} style={{display: 'inline-block', width: '49.5%'}}>
-                                    <p style={{fontSize: '140%', display: 'inline-block', verticalAlign: 'top', width: '50%'}}>
+                                <div className={"text-field-sq video-field"} style={{display: 'flex', width: '49.5%'}}>
+                                    <p style={{fontSize: '140%', display: 'flex', verticalAlign: 'top', marginRight: '15px'}}>
                                         This movie displays a calculated electron density map, contoured at 1 sigma,
                                         as the resolution limit is adjusted slowly from 0.5Å to 6Å. [...] The phases are
                                         perfect, and so are the amplitudes (R-factor = 0.0%) for all the resolutions displayed.
                                         Note that, even for a perfect map, you expect side chains to poke out of density at 3.5Å.
                                     </p>
-                                    <video width={230} height={170} controls style={{display: 'inline-block', marginLeft: '20px'}}>
+                                    <video width={230} height={170} controls style={{display: 'flex', marginLeft: 'auto', marginRight: '0'}}>
                                         <source src={"/src/videos/jh_resol.mp4"} type={"video/mp4"}/>
                                     </video>
                                 </div>
@@ -348,7 +369,7 @@ class App extends React.Component< {}, ValidationStates> {
                                 </p>
                             </div>
                             <div style={{display: 'flex'}}>
-                                <div className={"text-field-sq"} style={{display: 'inline-block', width: '46%', marginRight: 'auto'}}>
+                                <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
                                     <p style={{fontSize: '140%'}}>
                                         If you are interested in the overall quality of a model (e.g., to decide if
                                             it's good enough to use as a starting point for comparative modelling),
@@ -361,7 +382,7 @@ class App extends React.Component< {}, ValidationStates> {
                                         <li>Ramachandran plot</li>
                                     </ul>
                                 </div>
-                                <div className={"text-field-sq"} style={{display: 'inline-block', width: '46%'}}>
+                                <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%'}}>
                                     <p style={{fontSize: '140%', display: 'inline-block', verticalAlign: 'top'}}>
                                         If, on the other hand, you are interested in finding the local errors
                                         (to decide if the active site of a protein has been modeled reliably enough
@@ -374,7 +395,6 @@ class App extends React.Component< {}, ValidationStates> {
                                         <li>Side-chain torsion-angle combinations (rotamers)</li>
                                     </ul>
                                 </div>
-                                <img className={"arrow"} src={"./src/arrow.png"} style={{height: '80px', display: 'inline-block'}}/>
                             </div>
                         </div>
                     </ParallaxLayer>

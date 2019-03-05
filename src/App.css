@@ -154,6 +154,15 @@
     display: none;
 }
 
+.onHover h2{
+    width: 145px;
+    display: block;
+}
+
+.onHover {
+    width: 145px !important;
+    float: left;
+}
 .text-field-sq{
     background: #f5f5f5;
     padding: 10px 15px;
