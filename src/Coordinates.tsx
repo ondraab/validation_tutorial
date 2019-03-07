@@ -13,10 +13,18 @@ interface ValidationStates {
 }
 
 class Coordinates extends React.Component< {}, ValidationStates> {
+    get displayed2(): boolean {
+        return this._displayed2;
+    }
+
+    set displayed2(value: boolean) {
+        this._displayed2 = value;
+    }
 
     private parallax: Parallax | null;
     private _activeTab: number;
     private _displayed: boolean;
+    private _displayed2: boolean;
     get displayed(): boolean {
         return this._displayed;
     }
@@ -125,12 +133,22 @@ class Coordinates extends React.Component< {}, ValidationStates> {
         }
         if (currPos >= 1 && currPos <=2.5) {
             if (!this.displayed) {
-                $('#rama-view-container').append("<ramachandran-component pdb-ids='[\"1cbs\"]' chains-to-show='[\"A\"]' models-to-show='[\"1\"]' width=\"550\" ></ramachandran-component>")
+                $('#rama-view-container').append("<ramachandran-component pdb-ids='[\"1cbs\"]' chains-to-show='[\"A\"]' models-to-show='[\"1\"]' width=\"550\" id='ramachandran-component-1'></ramachandran-component>")
                 this.displayed = true;
             }
         } else {
             this.displayed = false;
-            $('ramachandran-component').remove();
+            $('#ramachandran-component-1').remove();
+        }
+
+        if (currPos > 2.5) {
+            if (!this.displayed2) {
+                $('#ramachandran-2').append("<ramachandran-component pdb-ids='[\"1tqn\"]' chains-to-show='[\"A\"]' models-to-show='[\"1\"]' width=\"550\" id='ramachandran-component-2'></ramachandran-component>")
+                this.displayed2 = true;
+            }
+        } else {
+            this.displayed2 = false;
+            $('#ramachandran-component-2').remove();
         }
     }
 
@@ -421,184 +439,53 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                         speed={-0}
                         // @ts-ignore
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <div style={{width: '100%'}}>
-                            <div style={{width: '50%', display: 'inline-block', marginTop: '95px'}}>
-                                <table style={{borderCollapse:'collapse'}}>
-                                    <tbody>
-                                    <tr>
-                                        <td style={{padding:'10px'}}>
-                                            <div id="scrollingdiv" style={{height:'490px', overflow:'auto'}}>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <script type='text/javascript'>
-                                                jmolApplet('500',jmolIsReady());
-                                            </script>
-                                        </td>
-                                        <td style={{padding:'10px', width:'190px'}}>
-                                            <table>
-                                                <tbody>
-                                                <tr>
-                                                    <td colSpan={2}>
-                                                        <span
-                                                            style={{fontSize:'150%',fontWeight:'bold',backgroundColor:'#d0d0d0',paddingLeft:'6px', paddingRight:'6px', paddingTop:'6px'}}
-                                                            title="Chemical element color key">
+                        <div style={{width: '95%'}}>
+                            <div style={{display: 'flex'}}>
+                                <div className="panel-group-sq" id="accordion" style={{width: "49.5%", marginRight: 'auto'}}>
+                                    <div className="text-field-sq">
+                                        <div className="panel-heading" style={{width: '8%', display: 'table-cell', verticalAlign: 'middle', borderRight: '1px solid gray'}}>
+                                            <h4 data-tip="hello world" className="panel-title" style={{fontSize:'30px'}}>?</h4>
+                                        </div>
+                                        <div className="panel-heading" style={{width: '92%', display: 'table-cell', verticalAlign: 'bottom'}}>
+                                            <h4 className="panel-title">
+                                                <a className="accordion-toggle" data-toggle="collapse"
+                                                   data-parent="#accordion" href="#collapseThree">
+                                                    The three most-densely populated areas in the Ramachandran plot are called the alpha, the beta, and the left-handed helical region. Where are these three regions located approximately in the Ramachandran plot?
+                                                </a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div className="text-field-sq">
+                                        <div className="panel-heading" style={{width: '8%', display: 'table-cell', borderRight: '1px solid gray'}}>
+                                            <h4 className="panel-title" style={{fontSize:'30px'}}>?</h4>
+                                        </div>
+                                        <div className="panel-heading" style={{width: '92%', display: 'table-cell', verticalAlign: 'bottom'}}>
+                                            <h4 className="panel-title">
+                                                <a className="accordion-toggle" data-toggle="collapse"
+                                                   data-parent="#accordion" href="#collapseTwo">
+                                                    Why do glycine residues have an atypical distribution? And proline residues?
+                                                </a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div className="text-field-sq">
+                                        <div className="panel-heading" style={{width: '8%', display: 'table-cell', borderRight: '1px solid gray'}}>
+                                            <h4 className="panel-title" style={{fontSize:'30px'}}>?</h4>
+                                        </div>
+                                        <div className="panel-heading" style={{width: '92%', display: 'table-cell', verticalAlign: 'bottom'}}>
+                                            <h4 className="panel-title">
+                                                <a className="accordion-toggle" data-toggle="collapse"
+                                                   data-parent="#accordion" href="#collapseTwo">
+                                                    Which regions would you expect to be most favourable in the Ramachandran plot of a protein that consists entirely of D-amino acids?
+                                                </a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style={{width: "49.5%", display: 'inline-flex', position: 'absolute', right: '0',top: '80px'}} id={"ramachandran-2"}>
 
-                                                            C<span style={{fontFamily:'Times New Roman, Times, serif'}}>&alpha;</span>
-                                                            C
-                                                            H
-                                                            N
-                                                            O
-                                                        </span>
-                                                        <br/><br/><br/>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-
-                                                        <label className="rcontainer" id="idrcont0">
-                                                            {/*
-                                                                // @ts-ignore */}
-                                                            <input type="radio" name="ppradioid" id="ppradioid_0"/>
-                                                        </label>
-                                                        &nbsp;</td>
-                                                    <td>
-
-                                                        <label className="rcontainer" id="idrcont1"
-                                                               style={{color:'#a0a0a0',fontWeight:'normal'}}>
-                                                            {/*
-                                                                // @ts-ignore */}
-                                                            <input type="radio" name="ppradioid" id="ppradioid_1"/>
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td id="phiangle"
-                                                        style={{fontSize:'130%',fontWeight:'bold',color:'#00c800'}}>
-                                                        165&deg;
-                                                    </td>
-                                                    <td id="psiangle"
-                                                        style={{fontSize:'130%', textAlign:'right', fontWeight:'normal' ,color: '#a0a0a0'}}>
-                                                        165&deg;
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colSpan={2} style={{textAlign:'center'}}>
-                                                        <span title="Rotate 10 degrees counter-clockwise">
-                                                        <input type="button" className="rotationbutton" name="rminus" id="rminus" value="-20&deg;"/>
-                                                        </span>
-
-                                                        <span title="Rotate 10 degrees clockwise">
-                                                        <input type="button" className="rotationbutton" name="rplus" id="rplus" value="+20&deg;"/>
-                                                    </span>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            <br/>
-
-                                                <span title="A single complete amino acid.">
-                                                <label className="container">
-                                                    <input type="checkbox" name="idalanine" id="idalanine"/>Alanine
-                                                  <span className="checkmark"/>
-                                                </label>
-                                                </span>
-
-
-                                                <label className="container">
-                                                    <input type="checkbox" name="idpeptidebonds" id="idpeptidebonds"
-                                                    />
-                                                    <span className="checkmark"/>
-                                                </label>
-
-                                                <span title="Six atoms are held in a plane by each peptide bond.">
-                                                        <label className="container">
-                                                            <input type="checkbox" name="idplanes" id="idplanes"/>Planes
-                                                          <span className="checkmark"/>
-                                                        </label>
-                                                </span>
-                                                <br/>
-
-                                                        <span title="Atoms shown actual sizes.">
-                                                    <label className="container">
-                                                        <input type="checkbox" name="idvdw" id="idvdw"/>van der Waals<sup>4</sup>
-                                                      <span className="checkmark"/>
-                                                    </label>
-                                                    </span>
-
-                                                    <div id="divwhite" style={{display:'none'}}>
-                                                        <label className="container">
-                                                            <input type="checkbox" name="idwhite" id="idwhite"
-                                                            />&nbsp;&nbsp;&nbsp;&nbsp;White
-                                                            <span className="checkmark"
-                                                                  style={{marginLeft: '20px'}}/>
-                                                        </label>
-                                                    </div>
-
-                                                    <label className="container">
-                                                        <input type="checkbox" name="idclashes" id="idclashes"/>Show
-                                                        Clashes
-                                                        <span className="checkmark"/>
-                                                    </label>
-
-                                                    <div id="divtrailclashes"
-                                                         style={{display: 'none'}}
-                                                         title="Previous clashes remain during rotation.">
-                                                        <label className="container">
-                                                            {/*
-                                                                // @ts-ignore */}
-                                                            <input type="checkbox" name="idtrailclashes" id="idtrailclashes"/>&nbsp;&nbsp;&nbsp;&nbsp;Trail Clashes
-                                                            <span className="checkmark" style={{marginLeft:'20px'}}/>
-                                                        </label>
-                                                    </div>
-
-                                                    <script>
-                                                        // ALTERNATE ONCLICK EVENTS FOR PROTEOPEDIA
-                                                        // NOTE THAT THE FUNCTION NAME MUST BE GIVEN WITHOUT "()"
-
-                                                        document.getElementById("idalanine").addEventListener("click",
-                                                        doAlanine);
-                                                        document.getElementById("idpeptidebonds").addEventListener("click",
-                                                        doPeptideBonds);
-                                                        document.getElementById("idplanes").addEventListener("click",
-                                                        doPlanes);
-                                                        document.getElementById("idvdw").addEventListener("click",
-                                                        doVDW);
-                                                        document.getElementById("idwhite").addEventListener("click",
-                                                        doWhite);
-                                                        document.getElementById("idclashes").addEventListener("click",
-                                                        doClashes);
-                                                        document.getElementById("idtrailclashes").addEventListener("click",
-                                                        doTrailClashes);
-
-                                                    </script>
-
-
-                                                    <br/>
-                                                                {/*
-                                                    // @ts-ignore */}
-                                                    <input type="button" className="resetbutton" value="Reset"/>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                </div>
                             </div>
-                            <div style={{width: '50%', height: '360px', position: 'relative', marginTop: '75px', float: 'right'}}>
-                                {/*
-                                // @ts-ignore */}
-                                {/*<pdb-lite-mol pdb-id="'2gwx'" is-expanded="false"></pdb-lite-mol>*/}
-                            </div>
-
-                            {/*<div style={{width: '50%', display: 'inline-block'}}>*/}
-                            {/*/!**/}
-                            {/*// @ts-ignore *!/*/}
-                            {/*<pdb-lite-mol pdb-id="'1cbs'"></pdb-lite-mol>*/}
-                            {/*</div>*/}
-                            {/*<div style={{width: '50%', display: 'inline-block'}}>*/}
-                            {/*/!**/}
-                            {/*// @ts-ignore *!/*/}
-                            {/*/!*<ramachandran-component pdb-ids='["3d12"]' chains-to-show='["A", "B", "C", "D", "E"]' models-to-show='["1"]' width="550"></ramachandran-component>*!/*/}
-                            {/*</div>*/}
                         </div>
                     </ParallaxLayer>
                 </Parallax>
