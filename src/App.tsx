@@ -139,7 +139,7 @@ class App extends React.Component< {}, ValidationStates> {
                     </NavLink>
                 </div>
             </div>
-            <div className="page-nav" style={{width: '10px', height: '95%', top: '54px', position: 'fixed', right: '17px', zIndex: 1}}>
+            <div className="page-nav long-4" style={{width: '10px', height: '95%', top: '54px', position: 'fixed', right: '17px', zIndex: 1}}>
                 <a className={"active grow"} style={{position: 'absolute', top: 0, right: 0}}
                    onClick={() => this.addClass(0)}>
                     <h2 style={{color: 'white', position: 'absolute', top: 50}}>Introduction</h2>

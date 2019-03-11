@@ -119,7 +119,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                     this.activeTab = 2;
                 }
             })
-        } else if (this.activeTab != 3 && currPos >= 2.25) {
+        } else if (this.activeTab != 3 && currPos >= 2.25 && currPos < 3) {
             $('div.page-nav a').each((a: number, obj: any) => {
                 $(obj).removeClass('active').removeClass('onHover');
                 if (a == 3) {
@@ -128,6 +128,17 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                         $(obj).removeClass('onHover')
                     }, 2000);
                     this.activeTab = 3;
+                }
+            })
+        } else if (this.activeTab != 4 && currPos >= 3) {
+            $('div.page-nav a').each((a: number, obj: any) => {
+                $(obj).removeClass('active').removeClass('onHover');
+                if (a == 4) {
+                    $(obj).addClass('active').addClass('onHover');
+                    setTimeout(() => {
+                        $(obj).removeClass('onHover')
+                    }, 2000);
+                    this.activeTab = 4;
                 }
             })
         }
@@ -187,27 +198,31 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                     </NavLink>
                 </div>
             </div>
-            <div className="page-nav" style={{width: '10px', height: '95%', top: '54px', position: 'fixed', right: '17px', zIndex: 1}}>
+            <div className="page-nav long-5" style={{width: '10px', height: '95%', top: '54px', position: 'fixed', right: '17px', zIndex: 1}}>
                 <a className={"active grow"} style={{position: 'absolute', top: 0, right: 0}}
                    onClick={() => this.addClass(0)}>
-                    <h2 style={{color: 'white', position: 'absolute', top: 50}}>Introduction</h2>
+                    <h2 style={{color: 'white', position: 'absolute', top: 35}}>Introduction</h2>
                 </a>
-                <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/4)-9, right: 0}}
+                <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/5)-7.5, right: 0}}
                    onClick={() => this.addClass(1)}>
-                    <h2 style={{color: 'white', position: 'absolute', top: 50}}>Review I</h2>
+                    <h2 style={{color: 'white', position: 'absolute', top: 35}}>Review I</h2>
                 </a>
-                <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/2)-18, right: 0}}
+                <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/5*2)-14.5, right: 0}}
                    onClick={() => this.addClass(2)}>
-                    <h2 style={{color: 'white', position: 'absolute', top: 50}}>Review II</h2>
+                    <h2 style={{color: 'white', position: 'absolute', top: 35}}>Review II</h2>
                 </a>
-                <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/4 * 3)-27, right: 0}}
+                <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/5 * 3)-21.5, right: 0}}
                    onClick={() => this.addClass(3)}>
-                    <h2 style={{color: 'white', position: 'absolute', top: 50}}>Review III</h2>
+                    <h2 style={{color: 'white', position: 'absolute', top: 35}}>Review III</h2>
+                </a>
+                <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/5 * 4)-28.5, right: 0}}
+                   onClick={() => this.addClass(4)}>
+                    <h2 style={{color: 'white', position: 'absolute', top: 20}}>Outliers</h2>
                 </a>
 
             </div>
             <div id={"main-content"} onScroll={this.listenScrollEvent.bind(this)}>
-                <Parallax ref={ref => (this.parallax = ref)} pages={4}>
+                <Parallax ref={ref => (this.parallax = ref)} pages={5}>
                     {/*
                        // @ts-ignore */}
                     <ParallaxLayer offset={1} speed={1} style={{ backgroundColor: '#aeaeae' }} />
@@ -245,6 +260,10 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                     {/*
                        // @ts-ignore */}
                     <ParallaxLayer offset={2.5} speed={-0.4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+                    {/*
+                       // @ts-ignore */}
+                    <ParallaxLayer offset={4} speed={0} factor={3} style={{ backgroundImage: url('stars', true), backgroundSize: 'cover' }} />
+
                     </ParallaxLayer>
 
                     <ParallaxLayer
@@ -328,12 +347,14 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 <div className="panel-group-sq" id="accordion" style={{width: "49.5%", display: 'inline-flex', marginRight: 'auto'}}>
                                     <div className="text-field-sq">
                                         <div className="panel-heading" style={{width: '8%', display: 'table-cell', verticalAlign: 'middle', borderRight: '1px solid gray'}}>
-                                            <h4 data-tip="hello world" className="panel-title" style={{fontSize:'30px'}}>?</h4>
+                                            <h4 data-tip="hello world" className="panel-title hint--bottom-right hint--large" style={{fontSize:'30px'}}
+                                            aria-label={"All amino acids but glycine have at least one chiral center at C\u03B1. Aminoacids" +
+                                            "with with more than one chiral center are Isoleucine and Threonine."}>?</h4>
                                         </div>
                                         <div className="panel-heading" style={{width: '92%', display: 'table-cell', verticalAlign: 'bottom'}}>
                                             <h4 className="panel-title">
                                                 <a className="accordion-toggle" data-toggle="collapse"
-                                                   data-parent="#accordion" href="#collapseOne">
+                                                   data-parent="#accordion">
                                                     Which amino acids contain chiral carbon atoms? Are there any
                                                     amino acids that contain more than one chiral carbon atom? If so, which one(s)?
                                                 </a>
@@ -344,12 +365,13 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 <div className="panel-group-sq" id="accordion" style={{width: "49.5%", display: 'inline-flex'}}>
                                     <div className="text-field-sq">
                                         <div className="panel-heading" style={{width: '8%', display: 'table-cell', borderRight: '1px solid gray'}}>
-                                            <h4 className="panel-title" style={{fontSize:'30px'}}>?</h4>
+                                            <h4 className="panel-title hint--bottom-right hint--large" style={{fontSize:'30px'}}
+                                            aria-label={"U - Selenocysteine (Seq), O - Pyrrolysine (Pyl), for actual answer about the number of entries, try use PDBe service."}>?</h4>
                                         </div>
                                         <div className="panel-heading" style={{width: '92%', display: 'table-cell', verticalAlign: 'bottom'}}>
                                             <h4 className="panel-title">
                                                 <a className="accordion-toggle" data-toggle="collapse"
-                                                   data-parent="#accordion" href="#collapseTwo">
+                                                   data-parent="#accordion">
                                                     Currently there are 22 (rather than 20) known naturally occurring, genetically encoded amino acids. Number 21 has one-letter code U and number 22 has one-letter code O. What are the names and three-letter codes of these two amino acids? How many PDB entries contain at least one of them?
                                                 </a>
                                             </h4>
@@ -361,13 +383,14 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 <div className="panel-group-sq" id="accordion" style={{width: "49.5%", display: 'inline-flex', marginRight: 'auto'}}>
                                     <div className="text-field-sq">
                                         <div className="panel-heading" style={{width: '8%', display: 'table-cell', verticalAlign: 'middle', borderRight: '1px solid gray'}}>
-                                            <h4 data-tip="hello world" className="panel-title" style={{fontSize:'30px'}}>?</h4>
+                                            <h4 className="panel-title hint--bottom-right hint--large" style={{fontSize:'30px'}}
+                                                aria-label={""}>?</h4>
                                         </div>
                                         <div className="panel-heading" style={{width: '92%', display: 'table-cell', verticalAlign: 'bottom'}}>
                                             <h4 className="panel-title">
                                                 <a className="accordion-toggle" data-toggle="collapse"
-                                                   data-parent="#accordion" href="#collapseThree">
-                                                    Do you expect the CB atom of a tyrosine residue to lie in the same plane as the aromatic ring?
+                                                   data-parent="#accordion">
+                                                    Do you expect the C&beta; atom of a tyrosine residue to lie in the same plane as the aromatic ring?
                                                 </a>
                                             </h4>
                                         </div>
@@ -381,7 +404,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                         <div className="panel-heading" style={{width: '92%', display: 'table-cell', verticalAlign: 'bottom'}}>
                                             <h4 className="panel-title">
                                                 <a className="accordion-toggle" data-toggle="collapse"
-                                                   data-parent="#accordion" href="#collapseTwo">
+                                                   data-parent="#accordion">
                                                     Using your favourite graphics program or web-based 3D viewer, have a look at residue TRP D67 in PDB entry 7GPB. Does anything strike you as odd?
                                                 </a>
                                             </h4>
@@ -449,7 +472,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                         <div className="panel-heading" style={{width: '92%', display: 'table-cell', verticalAlign: 'bottom'}}>
                                             <h4 className="panel-title">
                                                 <a className="accordion-toggle" data-toggle="collapse"
-                                                   data-parent="#accordion" href="#collapseThree">
+                                                   data-parent="#accordion">
                                                     The three most-densely populated areas in the Ramachandran plot are called the alpha, the beta, and the left-handed helical region. Where are these three regions located approximately in the Ramachandran plot?
                                                 </a>
                                             </h4>
@@ -462,7 +485,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                         <div className="panel-heading" style={{width: '92%', display: 'table-cell', verticalAlign: 'bottom'}}>
                                             <h4 className="panel-title">
                                                 <a className="accordion-toggle" data-toggle="collapse"
-                                                   data-parent="#accordion" href="#collapseTwo">
+                                                   data-parent="#accordion">
                                                     Why do glycine residues have an atypical distribution? And proline residues?
                                                 </a>
                                             </h4>
@@ -475,7 +498,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                         <div className="panel-heading" style={{width: '92%', display: 'table-cell', verticalAlign: 'bottom'}}>
                                             <h4 className="panel-title">
                                                 <a className="accordion-toggle" data-toggle="collapse"
-                                                   data-parent="#accordion" href="#collapseTwo">
+                                                   data-parent="#accordion">
                                                     Which regions would you expect to be most favourable in the Ramachandran plot of a protein that consists entirely of D-amino acids?
                                                 </a>
                                             </h4>
@@ -484,6 +507,24 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 </div>
                                 <div style={{width: "49.5%", display: 'inline-flex', position: 'absolute', right: '0',top: '80px'}} id={"ramachandran-2"}>
 
+                                </div>
+                            </div>
+                        </div>
+                    </ParallaxLayer>
+
+                    <ParallaxLayer
+                        offset={4}
+                        speed={-0}
+                        // @ts-ignore
+                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{width: '95%'}}>
+                            <h2>Ramachandran principle</h2>
+                            <div style={{display: 'flex'}}>
+                                <div className="panel-group-sq" id="accordion" style={{width: "49.5%", display: 'inline-flex', marginRight: 'auto'}}>
+                                    <div className="text-field-sq">
+                                        <p style={{fontSize: '140%'}}>The Ramachandran Principle says that alpha helices, beta strands, and turns are the most likely conformations for a polypeptide chain to adopt, because most other conformations are impossible due to steric collisions <b>(clashes)</b> between atoms.</p>
+                                        <p></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

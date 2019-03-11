@@ -101,20 +101,24 @@
     display: block;
     cursor: pointer;
     width: 10px;
-    height: 25%;
     background: rgba(54, 98, 49, 0.5);
     border-bottom: 1px solid white;
 }
+
+.long-5 a {
+    height: 20%;
+}
+
+.long-4 a {
+    height: 25%;
+}
+
 .panel-heading .accordion-toggle:after {
     /* symbol for "opening" panels */
     font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
     content: "\e114";    /* adjust as needed, taken from bootstrap.css */
     float: right;        /* adjust as needed */
     color: grey;         /* adjust as needed */
-}
-.panel-heading .accordion-toggle.collapsed:after {
-    /* symbol for "collapsed" panels */
-    content: "\e080";    /* adjust as needed, taken from bootstrap.css */
 }
 
 .text-field{
