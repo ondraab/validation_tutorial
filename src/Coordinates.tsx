@@ -3,8 +3,10 @@ import './App.css';
 import './theme-ebi-research.css'
 import {NavLink} from "react-router-dom";
 import {Parallax, ParallaxLayer} from "react-spring/addons";
+// @ts-ignore
+import ImageZoom from 'react-medium-image-zoom'
 import * as $ from "jquery";
-import ReactTooltip from 'react-tooltip'
+import ReactTooltip from 'react-tooltip';
 
 interface ValidationStates {
     pdbId: string;
@@ -201,23 +203,23 @@ class Coordinates extends React.Component< {}, ValidationStates> {
             <div className="page-nav long-5" style={{width: '10px', height: '95%', top: '54px', position: 'fixed', right: '17px', zIndex: 1}}>
                 <a className={"active grow"} style={{position: 'absolute', top: 0, right: 0}}
                    onClick={() => this.addClass(0)}>
-                    <h2 style={{color: 'white', position: 'absolute', top: 35}}>Introduction</h2>
+                    <h2 style={{color: 'white'}}>Introduction</h2>
                 </a>
                 <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/5)-7.5, right: 0}}
                    onClick={() => this.addClass(1)}>
-                    <h2 style={{color: 'white', position: 'absolute', top: 35}}>Review I</h2>
+                    <h2 style={{color: 'white'}}>Review I</h2>
                 </a>
                 <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/5*2)-14.5, right: 0}}
                    onClick={() => this.addClass(2)}>
-                    <h2 style={{color: 'white', position: 'absolute', top: 35}}>Review II</h2>
+                    <h2 style={{color: 'white'}}>Review II</h2>
                 </a>
                 <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/5 * 3)-21.5, right: 0}}
                    onClick={() => this.addClass(3)}>
-                    <h2 style={{color: 'white', position: 'absolute', top: 35}}>Review III</h2>
+                    <h2 style={{color: 'white'}}>Review III</h2>
                 </a>
                 <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/5 * 4)-28.5, right: 0}}
                    onClick={() => this.addClass(4)}>
-                    <h2 style={{color: 'white', position: 'absolute', top: 20}}>Outliers</h2>
+                    <h2 style={{color: 'white'}}>Ramachandran principle</h2>
                 </a>
 
             </div>
@@ -413,17 +415,37 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 </div>
                             </div>
                             <div className={"text-field-sq"}>
-                                <p style={{fontSize: '140%'}}>
-                                    The conformation of the backbone of every non-terminal amino-acid residue is determined by three torsion angles, called:
-                                </p>
-                                <ul style={{fontSize: '140%'}}>
-                                    <li>&phi; (phi) &rarr; (C<sub>[i-1]</sub>-N<sub>[i]</sub>-C&alpha;<sub>[i]</sub>-C<sub>[i]</sub>)</li>
-                                    <li>&psi; (psi) &rarr; (N<sub>[i]</sub>-C&alpha;<sub>[i]</sub>-C<sub>[i]</sub>-N<sub>[i+1]</sub>)</li>
-                                    <li>&omega; (omega) &rarr; (C&alpha;<sub>[i]</sub>-C<sub>[i]</sub>-N<sub>[i+1]</sub>-C&alpha;<sub>[i+1]</sub>)</li>
-                                </ul>
-                                <p style={{fontSize: '140%', borderBottom: 'gray solid 1px'}}>
-                                    Due to resonance, the peptide bond has partial double-bond character. Therefore, the omega torsion angle is restrained to values near 0 (cis-peptide) and 180 degrees (trans-peptide). Cis-peptides are relatively rare and usually (but not always) occur if the next residue is a proline. The omega angle therefore offers little in the way of validation checks, although values in the range of ±20 to ±160 degrees should be treated with caution in anything but very high-resolution models.
-                                </p>
+                                <div style={{display: 'flex'}}>
+                                    <div style={{display: 'inline-flex', width: '80%', marginRight: 'auto'}}>
+                                        <div style={{display: 'block'}}>
+                                            <p style={{fontSize: '140%'}}>
+                                                The conformation of the backbone of every non-terminal amino-acid residue is determined by three torsion angles, called:
+                                            </p>
+                                            <ul style={{fontSize: '140%'}}>
+                                                <li>&phi; (phi) &rarr; (C<sub>[i-1]</sub>-N<sub>[i]</sub>-C&alpha;<sub>[i]</sub>-C<sub>[i]</sub>)</li>
+                                                <li>&psi; (psi) &rarr; (N<sub>[i]</sub>-C&alpha;<sub>[i]</sub>-C<sub>[i]</sub>-N<sub>[i+1]</sub>)</li>
+                                                <li>&omega; (omega) &rarr; (C&alpha;<sub>[i]</sub>-C<sub>[i]</sub>-N<sub>[i+1]</sub>-C&alpha;<sub>[i+1]</sub>)</li>
+                                            </ul>
+                                            <p style={{fontSize: '140%', borderBottom: 'gray solid 1px'}}>
+                                                Due to resonance, the peptide bond has partial double-bond character. Therefore, the omega torsion angle is restrained to values near 0 (cis-peptide) and 180 degrees (trans-peptide). Cis-peptides are relatively rare and usually (but not always) occur if the next residue is a proline. The omega angle therefore offers little in the way of validation checks, although values in the range of ±20 to ±160 degrees should be treated with caution in anything but very high-resolution models.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div style={{display: 'inline-flex', width: '19%'}}>
+                                        <ImageZoom
+                                        image={{
+                                        src: '/src/videos/psiphi.gif',
+                                        alt: 'Phi and Psi',
+                                        className: 'img',
+                                        style: { width: '100%', height: '100%' }
+                                    }}
+                                        zoomImage={{
+                                        src: '/src/videos/psiphi.gif',
+                                        alt: 'Phi and Psi'
+                                    }}
+                                        />
+                                    </div>
+                                </div>
                                 <p style={{fontSize: '140%'}}><i>
                                     Validation potential of omega: poor.
                                 </i></p>
@@ -520,10 +542,51 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                         <div style={{width: '95%'}}>
                             <h2>Ramachandran principle</h2>
                             <div style={{display: 'flex'}}>
-                                <div className="panel-group-sq" id="accordion" style={{width: "49.5%", display: 'inline-flex', marginRight: 'auto'}}>
-                                    <div className="text-field-sq">
-                                        <p style={{fontSize: '140%'}}>The Ramachandran Principle says that alpha helices, beta strands, and turns are the most likely conformations for a polypeptide chain to adopt, because most other conformations are impossible due to steric collisions <b>(clashes)</b> between atoms.</p>
-                                        <p></p>
+                                <div className="text-field-sq" style={{display: 'flex'}}>
+                                    <div style={{display: 'inline-flex', marginRight: 'auto', width: '80%'}}>
+                                        <div style={{display: 'block'}}>
+                                            <p style={{fontSize: '140%'}}>The Ramachandran Principle says that alpha helices, beta strands, and turns are the most likely conformations for a polypeptide chain to adopt, because most other conformations are impossible due to steric collisions <b>(clashes)</b> between atoms.</p>
+                                            <p style={{fontSize: '140%'}}>Peptide bonds have a double bonded character. This prevents them from rotating. They have this charachter because they resonate with the adjacent oxygen double bond. As a result of their inability to rotate each peptide bond holds six atoms in a plane.</p>
+                                            <p style={{fontSize: '140%'}}>Actually most &phi; or &psi; angles are impossible due to clashes between atoms. Atoms in the ball and stick model are much smaller than the true sizes.</p>
+                                        </div>
+                                    </div>
+                                    <div style={{display: 'inline-flex', width: '19%'}}>
+                                        <ImageZoom
+                                            image={{
+                                                src: '/src/videos/planes.gif',
+                                                alt: 'Phi and Psi',
+                                                className: 'img',
+                                                style: { width: '100%', height: '100%' }
+                                            }}
+                                            zoomImage={{
+                                                src: '/src/videos/planes.gif',
+                                                alt: 'Phi and Psi'
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div style={{display: 'flex'}}>
+                                <div className="text-field-sq" style={{display: 'flex'}}>
+                                    <div style={{display: 'inline-flex', marginRight: 'auto', width: '80%'}}>
+                                        <div style={{display: 'block'}}>
+                                            <p style={{fontSize: '140%'}}>Here are the actual sizes of the atoms in our model. These are the so-called Vander Waals radii.</p>
+                                            <p style={{fontSize: '140%'}}>Here, the &psi; angle is fixed at 165° and we are rotating the &phi; angle a full through 360°. As the atoms get close to each other and begin to overlap, which would be physically impossible, but is allowed in this model, they clash with each other. These clases are shown as yellow and red objects that appear and disappear during  rotation.</p>
+                                        </div>
+                                    </div>
+                                    <div style={{display: 'inline-flex', width: '19%'}}>
+                                        <ImageZoom
+                                            image={{
+                                                src: '/src/videos/psifixed.gif',
+                                                alt: 'Phi and Psi',
+                                                className: 'img',
+                                                style: { width: '100%', height: '100%' }
+                                            }}
+                                            zoomImage={{
+                                                src: '/src/videos/psifixed.gif',
+                                                alt: 'Phi and Psi'
+                                            }}
+                                        />
                                     </div>
                                 </div>
                             </div>
