@@ -150,11 +150,18 @@
     justify-content: center;
     align-items: center;
     display: flex;
+    position: relative;
+    text-align: center;
 }
 
 .grow:hover h2{
-    display: flex;
-    justify-content: center;
+    width: 145px;
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin-top: -9px;
 }
 
 .grow h2 {
@@ -197,4 +204,9 @@
     -webkit-transform: rotate(90deg);
     margin-bottom: 0;
     margin-top: auto;
+}
+
+.image-box:before {
+    display: block;
+    padding-top: 100%;
 }
