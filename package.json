@@ -1,6 +1,9 @@
 {
   "name": "validation_tutorial",
   "version": "0.1.0",
+  "engines": {
+    "node": "8.9.0"
+  },
   "private": true,
   "homepage": "http://ondraab.github.io/validation-tutorial",
   "dependencies": {
