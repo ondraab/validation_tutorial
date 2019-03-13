@@ -12,6 +12,7 @@
     "@types/react-router-dom": "^4.3.1",
     "@types/react-tooltip": "^3.9.1",
     "@webcomponents/custom-elements": "^1.2.1",
+    "awesome-typescript-loader": "^3.5.0",
     "hint.css": "^2.5.1",
     "jquery": "^3.3.1",
     "pdb-lite-mol": "^0.1.0",
