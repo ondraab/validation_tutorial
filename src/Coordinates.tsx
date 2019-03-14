@@ -2,7 +2,6 @@ import * as React from 'react';
 import './App.css';
 import './theme-ebi-research.css'
 import {NavLink} from "react-router-dom";
-import {Parallax, ParallaxLayer} from "react-spring/addons";
 // @ts-ignore
 import ImageZoom from 'react-medium-image-zoom'
 import * as $ from "jquery";
@@ -15,7 +14,6 @@ interface ValidationStates {
 }
 
 class Coordinates extends React.Component< {}, ValidationStates> {
-    private parallax: Parallax | null;
     private _activeTab: number;
     private _displayed: boolean;
     private _displayed2: boolean;
@@ -183,7 +181,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
     }
 
     public render() {
-        const url = (name: any, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
+        // const url = (name: any, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
 
         // @ts-ignore
         return <div className="CoordinateApp">
@@ -237,61 +235,6 @@ class Coordinates extends React.Component< {}, ValidationStates> {
 
             </div>
             <div id={"main-content"} onScroll={this.listenScrollEvent.bind(this)}>
-                <Parallax ref={ref => (this.parallax = ref)} pages={5}>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={1} speed={1} style={{ backgroundColor: '#aeaeae' }} />
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={2} speed={1} style={{ backgroundColor: '#7c827e' }} />
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={0} speed={0} factor={3} style={{ backgroundImage: url('stars', true), backgroundSize: 'cover' }} />
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={1.3} speed={-0.3} style={{ pointerEvents: 'none' }}>
-                        {/*<img src="/src/2018-11-19.png" style={{ width: '15%', marginLeft: '70%' }} />*/}
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={1} speed={0.8} style={{ opacity: 0.1 }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={1.75} speed={0.5} style={{ opacity: 0.1 }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={1} speed={0.2} style={{ opacity: 0.2 }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={1.6} speed={-0.1} style={{ opacity: 0.4 }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={2.6} speed={0.4} style={{ opacity: 0.6 }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={2.5} speed={-0.4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={4} speed={0} factor={3} style={{ backgroundImage: url('stars', true), backgroundSize: 'cover' }} />
-
-                    </ParallaxLayer>
-
-                    <ParallaxLayer
-                        offset={2}
-                        speed={-0.3}
-                        // @ts-ignore
-                    />
-
-                    <ParallaxLayer
-                        offset={0}
-                        speed={0.1}
-                        // @ts-ignore
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{width: '95%', marginTop:'50px'}}>
                             <div style={{width: '100%', display: 'inline-block'}}>
                                 <h2>Coordinates and temperature factors</h2>
@@ -348,14 +291,12 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 </div>
                             </div>
                         </div>
-                    </ParallaxLayer>
 
 
-                    <ParallaxLayer
-                        offset={1}
-                        speed={0.1}
-                        // @ts-ignore
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+
+
+
+
                         <div style={{width: '95%'}}>
                             <h2>Chirality</h2>
                             <div style={{display: 'flex'}}>
@@ -466,13 +407,14 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 </i></p>
                             </div>
                         </div>
-                    </ParallaxLayer>
 
-                    <ParallaxLayer
-                        offset={2}
-                        speed={0.1}
-                        // @ts-ignore
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+
+
+
+
+
+
+
                         <div style={{width: '95%'}}>
                             <div className={"text-field-sq"} style={{width: '55%', top: '80px'}}>
                                 <p style={{fontSize: '140%'}}>
@@ -532,14 +474,18 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 {/*<ramachandran-component pdb-ids='["1cbs"]' chains-to-show='["A"]' models-to-show='["1"]' width="550" ></ramachandran-component>*/}
                             </div>
                         </div>
-                    </ParallaxLayer>
 
 
-                    <ParallaxLayer
-                        offset={3}
-                        speed={-0}
-                        // @ts-ignore
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+
+
+
+
+
+
+
+
+
+
                         <div style={{width: '95%'}}>
                             <div style={{display: 'flex'}}>
                                 <div className="text-field-sq" style={{display: 'flex', width: '60%'}}>
@@ -553,13 +499,13 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 </div>
                             </div>
                         </div>
-                    </ParallaxLayer>
 
-                    <ParallaxLayer
-                        offset={4}
-                        speed={-0}
-                        // @ts-ignore
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+
+
+
+
+
+
                         <div style={{width: '95%'}}>
                             <h2>Ramachandran principle</h2>
                             <div style={{display: 'flex'}}>
@@ -669,8 +615,6 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 </div>
                             </div>
                         </div>
-                    </ParallaxLayer>
-                </Parallax>
             </div>
         </div>;
     }

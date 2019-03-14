@@ -2,7 +2,6 @@ import * as React from 'react';
 import './App.css';
 import './theme-ebi-research.css'
 import {NavLink} from "react-router-dom";
-import {Parallax, ParallaxLayer} from "react-spring/addons";
 import * as $ from 'jquery';
 
 interface ValidationStates {
@@ -13,8 +12,6 @@ interface ValidationStates {
 
 class App extends React.Component< {}, ValidationStates> {
 
-    // @ts-ignore
-    private parallax: Parallax | null;
     private _activeTab: number;
     get pdbId(): string {
         return this._pdbId;
@@ -121,7 +118,7 @@ class App extends React.Component< {}, ValidationStates> {
 
 
     public render() {
-        const url = (name: any, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
+        // const url = (name: any, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
 
         return <div className="App">
             <div className="main-title masthead" style={{height: '54px'}}>
@@ -159,60 +156,6 @@ class App extends React.Component< {}, ValidationStates> {
 
             </div>
             <div id={"main-content"} onScroll={this.listenScrollEvent.bind(this)}>
-                <Parallax ref={ref => (this.parallax = ref)} pages={4}>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={1} speed={1} style={{ backgroundColor: '#aeaeae' }} />
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={2} speed={1} style={{ backgroundColor: '#7c827e' }} />
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={0} speed={0} factor={3} style={{ backgroundImage: url('stars', true), backgroundSize: 'cover' }} />
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={1.3} speed={-0.3} style={{ pointerEvents: 'none' }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={1} speed={0.8} style={{ opacity: 0.1 }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={1.75} speed={0.5} style={{ opacity: 0.1 }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={1} speed={0.2} style={{ opacity: 0.2 }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={1.6} speed={-0.1} style={{ opacity: 0.4 }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={2.6} speed={0.4} style={{ opacity: 0.6 }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={2.5} speed={-0.4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
-                    </ParallaxLayer>
-
-                    <ParallaxLayer
-                        offset={2}
-                        speed={-0.3}
-                        // @ts-ignore
-                        style={{
-                            backgroundSize: '80%',
-                            backgroundPosition: 'center',
-                        }}
-                    />
-
-                    <ParallaxLayer
-                        offset={0}
-                        speed={0.1}
-                       // @ts-ignore
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{width: '95%', marginTop:'50px'}}>
                             <div style={{width: '100%', display: 'inline-block'}}>
                             <h2>Introduction</h2>
@@ -256,13 +199,7 @@ class App extends React.Component< {}, ValidationStates> {
                                 </div>
                             </div>
                         </div>
-                    </ParallaxLayer>
 
-                    <ParallaxLayer
-                        offset={1}
-                        speed={0.1}
-                        // @ts-ignore
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{width: '95%'}}>
                             <h2>Before we start, let's review some important facts</h2>
                             <div style={{display: 'flex'}}>
@@ -315,13 +252,9 @@ class App extends React.Component< {}, ValidationStates> {
                                 </video>
                             </div>
                         </div>
-                    </ParallaxLayer>
 
-                    <ParallaxLayer
-                        offset={2}
-                        speed={-0}
-                        // @ts-ignore
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+
+
                         <div style={{width: '95%'}}>
                             <div style={{display: 'flex'}}>
                                 <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
@@ -397,13 +330,10 @@ class App extends React.Component< {}, ValidationStates> {
                                 </div>
                             </div>
                         </div>
-                    </ParallaxLayer>
 
-                    <ParallaxLayer
-                        offset={3}
-                        speed={-0}
-                        // @ts-ignore
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+
+
+
                         <div style={{width: '95%'}}>
                             <div style={{display: 'flex'}}>
                                 <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
@@ -432,8 +362,6 @@ class App extends React.Component< {}, ValidationStates> {
                                 </div>
                             </div>
                         </div>
-                    </ParallaxLayer>
-                </Parallax>
             </div>
             {/*<div>*/}
                 {/*<p><b>The conformation of the backbone of every non-terminal amino-acid residue is determined by three torsion angles, called:</b></p>*/}
