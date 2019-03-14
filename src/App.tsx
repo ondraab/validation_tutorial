@@ -142,19 +142,19 @@ class App extends React.Component< {}, ValidationStates> {
             <div className="page-nav long-4" style={{width: '10px', height: '95%', top: '54px', position: 'fixed', right: '17px', zIndex: 1}}>
                 <a className={"active grow"} style={{position: 'absolute', top: 0, right: 0}}
                    onClick={() => this.addClass(0)}>
-                    <h2 style={{color: 'white', position: 'absolute', top: 50}}>Introduction</h2>
+                    <h2 style={{color: 'white'}}>Introduction</h2>
                 </a>
                 <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/4)-9, right: 0}}
                     onClick={() => this.addClass(1)}>
-                    <h2 style={{color: 'white', position: 'absolute', top: 50}}>Review I</h2>
+                    <h2 style={{color: 'white'}}>Review I</h2>
                 </a>
                 <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/2)-18, right: 0}}
                     onClick={() => this.addClass(2)}>
-                    <h2 style={{color: 'white', position: 'absolute', top: 50}}>Review II</h2>
+                    <h2 style={{color: 'white'}}>Review II</h2>
                 </a>
                 <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/4 * 3)-27, right: 0}}
                     onClick={() => this.addClass(3)}>
-                    <h2 style={{color: 'white', position: 'absolute', top: 50}}>Review III</h2>
+                    <h2 style={{color: 'white'}}>Review III</h2>
                 </a>
 
             </div>
