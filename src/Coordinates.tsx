@@ -15,6 +15,8 @@ interface ValidationStates {
 }
 
 class Coordinates extends React.Component< {}, ValidationStates> {
+    // @ts-ignore
+    private parallax: Parallax | null;
     private _activeTab: number;
     private _displayed: boolean;
     private _displayed2: boolean;
@@ -343,6 +345,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 </div>
                             </div>
                         </div>
+                    </ParallaxLayer>
 
                     {/*
                        // @ts-ignore */}
@@ -520,6 +523,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 {/*<ramachandran-component pdb-ids='["1cbs"]' chains-to-show='["A"]' models-to-show='["1"]' width="550" ></ramachandran-component>*/}
                             </div>
                         </div>
+                    </ParallaxLayer>
 
                     {/*
                        // @ts-ignore */}
@@ -650,6 +654,8 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 </div>
                             </div>
                         </div>
+                    </ParallaxLayer>
+                </Parallax>
             </div>
         </div>;
     }
