@@ -34,7 +34,7 @@
   "scripts": {
     "dev": "webpack-dev-server --open --mode development",
     "start": "node server.js",
-    "build": "webpack --mode development",
+    "build": "webpack --mode production",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "predeploy": "npm run build",
