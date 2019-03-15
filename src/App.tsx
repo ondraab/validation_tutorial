@@ -2,7 +2,7 @@ import * as React from 'react';
 import './App.css';
 import './theme-ebi-research.css'
 import {NavLink} from "react-router-dom";
-import {Parallax, ParallaxLayer} from "react-spring/addons";
+import {Parallax, ParallaxLayer} from "react-spring/renderprops-addons";
 import * as $ from 'jquery';
 
 interface ValidationStates {
@@ -197,22 +197,12 @@ class App extends React.Component< {}, ValidationStates> {
                        // @ts-ignore */}
                     <ParallaxLayer offset={2.5} speed={-0.4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
                     </ParallaxLayer>
-
-                    <ParallaxLayer
-                        offset={2}
-                        speed={-0.3}
-                        // @ts-ignore
-                        style={{
-                            backgroundSize: '80%',
-                            backgroundPosition: 'center',
-                        }}
-                    />
-
-                    <ParallaxLayer
-                        offset={0}
-                        speed={0.1}
-                       // @ts-ignore
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {/*
+                       // @ts-ignore */}
+                    <ParallaxLayer offset={2} speed={-0.3} style={{backgroundSize: '80%', backgroundPosition: 'center'}}/>
+                    {/*
+                       // @ts-ignore */}
+                    <ParallaxLayer offset={0} speed={0.1} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{width: '95%', marginTop:'50px'}}>
                             <div style={{width: '100%', display: 'inline-block'}}>
                             <h2>Introduction</h2>
@@ -257,12 +247,9 @@ class App extends React.Component< {}, ValidationStates> {
                             </div>
                         </div>
                     </ParallaxLayer>
-
-                    <ParallaxLayer
-                        offset={1}
-                        speed={0.1}
-                        // @ts-ignore
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {/*
+                       // @ts-ignore */}
+                    <ParallaxLayer offset={1} speed={0.1} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{width: '95%'}}>
                             <h2>Before we start, let's review some important facts</h2>
                             <div style={{display: 'flex'}}>
@@ -316,12 +303,9 @@ class App extends React.Component< {}, ValidationStates> {
                             </div>
                         </div>
                     </ParallaxLayer>
-
-                    <ParallaxLayer
-                        offset={2}
-                        speed={-0}
-                        // @ts-ignore
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {/*
+                       // @ts-ignore */}
+                    <ParallaxLayer offset={2} speed={-0} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{width: '95%'}}>
                             <div style={{display: 'flex'}}>
                                 <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
@@ -398,12 +382,9 @@ class App extends React.Component< {}, ValidationStates> {
                             </div>
                         </div>
                     </ParallaxLayer>
-
-                    <ParallaxLayer
-                        offset={3}
-                        speed={-0}
-                        // @ts-ignore
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {/*
+                       // @ts-ignore */}
+                    <ParallaxLayer offset={3} speed={-0} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{width: '95%'}}>
                             <div style={{display: 'flex'}}>
                                 <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
