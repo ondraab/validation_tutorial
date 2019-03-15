@@ -15,7 +15,6 @@ interface ValidationStates {
 }
 
 class Coordinates extends React.Component< {}, ValidationStates> {
-    private parallax: Parallax | null;
     private _activeTab: number;
     private _displayed: boolean;
     private _displayed2: boolean;
@@ -183,7 +182,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
     }
 
     public render() {
-        const url = (name: any, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
+        // const url = (name: any, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
 
         // @ts-ignore
         return <div className="CoordinateApp">
@@ -344,7 +343,6 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 </div>
                             </div>
                         </div>
-                    </ParallaxLayer>
 
                     {/*
                        // @ts-ignore */}
@@ -522,7 +520,6 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 {/*<ramachandran-component pdb-ids='["1cbs"]' chains-to-show='["A"]' models-to-show='["1"]' width="550" ></ramachandran-component>*/}
                             </div>
                         </div>
-                    </ParallaxLayer>
 
                     {/*
                        // @ts-ignore */}
@@ -653,8 +650,6 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 </div>
                             </div>
                         </div>
-                    </ParallaxLayer>
-                </Parallax>
             </div>
         </div>;
     }

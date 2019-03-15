@@ -13,8 +13,6 @@ interface ValidationStates {
 
 class App extends React.Component< {}, ValidationStates> {
 
-    // @ts-ignore
-    private parallax: Parallax | null;
     private _activeTab: number;
     get pdbId(): string {
         return this._pdbId;
@@ -121,7 +119,7 @@ class App extends React.Component< {}, ValidationStates> {
 
 
     public render() {
-        const url = (name: any, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
+        // const url = (name: any, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
 
         return <div className="App">
             <div className="main-title masthead" style={{height: '54px'}}>
@@ -413,8 +411,6 @@ class App extends React.Component< {}, ValidationStates> {
                                 </div>
                             </div>
                         </div>
-                    </ParallaxLayer>
-                </Parallax>
             </div>
             {/*<div>*/}
                 {/*<p><b>The conformation of the backbone of every non-terminal amino-acid residue is determined by three torsion angles, called:</b></p>*/}
