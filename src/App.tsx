@@ -120,7 +120,7 @@ class App extends React.Component< {}, ValidationStates> {
 
 
     public render() {
-        // const url = (name: any, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
+        const url = (name: any, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
 
         return <div className="App">
             <div className="main-title masthead" style={{height: '54px'}}>

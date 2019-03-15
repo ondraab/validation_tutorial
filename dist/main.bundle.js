@@ -44460,7 +44460,6 @@ var Coordinates = /** @class */ (function (_super) {
             react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("script", null,
                 "(function () ",
                 // @ts-ignore
-                // @ts-ignore
                 angular.element(document).ready(function () {
                     // @ts-ignore
                     angular.bootstrap(document, ['pdb.litemol']);

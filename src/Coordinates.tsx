@@ -184,14 +184,13 @@ class Coordinates extends React.Component< {}, ValidationStates> {
     }
 
     public render() {
-        // const url = (name: any, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
+        const url = (name: any, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
 
         // @ts-ignore
         return <div className="CoordinateApp">
             <ReactTooltip />
             <script>
                 (function () {
-                // @ts-ignore
                 // @ts-ignore
                 angular.element(document).ready(function () {
                 // @ts-ignore
