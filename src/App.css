@@ -53,7 +53,7 @@
 }
 
 .navbar h3 {
-  line-height: 50px;
+  line-height: 47px;
   cursor: pointer;
 }
 
@@ -166,6 +166,7 @@
 
 .grow h2 {
     display: none;
+    font-size: 3vmin;
 }
 
 .onHover h2{
@@ -209,4 +210,28 @@
 .image-box:before {
     display: block;
     padding-top: 100%;
+}
+
+p, ol, ul {
+    font-size: 2vmin;
+}
+
+h3 {
+    font-size: 3vmin
+}
+
+h2 {
+    font-size: 4vmin
+}
+
+h4.panel-title {
+    font-size: 2vmin;
+}
+video {
+    width: 12.5vw;
+    height: 20vh;
+}
+
+form * {
+    margin: 5px;
 }

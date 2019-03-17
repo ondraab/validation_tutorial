@@ -6,9 +6,8 @@ module.exports = {
     entry: './src/index.tsx',
     module: {
         rules: [
-            {
-                loader: 'awesome-typescript-loader',
-                test: /\.(ts|tsx)$/
+            { test: /\.tsx?$/,
+              loader: "ts-loader"
             },
             {
                 test: /\.css$/,
@@ -23,6 +22,7 @@ module.exports = {
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
+        publicPath: "/"
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -30,6 +30,9 @@ module.exports = {
             filename: './index.html'
         })
     ],
+    devServer: {
+        historyApiFallback: true
+    },
     resolve: {
         extensions: ['.js', '.json', '.ts', '.tsx'],
     },

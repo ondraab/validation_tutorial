@@ -136,6 +136,11 @@ class App extends React.Component< {}, ValidationStates> {
                             Coordinates
                         </h3>
                     </NavLink>
+                    <NavLink to="/interactive">
+                        <h3>
+                            Interactive
+                        </h3>
+                    </NavLink>
                 </div>
             </div>
             <div className="page-nav long-4" style={{width: '10px', height: '95%', top: '54px', position: 'fixed', right: '17px', zIndex: 1}}>
@@ -143,15 +148,15 @@ class App extends React.Component< {}, ValidationStates> {
                    onClick={() => this.addClass(0)}>
                     <h2 style={{color: 'white'}}>Introduction</h2>
                 </a>
-                <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/4)-9, right: 0}}
+                <a className={"grow"} style={{position: 'absolute', top: '24vh', right: 0}}
                     onClick={() => this.addClass(1)}>
                     <h2 style={{color: 'white'}}>Review I</h2>
                 </a>
-                <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/2)-18, right: 0}}
+                <a className={"grow"} style={{position: 'absolute', top: '48vh', right: 0}}
                     onClick={() => this.addClass(2)}>
                     <h2 style={{color: 'white'}}>Review II</h2>
                 </a>
-                <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/4 * 3)-27, right: 0}}
+                <a className={"grow"} style={{position: 'absolute', top: '72vh', right: 0}}
                     onClick={() => this.addClass(3)}>
                     <h2 style={{color: 'white'}}>Review III</h2>
                 </a>
@@ -206,13 +211,13 @@ class App extends React.Component< {}, ValidationStates> {
                             <div style={{width: '100%', display: 'inline-block'}}>
                             <h2>Introduction</h2>
                                 <div className={"text-field-sq"}>
-                                    <p style={{fontSize: '140%'}}>
+                                    <p>
                                         Welcome to this practical about structure validation using publicly available resources.
                                         The emphasis in this practical is on validation of crystal structures of proteins,
                                         but some of the lessons extend to structures determined by other methods,
                                         and to structures of biomacromolecules other than proteins.
                                     </p>
-                                    <p style={{fontSize: '140%'}}>
+                                    <p>
                                         Assessing the quality of a model is called validation. Validation is something
                                         that needs to be done both by producers (crystallographers, NMR spectroscopists,
                                         electron microscopists, etc.) and users (biologists, enzymologists, medicinal chemists, etc.)
@@ -224,7 +229,7 @@ class App extends React.Component< {}, ValidationStates> {
                                 <div className={"text-field-sq"}>
 
                                     <h3>This practical and the resources it covers should help you to:</h3>
-                                    <ol style={{fontSize: '140%'}}>
+                                    <ol>
                                         <li>Read papers about protein crystal structures (errr, models) and understand the discussion of the model's quality (and ask relevant questions on this subject after hearing a protein crystallographer give a talk on a particular structure, or after reading a manuscript that you are asked to referee).</li>
                                         <li>Find or generate quality-related information on a given protein model using web-based databases and servers.</li>
                                         <li>Use this information to form a general opinion as to the overall quality of the model, as well as of certain aspects of it (e.g., the extent to which the presence or conformation of a bound ligand is supported by the crystallographic data).</li>
@@ -234,7 +239,7 @@ class App extends React.Component< {}, ValidationStates> {
                                 <div className={"text-field-sq"}>
 
                                     <h3>The following are useful links that you may want to explore:</h3>
-                                    <ul style={{fontSize: '140%'}}>
+                                    <ul>
                                         <li><a href={"http://spdbv.vital-it.ch/TheMolecularLevel/ModQual/index.html"}>A glossary of terms related to structural quality</a></li>
                                         <li><a href={" http://www.ruppweb.org/Xray/101index.html"}>An introduction to protein crystallography</a></li>
                                         <li><a href={"https://wwpdb.org/validation/validation-reports"}>List of wwPDB documents and resources related to validation and validation reports</a></li>
@@ -253,7 +258,7 @@ class App extends React.Component< {}, ValidationStates> {
                             <h2>Before we start, let's review some important facts</h2>
                             <div style={{display: 'flex'}}>
                                 <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
-                                    <p style={{fontSize: '140%'}}>
+                                    <p>
                                         <b><a href={"http://profiles.ucsf.edu/james.holton"}>James Holton</a></b>,
                                         while at Berkeley, produced a number of movies that demonstrate the
                                         importance of resolution, amplitudes and phases for the quality of the resulting
@@ -262,19 +267,19 @@ class App extends React.Component< {}, ValidationStates> {
                                     </p>
                                 </div>
                                 <div className={"text-field-sq video-field"} style={{display: 'flex', width: '49.5%'}}>
-                                    <p style={{fontSize: '140%', display: 'flex', verticalAlign: 'top', marginRight: '15px'}}>
+                                    <p style={{display: 'flex', verticalAlign: 'top', marginRight: '15px'}}>
                                         This movie displays a calculated electron density map, contoured at 1 sigma,
                                         as the resolution limit is adjusted slowly from 0.5Å to 6Å. [...] The phases are
                                         perfect, and so are the amplitudes (R-factor = 0.0%) for all the resolutions displayed.
                                         Note that, even for a perfect map, you expect side chains to poke out of density at 3.5Å.
                                     </p>
-                                    <video width={230} height={170} controls style={{display: 'flex', marginLeft: 'auto', marginRight: '0'}}>
+                                    <video controls style={{display: 'flex', marginLeft: 'auto', marginRight: '0'}}>
                                         <source src={"/src/videos/jh_resol.mp4"} type={"video/mp4"}/>
                                     </video>
                                 </div>
                             </div>
                             <div className={"text-field-sq video-field"}>
-                                <p style={{fontSize: '140%', display: 'inline-block', verticalAlign: 'top'}}>
+                                <p style={{display: 'inline-block', verticalAlign: 'top'}}>
                                     This movie displays the effect of calculating a map with "wrong" amplitudes. [...]
                                     The images in this movie represent the slow changing of all the amplitudes to a different
                                     set of randomly selected values while holding the phases constant. It is interesting to
@@ -283,12 +288,12 @@ class App extends React.Component< {}, ValidationStates> {
                                     the movie. Kinda spookey how it still looks traceable, isn't it? The resolution here is
                                     1.5Å, and the phases are always perfect.
                                 </p>
-                                <video width={230} height={170} controls style={{display: 'inline-block', marginLeft: '20px'}}>
+                                <video controls style={{display: 'inline-block', marginLeft: '20px'}}>
                                     <source src={"/src/videos/jh_ampli.mp4"} type={"video/mp4"}/>
                                 </video>
                             </div>
                             <div className={"text-field-sq video-field"}>
-                                <p style={{fontSize: '140%', display: 'inline-block', verticalAlign: 'top'}}>
+                                <p style={{display: 'inline-block', verticalAlign: 'top'}}>
                                     This movie displays the effect of calculating a map with "wrong" phases. The "figure of merit" (
                                     cosine of the error in the phase) is displayed as "m". The images in this movie were calculated by
                                     merging a perfect calculated map with another map, calculated with the same amplitudes, but with phases
@@ -296,7 +301,7 @@ class App extends React.Component< {}, ValidationStates> {
                                     but changes the phases slowly to a new set of values. At what point do you think the map becomes untraceable?
                                     The resolution here is 1.5Å, and the R-factor is always 0.0%.
                                 </p>
-                                <video width={230} height={170} controls style={{display: 'inline-block', marginLeft: '20px'}}>
+                                <video controls style={{display: 'inline-block', marginLeft: '20px'}}>
                                     <source src={"/src/videos/jh_phase.mp4"} type={"video/mp4"}/>
                                 </video>
                             </div>
@@ -308,17 +313,17 @@ class App extends React.Component< {}, ValidationStates> {
                         <div style={{width: '95%'}}>
                             <div style={{display: 'flex'}}>
                                 <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
-                                    <p style={{fontSize: '140%'}}>
+                                    <p>
                                         <b>If you look it up in a dictionary, "validation" is defined as:</b>
                                     </p>
-                                    <ul style={{fontSize: '140%'}}>
+                                    <ul>
                                         <li>to declare or make legally valid</li>
                                         <li>to mark with an indication of official sanction</li>
                                         <li>to substantiate or verify</li>
                                     </ul>
                                 </div>
                                 <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%'}}>
-                                    <p style={{fontSize: '140%', display: 'inline-block', verticalAlign: 'top'}}>
+                                    <p style={{display: 'inline-block', verticalAlign: 'top'}}>
                                         Many statistics, methods, and programs were developed from the 1990s onward to help identify
                                         errors in protein models. These methods generally fall into two classes: one in which only
                                         coordinates are considered (such methods often entail comparison of a model to information derived from structural databases),
@@ -327,20 +332,20 @@ class App extends React.Component< {}, ValidationStates> {
                                 </div>
                             </div>
                             <div className={"text-field-sq"}>
-                                <p style={{fontSize: '140%', verticalAlign: 'top'}}>
+                                <p style={{verticalAlign: 'top'}}>
                                     Alternatively, one can distinguish between "weak" methods that essentially measure
                                     how well the refinement program has succeeded in imposing restraints (e.g.,
                                     deviations from ideal geometry, conventional R-value) and "strong" ones that assess
                                     aspects of the model that are "orthogonal" to the information used in refinement
                                     (e.g., free R-value, patterns of non-bonded interactions, conformational torsion-angle distributions).
                                 </p>
-                                <p style={{fontSize: '140%', verticalAlign: 'top'}}>
+                                <p style={{verticalAlign: 'top'}}>
                                     An additional distinction can be made between methods that provide overall (global) statistics for a
                                     model (such methods are suitable for monitoring the progress of the refinement and rebuilding process)
                                     and those that provide information at the level of residues or atoms (such methods are more
                                     useful for detecting local problems in a model).
                                 </p>
-                                <p style={{fontSize: '140%', verticalAlign: 'top'}}>
+                                <p style={{verticalAlign: 'top'}}>
                                     It is important to realise that almost all coordinate-based validation methods
                                     detect outliers (i.e., atoms, residues or ligands with unusual properties): to
                                     assess whether an outlier is an error in the model or whether it is a genuine,
@@ -353,26 +358,26 @@ class App extends React.Component< {}, ValidationStates> {
                             </div>
                             <div style={{display: 'flex'}}>
                                 <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
-                                    <p style={{fontSize: '140%'}}>
+                                    <p>
                                         If you are interested in the overall quality of a model (e.g., to decide if
                                             it's good enough to use as a starting point for comparative modelling),
                                             strong and global quality indicators are most useful.
                                         <b>Examples of such criteria are:</b>
                                     </p>
-                                    <ul style={{fontSize: '140%'}}>
+                                    <ul>
                                         <li>Free R-value</li>
                                         <li>Packing or clash score</li>
                                         <li>Ramachandran plot</li>
                                     </ul>
                                 </div>
                                 <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%'}}>
-                                    <p style={{fontSize: '140%', display: 'inline-block', verticalAlign: 'top'}}>
+                                    <p style={{display: 'inline-block', verticalAlign: 'top'}}>
                                         If, on the other hand, you are interested in finding the local errors
                                         (to decide if the active site of a protein has been modeled reliably enough
                                         to use it for the design of ligands), strong and local methods are most suitable.
                                         <b>Examples of these are:</b>
                                     </p>
-                                    <ul style={{fontSize: '140%'}}>
+                                    <ul>
                                         <li>Real-space fit</li>
                                         <li>Main-chain torsion-angle combinations (Ramachandran)</li>
                                         <li>Side-chain torsion-angle combinations (rotamers)</li>
@@ -387,24 +392,24 @@ class App extends React.Component< {}, ValidationStates> {
                         <div style={{width: '95%'}}>
                             <div style={{display: 'flex'}}>
                                 <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
-                                    <p style={{fontSize: '140%'}}>
+                                    <p>
                                         Unfortunately, in many (especially older) papers that describe macromolecular
                                         crystal structures, "quality criteria" are quoted that do not necessarily
                                         provide any indication whatsoever of the actual quality of the model. <b>Examples are:</b>
                                     </p>
-                                    <ul style={{fontSize: '140%'}}>
+                                    <ul>
                                         <li>Conventional R-value</li>
                                         <li>RMS deviation of bond lengths and angles from "ideal" values</li>
                                         <li>Average temperature factor of the atoms in the model</li>
                                     </ul>
                                 </div>
                                 <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%'}}>
-                                    <p style={{fontSize: '140%', verticalAlign: 'top'}}>
+                                    <p style={{verticalAlign: 'top'}}>
                                         It is also important to realise that every quality check that a model
                                         passes provides a necessary but insufficient indication of the model's correctness:
                                         a good model makes sense in just about every respect.
                                     </p>
-                                    <p style={{fontSize: '140%', verticalAlign: 'top'}}>
+                                    <p style={{verticalAlign: 'top'}}>
                                         Fortunately, nowadays there are sensible validation reports available
                                         for all structures in the PDB to help you assess their quality
                                         (we will come back to these reports later in the practical).

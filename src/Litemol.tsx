@@ -21,7 +21,7 @@ class Litemol extends React.Component<LitemolProps, LitemolStates> {
         angular.bootstrap(this.container, ['myModule']);
     }
 
-    public html = `<pdb-lite-mol pdb-id="'${this.props.pdbId}'"/>`;
+    public html = `<pdb-lite-mol pdb-id="'${this.props.pdbId}'" id="litemol-1"/>`;
 
     public render() {
         // @ts-ignore

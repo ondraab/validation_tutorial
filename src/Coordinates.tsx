@@ -164,7 +164,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
 
         if (currPos > 2.5 && currPos < 3.19) {
             if (!this.displayed2) {
-                $('#ramachandran-2').append("<ramachandran-component pdb-ids='[\"1tqn\"]' chains-to-show='[\"A\"]' models-to-show='[\"1\"]' width=\"550\" id='ramachandran-component-2'/>");
+                $('#ramachandran-2').append("<ramachandran-component pdb-ids='[\"2hyv\"]' chains-to-show='[\"A\"]' models-to-show='[\"1\"]' width=\"550\" id='ramachandran-component-2'/>");
                 this.displayed2 = true;
             }
         } else {
@@ -189,16 +189,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
         // @ts-ignore
         return <div className="CoordinateApp">
             <ReactTooltip />
-            <script>
-                (function () {
-                // @ts-ignore
-                angular.element(document).ready(function () {
-                // @ts-ignore
-                angular.bootstrap(document, ['pdb.litemol'])
-            })
-            }());
-            </script>
-            <div className="main-title masthead">
+            <div className="main-title masthead" style={{height: '54px'}}>
                 <h1 className="white-color">Validation tutorial</h1>
                 <div className="navbar">
                     <NavLink to="/">
@@ -211,6 +202,11 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                             Coordinates
                         </h3>
                     </NavLink>
+                    <NavLink to="/interactive">
+                        <h3>
+                            Interactive
+                        </h3>
+                    </NavLink>
                 </div>
             </div>
             <div className="page-nav long-5" style={{width: '10px', height: '95%', top: '54px', position: 'fixed', right: '17px', zIndex: 1}}>
@@ -218,19 +214,19 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                    onClick={() => this.addClass(0)}>
                     <h2 style={{color: 'white'}}>Introduction</h2>
                 </a>
-                <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/5)-7.5, right: 0}}
+                <a className={"grow"} style={{position: 'absolute', top: '19vh', right: 0}}
                    onClick={() => this.addClass(1)}>
                     <h2 style={{color: 'white'}}>Review I</h2>
                 </a>
-                <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/5*2)-14.5, right: 0}}
+                <a className={"grow"} style={{position: 'absolute', top: '38vh', right: 0}}
                    onClick={() => this.addClass(2)}>
                     <h2 style={{color: 'white'}}>Review II</h2>
                 </a>
-                <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/5 * 3)-21.5, right: 0}}
+                <a className={"grow"} style={{position: 'absolute', top: '57vh', right: 0}}
                    onClick={() => this.addClass(3)}>
                     <h2 style={{color: 'white'}}>Outliers</h2>
                 </a>
-                <a className={"grow"} style={{position: 'absolute', top: (window.innerHeight/5 * 4)-28.5, right: 0}}
+                <a className={"grow"} style={{position: 'absolute', top: '76vh', right: 0}}
                    onClick={() => this.addClass(4)}>
                     <h2 style={{color: 'white'}}>Ramachandran principle</h2>
                 </a>
@@ -294,7 +290,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 <div style={{display: 'flex'}}>
                                     <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
                                         <h3>Refresher</h3>
-                                        <ul style={{fontSize: '140%'}}>
+                                        <ul >
                                             <li>If you have forgotten what amino acids are, look <b><a href={"http://www.biology.arizona.edu/biochemistry/problem_sets/aa/aa.html"}>here</a></b> or <b><a href={"http://en.wikipedia.org/wiki/Amino_acid"}>here</a></b></li>
                                             <li>If you have forgotten what molecular geometry is, look <b><a href={"http://en.wikipedia.org/wiki/Molecular_geometry"}>here</a></b></li>
                                             <li>If you have forgotten what dihedral or torsion angles are, look <b><a href={"http://en.wikipedia.org/wiki/Dihedral_angle"}>here</a></b></li>
@@ -305,7 +301,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                         </ul>
                                     </div>
                                     <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%'}}>
-                                        <p style={{fontSize: '140%'}}>
+                                        <p>
                                             The majority of model-quality criteria are based on the use of the (X,Y,Z)
                                             coordinates of the atoms in the model, their nature (e.g., carboxylate oxygen
                                             or aromatic carbon), and their identity (e.g., the main-chain nitrogen atom of
@@ -318,7 +314,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                     </div>
                                 </div>
                                 <div className={"text-field-sq"}>
-                                    <p style={{fontSize: '140%'}}>
+                                    <p>
                                         The covalent geometry of a model can be assessed by comparing bond lengths and
                                         angles to a library of "ideal" values. In the past, every refinement and modelling
                                         program had its own set of "ideal" values. This even made it possible to detect
@@ -327,7 +323,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                         derived from an analysis of small-molecule crystal structures, are available
                                         for proteins and nucleic acids.
                                     </p>
-                                    <p style={{fontSize: '140%'}}>
+                                    <p>
                                         For bond lengths, the RMS deviation from ideal values is typically quoted.
                                         Deviations from ideality of bond angles can be expressed directly as an angular
                                         RMS deviation or in terms of angle distances (i.e., the angle ABC is measured by
@@ -335,7 +331,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                         preferred as they are more informative (but these values are not always provided in papers).
                                         Other checks in this class include chirality and planarity tests.
                                     </p>
-                                    <p style={{fontSize: '140%', borderTop: 'black solid 1px'}}><i>
+                                    <p style={{borderTop: 'black solid 1px'}}><i>
                                         Validation potential of geometric tests: poor. Good scores for these criteria
                                         prove little. However, if an entire model scores poorly, this should set off
                                         warning bells. Also, gross outliers should always be investigated!
@@ -424,15 +420,15 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                 <div style={{display: 'flex'}}>
                                     <div style={{display: 'inline-flex', width: '80%', marginRight: 'auto'}}>
                                         <div style={{display: 'block'}}>
-                                            <p style={{fontSize: '140%'}}>
+                                            <p>
                                                 The conformation of the backbone of every non-terminal amino-acid residue is determined by three torsion angles, called:
                                             </p>
-                                            <ul style={{fontSize: '140%'}}>
+                                            <ul >
                                                 <li>&phi; (phi) &rarr; (C<sub>[i-1]</sub>-N<sub>[i]</sub>-C&alpha;<sub>[i]</sub>-C<sub>[i]</sub>)</li>
                                                 <li>&psi; (psi) &rarr; (N<sub>[i]</sub>-C&alpha;<sub>[i]</sub>-C<sub>[i]</sub>-N<sub>[i+1]</sub>)</li>
                                                 <li>&omega; (omega) &rarr; (C&alpha;<sub>[i]</sub>-C<sub>[i]</sub>-N<sub>[i+1]</sub>-C&alpha;<sub>[i+1]</sub>)</li>
                                             </ul>
-                                            <p style={{fontSize: '140%', borderBottom: 'gray solid 1px'}}>
+                                            <p style={{borderBottom: 'gray solid 1px'}}>
                                                 Due to resonance, the peptide bond has partial double-bond character. Therefore, the omega torsion angle is restrained to values near 0 (cis-peptide) and 180 degrees (trans-peptide). Cis-peptides are relatively rare and usually (but not always) occur if the next residue is a proline. The omega angle therefore offers little in the way of validation checks, although values in the range of ±20 to ±160 degrees should be treated with caution in anything but very high-resolution models.
                                             </p>
                                         </div>
@@ -454,7 +450,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                         </div>
                                     </div>
                                 </div>
-                                <p style={{fontSize: '140%'}}><i>
+                                <p><i>
                                     Validation potential of omega: poor.
                                 </i></p>
                             </div>
@@ -465,13 +461,13 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                     <ParallaxLayer offset={2} speed={0.1} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{width: '95%'}}>
                             <div className={"text-field-sq"} style={{width: '55%', top: '80px'}}>
-                                <p style={{fontSize: '140%'}}>
+                                <p>
                                     The &phi; and &psi; torsion angles, on the other hand, are much less restricted, but it has been known for a long time that, due to steric hindrance, there are several clearly preferred combinations of &phi;, &psi; values (a scatter plot of &phi;, &psi; values for all residues in a protein model is called a Ramachandran plot). This is true even for proline and glycine residues, although their distributions are atypical. Also, the overwhelming majority of residues that are not in regular secondary structure elements are found to have favourable &phi;, &psi; torsion-angle combinations. For these reasons, the Ramachandran plot is an extremely simple, useful and sensitive indicator of model quality. Residues that have unusual &phi;, &psi; torsion-angle combinations should be scrutinised by the crystallographer. If they have convincing electron density, there is probably a good structural or functional reason for the protein to tolerate the energetic strain that is associated with the unusual conformation. The quality of a model's Ramachandran plot is most convincingly illustrated with a figure. Alternatively, the fraction of residues in certain predefined areas of the plot (e.g., core regions) can be quoted, but in that case it is important to indicate which definition of such areas was used.
                                 </p>
-                                <p style={{fontSize: '140%'}}>
+                                <p>
                                     If you are interested in finding out which specific steric clashes put restrictions on &phi; and/or &psi;, read the 2003 paper by Ho et al. They found that O<sub>(i-1)</sub>...C&beta;<sub>(i)</sub> restricts &phi; of residue i, C&beta;<sub>(i)</sub>...O<sub>(i)</sub> and C&beta;<sub>(i)</sub>...N<sub>(i+1)</sub> restrict &psi;, and O<sub>(i-1)</sub>...O<sub>(i)</sub> and O<sub>(i-1)</sub>...N<sub>(i+1)</sub> restrict both &phi; and &psi;.
                                 </p>
-                                <p style={{fontSize: '140%', borderTop: 'black solid 1px'}}><i>
+                                <p style={{borderTop: 'black solid 1px'}}><i>
                                     Validation potential of &phi;, &psi; combinations: excellent. A quick look at the Ramachandran plot will tell you a lot about the quality of a model. Good models have most residues tightly clustered in the most-favoured regions with relatively few outliers. Good, but low-resolution models may have less pronounced clustering, but will still have few outliers. Models that show poor clustering and many outliers are bound to be poor.
                                 </i></p>
                             </div>
@@ -531,8 +527,12 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                             <div style={{display: 'flex'}}>
                                 <div className="text-field-sq" style={{display: 'flex', width: '60%'}}>
                                         <div style={{display: 'block'}}>
-                                            <p style={{fontSize: '140%'}}>Contours for Ramachandran plot was computed using database Top8000. A residue is marked as Ramachandran outlier, when the dihedral angle is improbable or rare. But that does not mean, that it can't exist. </p>
-                                            <p style={{fontSize: '140%'}}>Ramachandran outliers are common in proteins, and many are likely to simply be errors in the structure. However, some of these outliers will be supported by the structural data and may exist in energetically strained conformations.</p>
+                                            <p>Contours for Ramachandran plot was computed using database Top8000. A residue is marked as Ramachandran outlier, when the dihedral angle is improbable or rare. But that does not mean, that it can't exist. </p>
+                                            <p>Ramachandran outliers are common in proteins, and many are likely to simply be errors in the structure. However, some of these outliers will be supported by the structural data and may exist in energetically strained conformations.</p>
+                                            <p>The Ramachandran plot on the right side is for annexin protein. Annexins are proteins, which are mostlz found in eukaryotic organisms. This specific one, 2HYV, is a human annexin A2 with heparin hexasaccharide bound. You can see, that there is only one residue, which is flagged as outlier.</p>
+                                            <p>It is very important to note, that issues highlighted by a validation metri do not necessarily  imply errors in the model. Instead they may point to genuine, albeit unusal, features of structure, which may be of biological interest.</p>
+                                            <p>An example is resiude <b>Val50</b> in the annexin protein. It is involved in Ca<sup>2+</sup> ion coordination - but is consistently flagged as a Ramachandran outlier.</p>
+                                            <p>Such unusual features should, however, be supported by convincing experimental evidence.</p>
                                         </div>
                                 </div>
                                 <div style={{width: "39.5%", display: 'inline-flex', position: 'absolute', right: '0',top: '80px'}} id={"ramachandran-2"}>
@@ -552,9 +552,9 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                         <div className="text-field-sq" style={{display: 'flex'}}>
                                             <div style={{display: 'inline-flex', marginRight: 'auto', width: '87%'}}>
                                                 <div style={{display: 'block'}}>
-                                                    <p style={{fontSize: '140%'}}>The Ramachandran Principle says that alpha helices, beta strands, and turns are the most likely conformations for a polypeptide chain to adopt, because most other conformations are impossible due to steric collisions <b>(clashes)</b> between atoms.</p>
-                                                    <p style={{fontSize: '140%'}}>Peptide bonds have a double bonded character. This prevents them from rotating. They have this charachter because they resonate with the adjacent oxygen double bond. As a result of their inability to rotate each peptide bond holds six atoms in a plane.</p>
-                                                    <p style={{fontSize: '140%'}}>Actually most &phi; or &psi; angles are impossible due to clashes between atoms. Atoms in the ball and stick model are much smaller than the true sizes.</p>
+                                                    <p>The Ramachandran Principle says that alpha helices, beta strands, and turns are the most likely conformations for a polypeptide chain to adopt, because most other conformations are impossible due to steric collisions <b>(clashes)</b> between atoms.</p>
+                                                    <p>Peptide bonds have a double bonded character. This prevents them from rotating. They have this charachter because they resonate with the adjacent oxygen double bond. As a result of their inability to rotate each peptide bond holds six atoms in a plane.</p>
+                                                    <p>Actually most &phi; or &psi; angles are impossible due to clashes between atoms. Atoms in the ball and stick model are much smaller than the true sizes.</p>
                                                 </div>
                                             </div>
                                             <div style={{display: 'inline-flex', width: '12%'}}>
@@ -579,9 +579,9 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                         <div className="text-field-sq" style={{display: 'flex'}}>
                                             <div style={{display: 'inline-flex', marginRight: 'auto', width: '87%'}}>
                                                 <div style={{display: 'block'}}>
-                                                    <p style={{fontSize: '140%'}}>Here are the actual sizes of the atoms in our model. These are the so-called Vander Waals radii.</p>
-                                                    <p style={{fontSize: '140%'}}>Here, the &psi; angle is fixed at 165° and we are rotating the &phi; angle a full through 360°. As the atoms get close to each other and begin to overlap, which would be physically impossible, but is allowed in this model, they clash with each other. These clashes are shown as yellow and red objects that appear and disappear during  rotation.</p>
-                                                    <p style={{fontSize: '140%'}}>Wherever the clashes appear, that angle of &phi; would be impossible when &psi; is 165°. Compare it with the Ramachandran plot. As you can see at the animation, there is only one region, that has no clashes. You can find the region on the Ramachandran plot.</p>
+                                                    <p>Here are the actual sizes of the atoms in our model. These are the so-called Vander Waals radii.</p>
+                                                    <p>Here, the &psi; angle is fixed at 165° and we are rotating the &phi; angle a full through 360°. As the atoms get close to each other and begin to overlap, which would be physically impossible, but is allowed in this model, they clash with each other. These clashes are shown as yellow and red objects that appear and disappear during  rotation.</p>
+                                                    <p>Wherever the clashes appear, that angle of &phi; would be impossible when &psi; is 165°. Compare it with the Ramachandran plot. As you can see at the animation, there is only one region, that has no clashes. You can find the region on the Ramachandran plot.</p>
                                                 </div>
                                             </div>
                                             <div style={{display: 'inline-flex', width: '12%'}} className={'image-box'}>
@@ -624,8 +624,8 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                             </div>
                                             <div style={{display: 'inline-flex', marginRight: 'auto', width: '75%'}}>
                                                 <div style={{display: 'block'}}>
-                                                    <p style={{fontSize: '140%'}}>At the left animation we are rotating &psi;. &phi; angle is fixed at -80°. You can detect two regions with no clashes. You can try again identify the region on Ramachandran plot.</p>
-                                                    <p style={{fontSize: '140%'}}>At the right animation the &phi; angle is fixed at 0°. This angle <b>does not </b>occur in real proteins. As you can see, when the &psi; rotates, there are clashes at all &psi; angles. This means, that &phi; of 0° is physically impossible.</p>
+                                                    <p>At the left animation we are rotating &psi;. &phi; angle is fixed at -80°. You can detect two regions with no clashes. You can try again identify the region on Ramachandran plot.</p>
+                                                    <p>At the right animation the &phi; angle is fixed at 0°. This angle <b>does not </b>occur in real proteins. As you can see, when the &psi; rotates, there are clashes at all &psi; angles. This means, that &phi; of 0° is physically impossible.</p>
                                                 </div>
                                             </div>
                                             <div style={{display: 'inline-flex', width: '12%'}}>

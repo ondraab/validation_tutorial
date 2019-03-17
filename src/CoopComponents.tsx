@@ -1,4 +1,4 @@
-import Litemol from "./Litemol";
+import Interactive from "./Interactive";
 import * as React from "react";
 
 interface CoopComponentsProps {
@@ -36,7 +36,7 @@ class CoopComponents extends React.Component<CoopComponentsProps, CoopComponents
             </div>
             <div id={"litemol-div"}>
             //@ts-ignore
-            <Litemol pdbId={this.state.pdbId}/>
+            <Interactive pdbId={this.state.pdbId}/>
             </div>
         </div>
     }
