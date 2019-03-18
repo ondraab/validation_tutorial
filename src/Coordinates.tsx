@@ -15,12 +15,36 @@ interface ValidationStates {
 }
 
 class Coordinates extends React.Component< {}, ValidationStates> {
+    get rama3(): any {
+        return this._rama3;
+    }
+
+    set rama3(value: any) {
+        this._rama3 = value;
+    }
+    get rama2(): any {
+        return this._rama2;
+    }
+
+    set rama2(value: any) {
+        this._rama2 = value;
+    }
+    get rama1(): any {
+        return this._rama1;
+    }
+
+    set rama1(value: any) {
+        this._rama1 = value;
+    }
     // @ts-ignore
     private parallax: Parallax | null;
     private _activeTab: number;
     private _displayed: boolean;
     private _displayed2: boolean;
     private _displayed3: boolean;
+    private _rama1: any;
+    private _rama2: any;
+    private _rama3: any;
     get displayed(): boolean {
         return this._displayed;
     }
@@ -152,35 +176,48 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                 }
             })
         }
-        if (currPos >= 1 && currPos <=2.5) {
-            if (!this.displayed) {
-                $('#rama-view-container').append("<ramachandran-component pdb-ids='[\"1cbs\"]' chains-to-show='[\"A\"]' models-to-show='[\"1\"]' width=\"550\" id='ramachandran-component-1'/>");
-                this.displayed = true;
-            }
-        } else {
-            this.displayed = false;
-            $('#ramachandran-component-1').remove();
-        }
-
-        if (currPos > 2.5 && currPos < 3.19) {
-            if (!this.displayed2) {
-                $('#ramachandran-2').append("<ramachandran-component pdb-ids='[\"2hyv\"]' chains-to-show='[\"A\"]' models-to-show='[\"1\"]' width=\"550\" id='ramachandran-component-2'/>");
-                this.displayed2 = true;
-            }
-        } else {
-            this.displayed2 = false;
-            $('#ramachandran-component-2').remove();
-        }
-
-        if (currPos > 3.2) {
-            if (!this._displayed3) {
-                $('#ramachandran-3').append("<ramachandran-component pdb-ids='[\"1tqn\"]' chains-to-show='[\"A\"]' models-to-show='[\"1\"]' width=\"550\" id='ramachandran-component-3'/>");
-                this.displayed3 = true;
-            }
-        } else {
-            this._displayed3 = false;
-            $('#ramachandran-component-3').remove();
-        }
+        // if (currPos >= 1 && currPos <=2.4) {
+        //     if (!this.displayed) {
+        //         $('#rama-view-container').append("<ramachandran-component pdb-ids='[\"1cbs\"]' chains-to-show='[\"A\"]' models-to-show='[\"1\"]' width=\"550\" id='ramachandran-component-1'/>");
+        //         this.rama1 = $('#ramachandran-component-1');
+        //         this.displayed = true;
+        //     }
+        // } else {
+        //     this.displayed = false;
+        //     $('#ramachandran-component-1').remove();
+        // }
+        //
+        // if (currPos > 2.5 && currPos < 3.19) {
+        //     if (!this.displayed2) {
+        //         if (typeof this.rama3 !== 'undefined') {
+        //             $('#ramachandran-2').append(this.rama2);
+        //         } else {
+        //             $('#ramachandran-2').append("<ramachandran-component pdb-ids='[\"2hyv\"]' chains-to-show='[\"A\"]' models-to-show='[\"1\"]' width=\"550\" id='ramachandran-component-2'/>");
+        //             this.rama2 = $('#ramachandran-component-2');
+        //         }
+        //         this.displayed2 = true;
+        //     }
+        // } else {
+        //     this.displayed2 = false;
+        //     $('#ramachandran-component-2').remove();
+        // }
+        //
+        // if (currPos > 3.5) {
+        //     if (!this._displayed3) {
+        //         if (typeof this.rama3 !== 'undefined') {
+        //             $('#ramachandran-3').append(this.rama3);
+        //             console.log('pridano 3 z cache');
+        //         } else {
+        //             $('#ramachandran-3').append("<ramachandran-component pdb-ids='[\"1tqn\"]' chains-to-show='[\"A\"]' models-to-show='[\"1\"]' width=\"550\" id='ramachandran-component-3'/>");
+        //             this.rama3 = $('#ramachandran-component-3');
+        //         }
+        //         this.displayed3 = true;
+        //     }
+        // } else {
+        //     this._displayed3 = false;
+        //     // $('#ramachandran-component-3').css('display', 'none');
+        //     $('#ramachandran-component-3').remove();
+        // }
     }
 
     public render() {
@@ -515,6 +552,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                             <div style={{width: '39.5%', display: 'inline-block', position: 'absolute', right: '0', top: '80px'}} id={"rama-view-container"}>
                             {/*
                                 // @ts-ignore */}
+                                <ramachandran-component pdb-ids='["1cbs"]' chains-to-show='["A"]' models-to-show='["1"]' width="550" id='ramachandran-component-1'/>
                                 {/*<ramachandran-component pdb-ids='["1cbs"]' chains-to-show='["A"]' models-to-show='["1"]' width="550" ></ramachandran-component>*/}
                             </div>
                         </div>
@@ -536,7 +574,9 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                         </div>
                                 </div>
                                 <div style={{width: "39.5%", display: 'inline-flex', position: 'absolute', right: '0',top: '80px'}} id={"ramachandran-2"}>
-
+                                    {/*
+                                // @ts-ignore */}
+                                    <ramachandran-component pdb-ids='["2hyv"]' chains-to-show='["A"]' models-to-show='["1"]' width="550" id='ramachandran-component-2'/>
                                 </div>
                             </div>
                         </div>
@@ -649,7 +689,9 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                     </div>
                                 </div>
                                 <div style={{width: "39.5%", display: 'inline-flex', position: 'absolute', right: '0',top: '80px'}} id={"ramachandran-3"}>
-
+                                    {/*
+                                // @ts-ignore */}
+                                    <ramachandran-component pdb-ids='["1tqn"]' chains-to-show='["A"]' models-to-show='["1"]' width="550" id='ramachandran-component-1'/>
                                 </div>
                             </div>
                         </div>
