@@ -1,32 +1,14 @@
-// const express = require('express');
-// const path = require('path');
-// const port = process.env.PORT || 8080;
-// const app = express();
-//
-// // the __dirname is the current directory from where the script is running
-// app.use(express.static(__dirname + '/dist'));
-//
-// // send the user to index html page inspite of the url
-// app.get('*', (req, res) => {
-//     res.sendFile(path.resolve(__dirname + '/dist', 'index.html'));
-// });
-//
-// app.listen(port);
-
+const express = require('express');
+const path = require('path');
 const port = process.env.PORT || 8080;
-//server.js
-const express = require('express')
-const app = express()
-// serve static assets from the public folder in project root
+const app = express();
+// this assumes that all your app files
+// `public` directory relative to where your server.js is
 app.use(express.static(__dirname + '/dist'));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/dist/index.html'), function(err) {
-        if (err) {
-            res.status(500).send(err)
-        }
-    });
+app.get('*', function (request, response){
+    response.sendFile(path.resolve(__dirname, 'dist', 'index.html'))
 });
 
-//
-app.listen(port, () => console.log('listening...'))
+app.listen(port);
+console.log("Server started on port " + port);
