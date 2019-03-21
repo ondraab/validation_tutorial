@@ -75,6 +75,8 @@ class Interactive extends React.Component<{}, LitemolStates> {
     //     this.parallax.scrollTo(scrollTo)
     // }
 
+
+
     private listenScrollEvent() {
         //@ts-ignore
         let currPos = this.parallax.current / this.parallax.space;

@@ -3,48 +3,33 @@ import './App.css';
 import './theme-ebi-research.css'
 import {NavLink} from "react-router-dom";
 import {Parallax, ParallaxLayer} from "react-spring/renderprops-addons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faAngleDown, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 // @ts-ignore
 import ImageZoom from 'react-medium-image-zoom'
 import * as $ from "jquery";
 import ReactTooltip from 'react-tooltip';
+import {Collapse} from "react-collapse";
+import * as Modal from "react-modal";
 
 interface ValidationStates {
     pdbId: string;
     chains: string[];
     models: string[];
+    showAnswer1: boolean;
+    showAnswer2: boolean;
+    showAnswer3: boolean;
+    showAnswer4: boolean;
+    questionStyle: string;
 }
 
 class Coordinates extends React.Component< {}, ValidationStates> {
-    get rama3(): any {
-        return this._rama3;
-    }
-
-    set rama3(value: any) {
-        this._rama3 = value;
-    }
-    get rama2(): any {
-        return this._rama2;
-    }
-
-    set rama2(value: any) {
-        this._rama2 = value;
-    }
-    get rama1(): any {
-        return this._rama1;
-    }
-
-    set rama1(value: any) {
-        this._rama1 = value;
-    }
     // @ts-ignore
     private parallax: Parallax | null;
     private _activeTab: number;
     private _displayed: boolean;
     private _displayed2: boolean;
     private _displayed3: boolean;
-    private _rama1: any;
-    private _rama2: any;
-    private _rama3: any;
     get displayed(): boolean {
         return this._displayed;
     }
@@ -86,9 +71,23 @@ class Coordinates extends React.Component< {}, ValidationStates> {
 
     constructor(props : {}) {
         super(props);
-        this.state = {pdbId: '1cbs', models: ['1'], chains: ['A']};
+        this.state = {
+            pdbId: '1cbs',
+            models: ['1'],
+            chains: ['A'],
+            showAnswer1: false,
+            showAnswer2: false,
+            showAnswer3: false,
+            showAnswer4: false,
+            questionStyle: '100%'};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleShowAnswer1 = this.handleShowAnswer1.bind(this);
+        this.handleShowAnswer2 = this.handleShowAnswer2.bind(this);
+        this.handleShowAnswer3 = this.handleShowAnswer3.bind(this);
+        this.handleShowAnswer4 = this.handleShowAnswer4.bind(this);
+        this.handleHideAnswer4 = this.handleHideAnswer4.bind(this);
+        // this.closeModals = this.closeModals.bind(this);
         this._pdbId = '1cbs';
         this._activeTab = 0;
     }
@@ -220,6 +219,36 @@ class Coordinates extends React.Component< {}, ValidationStates> {
         // }
     }
 
+    private handleShowAnswer1() {
+        this.setState({
+            showAnswer1: !this.state.showAnswer1
+        })
+    }
+
+    private handleShowAnswer2() {
+        this.setState({
+            showAnswer2: !this.state.showAnswer2
+        })
+    }
+
+    private handleShowAnswer3() {
+        this.setState({
+            showAnswer3: !this.state.showAnswer3
+        })
+    }
+
+    private handleShowAnswer4() {
+        this.setState({
+            showAnswer4: true
+        })
+    }
+
+    private handleHideAnswer4() {
+        this.setState({
+            showAnswer4: false
+        })
+    }
+
     public render() {
         const url = (name: any, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
 
@@ -253,7 +282,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                 </a>
                 <a className={"grow"} style={{position: 'absolute', top: '19vh', right: 0}}
                    onClick={() => this.addClass(1)}>
-                    <h2 style={{color: 'white'}}>Review I</h2>
+                    <h2 style={{color: 'white'}}>Basic facts</h2>
                 </a>
                 <a className={"grow"} style={{position: 'absolute', top: '38vh', right: 0}}
                    onClick={() => this.addClass(2)}>
@@ -323,18 +352,18 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                     <ParallaxLayer offset={0} speed={0.1} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{width: '95%', marginTop:'50px'}}>
                             <div style={{width: '100%', display: 'inline-block'}}>
-                                <h2>Coordinates and temperature factors</h2>
+                                <h2>Introduction</h2>
                                 <div style={{display: 'flex'}}>
                                     <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
                                         <h3>Refresher</h3>
                                         <ul >
-                                            <li>If you have forgotten what amino acids are, look <b><a href={"http://www.biology.arizona.edu/biochemistry/problem_sets/aa/aa.html"}>here</a></b> or <b><a href={"http://en.wikipedia.org/wiki/Amino_acid"}>here</a></b></li>
+                                            <li>If you have forgotten what amino acids are, look  <b><a href={"http://en.wikipedia.org/wiki/Amino_acid"}>here</a></b> or <b><a href={"http://www.biology.arizona.edu/biochemistry/problem_sets/aa/aa.html"}>here</a></b></li>
                                             <li>If you have forgotten what molecular geometry is, look <b><a href={"http://en.wikipedia.org/wiki/Molecular_geometry"}>here</a></b></li>
                                             <li>If you have forgotten what dihedral or torsion angles are, look <b><a href={"http://en.wikipedia.org/wiki/Dihedral_angle"}>here</a></b></li>
                                             <li>If you have forgotten what eclipsed and staggered conformations are, look <b><a href={"http://en.wikipedia.org/wiki/Rotamer"}>here</a></b></li>
                                             <li>If you have forgotten what chiral carbon atoms are, look <b><a href={"https://en.wikipedia.org/wiki/Asymmetric_carbon"}>here</a></b></li>
                                             <li>If you have forgotten what &phi; and &psi; are, look <b><a href={"http://employees.csbsju.edu/hjakubowski/classes/ch331/protstructure/phipsi.gif"}>here</a></b> or <b><a href={"http://www.msg.ucsf.edu/local/programs/garlic/commands/phipsi.gif"}>here</a></b></li>
-                                            <li>If you have forgotten what chi-1, chi-2 etc. are, look <b><a href={"http://dunbrack.fccc.edu/bbdep2010/Images/Chi1Chi2Chi3Chi4.PNG"}>here</a></b> or <b><a href={"http://www.msg.ucsf.edu/local/programs/garlic/commands/chi_angles.gif"}>here</a></b></li>
+                                            <li>If you have forgotten what &chi;-1, &chi;-2 etc. are, look <b><a href={"http://dunbrack.fccc.edu/bbdep2010/Images/Chi1Chi2Chi3Chi4.PNG"}>here</a></b> or <b><a href={"http://www.msg.ucsf.edu/local/programs/garlic/commands/chi_angles.gif"}>here</a></b></li>
                                         </ul>
                                     </div>
                                     <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%'}}>
@@ -383,39 +412,68 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                        // @ts-ignore */}
                     <ParallaxLayer offset={1} speed={0.1} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{width: '95%'}}>
-                            <h2>Chirality</h2>
+                            <h2>Basic facts</h2>
                             <div style={{display: 'flex'}}>
                                 <div className="panel-group-sq" id="accordion" style={{width: "49.5%", display: 'inline-flex', marginRight: 'auto'}}>
                                     <div className="text-field-sq">
-                                        <div className="panel-heading" style={{width: '8%', display: 'table-cell', verticalAlign: 'middle', borderRight: '1px solid gray'}}>
-                                            <h4 data-tip="hello world" className="panel-title hint--bottom-right hint--large" style={{fontSize:'30px'}}
-                                            aria-label={"All amino acids but glycine have at least one chiral center at C\u03B1. Aminoacids" +
-                                            "with with more than one chiral center are Isoleucine and Threonine."}>?</h4>
+                                        <div className={"expandable-question"} style={{height: this.state.showAnswer1 ? '50%' : '100%'}}>
+                                            <div className="panel-heading question-mark">
+                                                <h4 className="panel-title" style={{fontSize:'30px'}}>?</h4>
+                                            </div>
+                                            <div className="panel-heading question-heading">
+                                                <h4 className="panel-title">
+                                                    <div className={"question-s"}>
+                                                        <a className="accordion-toggle" data-toggle="collapse"
+                                                           data-parent="#accordion">
+                                                            Which amino acids contain chiral carbon atoms? Are there any
+                                                            amino acids that contain more than one chiral carbon atom? If so, which one(s)?
+                                                        </a>
+                                                        <a onClick={this.handleShowAnswer1}>
+                                                            <FontAwesomeIcon icon={this.state.showAnswer1 ? faAngleRight : faAngleDown} size={"2x"} style={{float: 'right', cursor: 'pointer'}} className="hint--bottom" aria-label={"Show answer"}/>
+                                                        </a>
+                                                    </div>
+                                                </h4>
+                                            </div>
                                         </div>
-                                        <div className="panel-heading" style={{width: '92%', display: 'table-cell', verticalAlign: 'bottom'}}>
-                                            <h4 className="panel-title">
-                                                <a className="accordion-toggle" data-toggle="collapse"
-                                                   data-parent="#accordion">
-                                                    Which amino acids contain chiral carbon atoms? Are there any
-                                                    amino acids that contain more than one chiral carbon atom? If so, which one(s)?
-                                                </a>
-                                            </h4>
+                                        <div>
+                                            <Collapse isOpened={this.state.showAnswer1} style={{display: 'block'}}>
+                                                <div>
+                                                    <p className={"answer"}>
+                                                        All amino acids but glycine have at least one chiral center at C&beta;. Aminoacids with with more than one chiral center are Isoleucine and Threonine
+                                                    </p>
+                                                </div>
+                                            </Collapse>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="panel-group-sq" id="accordion" style={{width: "49.5%", display: 'inline-flex'}}>
                                     <div className="text-field-sq">
-                                        <div className="panel-heading" style={{width: '8%', display: 'table-cell', borderRight: '1px solid gray'}}>
-                                            <h4 className="panel-title hint--bottom-right hint--large" style={{fontSize:'30px'}}
-                                            aria-label={"U - Selenocysteine (Seq), O - Pyrrolysine (Pyl), for actual answer about the number of entries, try use PDBe service."}>?</h4>
+                                        <div style={{height: this.state.showAnswer2 ? '70%' : '100%'}}>
+                                            <div className="panel-heading question-mark">
+                                                <h4 className="panel-title" style={{fontSize:'30px'}}>?</h4>
+                                            </div>
+                                            <div className="panel-heading question-heading">
+                                                <h4 className="panel-title">
+                                                    <div className={"question-s"}>
+                                                        <a className="accordion-toggle" data-toggle="collapse"
+                                                           data-parent="#accordion">
+                                                            Currently there are 22 (rather than 20) known naturally occurring, genetically encoded amino acids. Number 21 has one-letter code U and number 22 has one-letter code O. What are the names and three-letter codes of these two amino acids? How many PDB entries contain at least one of them?
+                                                        </a>
+                                                        <a onClick={this.handleShowAnswer2}>
+                                                            <FontAwesomeIcon icon={this.state.showAnswer2 ? faAngleRight : faAngleDown} size={"2x"} style={{float: 'right', cursor: 'pointer'}}/>
+                                                        </a>
+                                                    </div>
+                                                </h4>
+                                            </div>
                                         </div>
-                                        <div className="panel-heading" style={{width: '92%', display: 'table-cell', verticalAlign: 'bottom'}}>
-                                            <h4 className="panel-title">
-                                                <a className="accordion-toggle" data-toggle="collapse"
-                                                   data-parent="#accordion">
-                                                    Currently there are 22 (rather than 20) known naturally occurring, genetically encoded amino acids. Number 21 has one-letter code U and number 22 has one-letter code O. What are the names and three-letter codes of these two amino acids? How many PDB entries contain at least one of them?
-                                                </a>
-                                            </h4>
+                                        <div>
+                                            <Collapse isOpened={this.state.showAnswer2} style={{display: 'block'}}>
+                                                <div>
+                                                    <p className={"answer"}>
+                                                        U - Selenocysteine (Seq), O - Pyrrolysine (Pyl), for actual answer about the number of entries, try use PDBe service.
+                                                    </p>
+                                                </div>
+                                            </Collapse>
                                         </div>
                                     </div>
                                 </div>
@@ -423,32 +481,63 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                             <div style={{display: 'flex'}}>
                                 <div className="panel-group-sq" id="accordion" style={{width: "49.5%", display: 'inline-flex', marginRight: 'auto'}}>
                                     <div className="text-field-sq">
-                                        <div className="panel-heading" style={{width: '8%', display: 'table-cell', verticalAlign: 'middle', borderRight: '1px solid gray'}}>
-                                            <h4 className="panel-title hint--bottom-right hint--large" style={{fontSize:'30px'}}
-                                                aria-label={""}>?</h4>
-                                        </div>
-                                        <div className="panel-heading" style={{width: '92%', display: 'table-cell', verticalAlign: 'bottom'}}>
-                                            <h4 className="panel-title">
-                                                <a className="accordion-toggle" data-toggle="collapse"
-                                                   data-parent="#accordion">
-                                                    Do you expect the C&beta; atom of a tyrosine residue to lie in the same plane as the aromatic ring?
-                                                </a>
-                                            </h4>
+                                        <div style={{height: this.state.showAnswer3 ? '50%' : '100%'}}>
+                                            <div className="panel-heading question-mark">
+                                                <h4 style={{fontSize:'30px'}}>?</h4>
+                                            </div>
+                                            <div className="panel-heading question-heading">
+                                                <h4 className="panel-title">
+                                                    <div className={"question-s"}>
+                                                        <a>
+                                                            Do you expect the C&beta; atom of a tyrosine residue to lie in the same plane as the aromatic ring?
+                                                        </a>
+                                                        <a onClick={this.handleShowAnswer3}>
+                                                            <FontAwesomeIcon icon={this.state.showAnswer3 ? faAngleRight : faAngleDown} size={"2x"} style={{float: 'right', cursor: 'pointer'}}/>
+                                                        </a>
+                                                    </div>
+                                                </h4>
+                                            </div>
+                                            <div>
+                                                <Collapse isOpened={this.state.showAnswer3} style={{display: 'block'}}>
+                                                    <div>
+                                                        <p className={"answer"}>
+                                                            U - Selenocysteine (Seq), O - Pyrrolysine (Pyl), for actual answer about the number of entries, try use PDBe service.
+                                                        </p>
+                                                    </div>
+                                                </Collapse>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="panel-group-sq" id="accordion" style={{width: "49.5%", display: 'inline-flex'}}>
                                     <div className="text-field-sq">
-                                        <div className="panel-heading" style={{width: '8%', display: 'table-cell', borderRight: '1px solid gray'}}>
-                                            <h4 className="panel-title" style={{fontSize:'30px'}}>?</h4>
-                                        </div>
-                                        <div className="panel-heading" style={{width: '92%', display: 'table-cell', verticalAlign: 'bottom'}}>
-                                            <h4 className="panel-title">
-                                                <a className="accordion-toggle" data-toggle="collapse"
-                                                   data-parent="#accordion">
-                                                    Using your favourite graphics program or web-based 3D viewer, have a look at residue TRP D67 in PDB entry 7GPB. Does anything strike you as odd?
-                                                </a>
-                                            </h4>
+                                        <div style={{height: this.state.showAnswer4 ? '50%' : '100%'}}>
+                                            <div className="panel-heading question-mark">
+                                                <h4 className="panel-title" style={{fontSize:'30px'}}>?</h4>
+                                            </div>
+                                            <div className="panel-heading question-heading">
+                                                <h4 className="panel-title">
+                                                    <div className={"question-s"}>
+                                                        <a>
+                                                            Using your favourite graphics program or web-based 3D viewer, have a look at residue TRP D67 in PDB entry 7GPB. Does anything strike you as odd?
+                                                        </a>
+                                                        <a onClick={this.handleShowAnswer4}>
+                                                            <FontAwesomeIcon icon={this.state.showAnswer4 ? faAngleRight : faAngleDown} size={"2x"} style={{float: 'right', cursor: 'pointer'}}/>
+                                                        </a>
+                                                    </div>
+                                                </h4>
+                                            </div>
+                                            <Modal
+                                                isOpen={this.state.showAnswer4}
+                                                onAfterOpen={this.handleShowAnswer4}
+                                                onRequestClose={this.handleHideAnswer4}
+                                                style={{content: {top: '50%', left: '50%', right: 'auto', bottom: 'auto', transform: 'translate(-50%, -50%)'}}}
+                                                contentLabel="Example Modal"
+                                            >
+                                                <div>
+                                                   <img src={'/src/videos/7gpb_63d_2.gif'} style={{width: '676px', heigh: '400px'}}/>
+                                                </div>
+                                            </Modal>
                                         </div>
                                     </div>
                                 </div>
@@ -473,16 +562,21 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                     <div style={{display: 'inline-flex', width: '19%'}}>
                                         <div style={{width: '100%', position: 'relative'}}>
                                             <ImageZoom
-                                            image={{
-                                            src: '/src/videos/psiphi.gif',
-                                            alt: 'Phi and Psi',
-                                            className: 'img',
-                                            style: { width: '100%', objectFit: 'contain' }
-                                        }}
-                                            zoomImage={{
-                                            src: '/src/videos/psiphi.gif',
-                                            alt: 'Phi and Psi'
-                                        }}
+                                                image={{
+                                                src: '/src/videos/psiphi.gif',
+                                                alt: 'Phi and Psi',
+                                                className: 'img',
+                                                style: { width: '100%', objectFit: 'contain' }
+                                            }}
+                                                zoomImage={{
+                                                src: '/src/videos/psiphi.gif',
+                                                alt: 'Phi and Psi'
+                                            }}
+                                                defaultStyles={{
+                                                    overlay: {
+                                                        opacity: 0.5
+                                                }
+                                            }}
                                             />
                                         </div>
                                     </div>
@@ -610,6 +704,11 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                                             src: '/src/videos/planes.gif',
                                                             alt: 'Phi and Psi'
                                                         }}
+                                                        defaultStyles={{
+                                                            overlay: {
+                                                                opacity: 0.5
+                                                            }
+                                                        }}
                                                     />
                                                 </div>
                                             </div>
@@ -638,6 +737,11 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                                             style: {width: ''},
                                                             alt: 'Phi and Psi'
                                                         }}
+                                                        defaultStyles={{
+                                                            overlay: {
+                                                                opacity: 0.5
+                                                            }
+                                                        }}
                                                     />
                                                 </div>
                                             </div>
@@ -658,7 +762,11 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                                             src: '/src/videos/phifixed.gif',
                                                             alt: 'Phi and Psi'
                                                         }}
-
+                                                        defaultStyles={{
+                                                            overlay: {
+                                                                opacity: 0.5
+                                                            }
+                                                        }}
                                                     />
                                                 </div>
                                             </div>
@@ -681,7 +789,11 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                                             src: '/src/videos/phi0.gif',
                                                             alt: 'Phi and Psi'
                                                         }}
-
+                                                        defaultStyles={{
+                                                            overlay: {
+                                                                opacity: 0.5
+                                                            }
+                                                        }}
                                                     />
                                                 </div>
                                             </div>

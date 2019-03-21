@@ -4,12 +4,18 @@ import './theme-ebi-research.css'
 import {NavLink} from "react-router-dom";
 import {Parallax, ParallaxLayer} from "react-spring/renderprops-addons";
 import * as $ from 'jquery';
+import * as Modal from "react-modal";
 
 interface ValidationStates {
     pdbId: string;
     chains: string[];
     models: string[];
+    modalVideo1: boolean;
+    modalVideo2: boolean;
+    modalVideo3: boolean;
+    showModal: boolean;
 }
+
 
 class App extends React.Component< {}, ValidationStates> {
     // @ts-ignore
@@ -37,11 +43,41 @@ class App extends React.Component< {}, ValidationStates> {
 
     constructor(props : {}) {
         super(props);
-        this.state = {pdbId: '1cbs', models: ['1'], chains: ['A']};
+        this.state = {
+            pdbId: '1cbs',
+            models: ['1'],
+            chains: ['A'],
+            modalVideo1: false,
+            modalVideo2: false,
+            modalVideo3: false,
+            showModal: false};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this._pdbId = '1cbs';
         this.activeTab = 0;
+
+        this.closeModals = this.closeModals.bind(this);
+        this.openModal1 = this.openModal1.bind(this);
+        this.openModal2 = this.openModal2.bind(this);
+        this.openModal3 = this.openModal3.bind(this);
+    }
+
+    public closeModals() {
+        this.setState({ modalVideo1: false,
+        modalVideo2: false,
+        modalVideo3: false});
+    }
+
+    public openModal1() {
+        this.setState({ modalVideo1: true });
+    }
+
+    public openModal2() {
+        this.setState({ modalVideo2: true });
+    }
+
+    public openModal3() {
+        this.setState({ modalVideo3: true });
     }
 
     private handleChange(event: any) {
@@ -122,6 +158,7 @@ class App extends React.Component< {}, ValidationStates> {
     public render() {
         const url = (name: any, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
 
+
         return <div className="App">
             <div className="main-title masthead" style={{height: '54px'}}>
                 <h1 className="white-color">Validation tutorial</h1>
@@ -150,15 +187,15 @@ class App extends React.Component< {}, ValidationStates> {
                 </a>
                 <a className={"grow"} style={{position: 'absolute', top: '24vh', right: 0}}
                     onClick={() => this.addClass(1)}>
-                    <h2 style={{color: 'white'}}>Review I</h2>
+                    <h2 style={{color: 'white'}}>Review some facts</h2>
                 </a>
                 <a className={"grow"} style={{position: 'absolute', top: '48vh', right: 0}}
                     onClick={() => this.addClass(2)}>
-                    <h2 style={{color: 'white'}}>Review II</h2>
+                    <h2 style={{color: 'white'}}>Validation methods I</h2>
                 </a>
                 <a className={"grow"} style={{position: 'absolute', top: '72vh', right: 0}}
                     onClick={() => this.addClass(3)}>
-                    <h2 style={{color: 'white'}}>Review III</h2>
+                    <h2 style={{color: 'white'}}>Validation methods II</h2>
                 </a>
 
             </div>
@@ -236,17 +273,27 @@ class App extends React.Component< {}, ValidationStates> {
                                         <li>Select the better of a set of related models (assuming there are noticeable differences in the quality of these models), e.g. for purposes of homology modelling, ligand design, mutant design, or molecular replacement calculations.</li>
                                     </ol>
                                 </div>
-                                <div className={"text-field-sq"}>
-
-                                    <h3>The following are useful links that you may want to explore:</h3>
-                                    <ul>
-                                        <li><a href={"http://spdbv.vital-it.ch/TheMolecularLevel/ModQual/index.html"}>A glossary of terms related to structural quality</a></li>
-                                        <li><a href={" http://www.ruppweb.org/Xray/101index.html"}>An introduction to protein crystallography</a></li>
-                                        <li><a href={"https://wwpdb.org/validation/validation-reports"}>List of wwPDB documents and resources related to validation and validation reports</a></li>
-                                        <li><a href={"https://wwpdb.org/task/validation-task-forces"}>Overview of wwPDB Validation Task Forces (VTFs) and their published recommendations</a></li>
-                                        <li>The websites of the wwPDB partners, <a href={"http://pdbe.org"}>PDBe</a>, <a href={"http://pdbj.org"}>PDBj</a> and <a href={"https://rcsb.org"}>RCSB PDB</a></li>
-                                        <li><a href={"http://scripts.iucr.org/cgi-bin/paper?S0907444999016364"}>An extensive review of validation in protein crystallography</a></li>
-                                    </ul>
+                                <div style={{display: 'flex'}}>
+                                    <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
+                                        <h3>The following are useful links that you may want to explore:</h3>
+                                        <ul>
+                                            <li><a href={"http://spdbv.vital-it.ch/TheMolecularLevel/ModQual/index.html"}>A glossary of terms related to structural quality</a></li>
+                                            <li><a href={" http://www.ruppweb.org/Xray/101index.html"}>An introduction to protein crystallography</a></li>
+                                            <li><a href={"https://wwpdb.org/validation/validation-reports"}>List of wwPDB documents and resources related to validation and validation reports</a></li>
+                                            <li><a href={"https://wwpdb.org/task/validation-task-forces"}>Overview of wwPDB Validation Task Forces (VTFs) and their published recommendations</a></li>
+                                            <li>The websites of the wwPDB partners, <a href={"http://pdbe.org"}>PDBe</a>, <a href={"http://pdbj.org"}>PDBj</a> and <a href={"https://rcsb.org"}>RCSB PDB</a></li>
+                                            <li><a href={"http://scripts.iucr.org/cgi-bin/paper?S0907444999016364"}>An extensive review of validation in protein crystallography</a></li>
+                                        </ul>
+                                    </div>
+                                    <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
+                                        <p>
+                                            <b><a href={"http://profiles.ucsf.edu/james.holton"}>James Holton</a></b>,
+                                            while at Berkeley, produced a number of movies that demonstrate the
+                                            importance of resolution, amplitudes and phases for the quality of the resulting
+                                            electron-density map. James has kindly given permission to incorporate a couple of his
+                                            movies into this practical. You will find them at next page.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -257,28 +304,64 @@ class App extends React.Component< {}, ValidationStates> {
                         <div style={{width: '95%'}}>
                             <h2>Before we start, let's review some important facts</h2>
                             <div style={{display: 'flex'}}>
-                                <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
-                                    <p>
-                                        <b><a href={"http://profiles.ucsf.edu/james.holton"}>James Holton</a></b>,
-                                        while at Berkeley, produced a number of movies that demonstrate the
-                                        importance of resolution, amplitudes and phases for the quality of the resulting
-                                        electron-density map. James has kindly given permission to incorporate a couple of his
-                                        movies into this practical.
-                                    </p>
-                                </div>
-                                <div className={"text-field-sq video-field"} style={{display: 'flex', width: '49.5%'}}>
+                                <div className={"text-field-sq"}>
+                                    {/*
+                                        // @ts-ignore */}
+                                    <Modal
+                                        isOpen={this.state.modalVideo1}
+                                        onAfterOpen={this.openModal1}
+                                        onRequestClose={this.closeModals}
+                                        style={{content: {top: '50%', left: '50%', right: 'auto', bottom: 'auto', transform: 'translate(-50%, -50%)'}}}
+                                        contentLabel="Example Modal"
+                                    >
+                                        <div>
+                                            <video controls style={{display: 'flex'}} className={"modal-video"}>
+                                                <source src={"/src/videos/jh_resol.mp4"} type={"video/mp4"}/>
+                                            </video>
+                                            <p style={{display: "block"}}>
+                                                This movie displays a calculated electron density map, contoured at 1 sigma,
+                                                as the resolution limit is adjusted slowly from 0.5Å to 6Å. [...] The phases are
+                                                perfect, and so are the amplitudes (R-factor = 0.0%) for all the resolutions displayed.
+                                                Note that, even for a perfect map, you expect side chains to poke out of density at 3.5Å.
+                                            </p>
+                                        </div>
+                                    </Modal>
                                     <p style={{display: 'flex', verticalAlign: 'top', marginRight: '15px'}}>
                                         This movie displays a calculated electron density map, contoured at 1 sigma,
                                         as the resolution limit is adjusted slowly from 0.5Å to 6Å. [...] The phases are
                                         perfect, and so are the amplitudes (R-factor = 0.0%) for all the resolutions displayed.
                                         Note that, even for a perfect map, you expect side chains to poke out of density at 3.5Å.
                                     </p>
-                                    <video controls style={{display: 'flex', marginLeft: 'auto', marginRight: '0'}}>
-                                        <source src={"/src/videos/jh_resol.mp4"} type={"video/mp4"}/>
-                                    </video>
+                                    <a href={"#"} onClick={this.openModal1}>
+                                        <video style={{display: 'flex', marginLeft: 'auto', marginRight: '0'}} id={"video1"}>
+                                            <source src={"/src/videos/jh_resol.mp4"} type={"video/mp4"}/>
+                                        </video>
+                                    </a>
                                 </div>
                             </div>
                             <div className={"text-field-sq video-field"}>
+                                <Modal
+                                    isOpen={this.state.modalVideo2}
+                                    onAfterOpen={this.openModal2}
+                                    onRequestClose={this.closeModals}
+                                    style={{content: {top: '50%', left: '50%', right: 'auto', bottom: 'auto', transform: 'translate(-50%, -50%)'}}}
+                                    contentLabel="Example Modal"
+                                >
+                                    <div>
+                                        <video controls style={{display: 'flex'}} className={"modal-video"}>
+                                            <source src={"/src/videos/jh_ampli.mp4"} type={"video/mp4"}/>
+                                        </video>
+                                        <p style={{display: "block"}}>
+                                            This movie displays the effect of calculating a map with "wrong" amplitudes. [...]
+                                            The images in this movie represent the slow changing of all the amplitudes to a different
+                                            set of randomly selected values while holding the phases constant. It is interesting to
+                                            note that the map hardly changes at all until the R-factor gets higher than 30%.
+                                            The maximum R-factor you can get for two random data sets is 75%, which is the end of
+                                            the movie. Kinda spookey how it still looks traceable, isn't it? The resolution here is
+                                            1.5Å, and the phases are always perfect.
+                                        </p>
+                                    </div>
+                                </Modal>
                                 <p style={{display: 'inline-block', verticalAlign: 'top'}}>
                                     This movie displays the effect of calculating a map with "wrong" amplitudes. [...]
                                     The images in this movie represent the slow changing of all the amplitudes to a different
@@ -288,11 +371,34 @@ class App extends React.Component< {}, ValidationStates> {
                                     the movie. Kinda spookey how it still looks traceable, isn't it? The resolution here is
                                     1.5Å, and the phases are always perfect.
                                 </p>
-                                <video controls style={{display: 'inline-block', marginLeft: '20px'}}>
-                                    <source src={"/src/videos/jh_ampli.mp4"} type={"video/mp4"}/>
-                                </video>
+                                <a href={"#"} onClick={this.openModal2}>
+                                    <video style={{display: 'inline-block', marginLeft: '20px'}} id="video2">
+                                        <source src={"/src/videos/jh_ampli.mp4"} type={"video/mp4"}/>
+                                    </video>
+                                </a>
                             </div>
                             <div className={"text-field-sq video-field"}>
+                                <Modal
+                                    isOpen={this.state.modalVideo3}
+                                    onAfterOpen={this.openModal3}
+                                    onRequestClose={this.closeModals}
+                                    style={{content: {top: '50%', left: '50%', right: 'auto', bottom: 'auto', transform: 'translate(-50%, -50%)'}}}
+                                    contentLabel="Example Modal"
+                                >
+                                    <div>
+                                        <video controls style={{display: 'flex'}} className={"modal-video"}>
+                                            <source src={"/src/videos/jh_phase.mp4"} type={"video/mp4"}/>
+                                        </video>
+                                        <p style={{display: "block"}}>
+                                            This movie displays the effect of calculating a map with "wrong" phases. The "figure of merit" (
+                                            cosine of the error in the phase) is displayed as "m". The images in this movie were calculated by
+                                            merging a perfect calculated map with another map, calculated with the same amplitudes, but with phases
+                                            obtained from a model with randomly positioned atoms. Merging these two maps always preserves the amplitudes,
+                                            but changes the phases slowly to a new set of values. At what point do you think the map becomes untraceable?
+                                            The resolution here is 1.5Å, and the R-factor is always 0.0%.
+                                        </p>
+                                    </div>
+                                </Modal>
                                 <p style={{display: 'inline-block', verticalAlign: 'top'}}>
                                     This movie displays the effect of calculating a map with "wrong" phases. The "figure of merit" (
                                     cosine of the error in the phase) is displayed as "m". The images in this movie were calculated by
@@ -301,9 +407,11 @@ class App extends React.Component< {}, ValidationStates> {
                                     but changes the phases slowly to a new set of values. At what point do you think the map becomes untraceable?
                                     The resolution here is 1.5Å, and the R-factor is always 0.0%.
                                 </p>
-                                <video controls style={{display: 'inline-block', marginLeft: '20px'}}>
-                                    <source src={"/src/videos/jh_phase.mp4"} type={"video/mp4"}/>
-                                </video>
+                                <a href={"#"} onClick={this.openModal3}>
+                                    <video style={{display: 'inline-block', marginLeft: '20px'}} id="video3">
+                                        <source src={"/src/videos/jh_phase.mp4"} type={"video/mp4"}/>
+                                    </video>
+                                </a>
                             </div>
                         </div>
                     </ParallaxLayer>
@@ -311,8 +419,9 @@ class App extends React.Component< {}, ValidationStates> {
                        // @ts-ignore */}
                     <ParallaxLayer offset={2} speed={-0} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{width: '95%'}}>
+                            <h2>Validation methods I</h2>
                             <div style={{display: 'flex'}}>
-                                <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
+                                <div className={"text-field-sq"}>
                                     <p>
                                         <b>If you look it up in a dictionary, "validation" is defined as:</b>
                                     </p>
@@ -321,8 +430,6 @@ class App extends React.Component< {}, ValidationStates> {
                                         <li>to mark with an indication of official sanction</li>
                                         <li>to substantiate or verify</li>
                                     </ul>
-                                </div>
-                                <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%'}}>
                                     <p style={{display: 'inline-block', verticalAlign: 'top'}}>
                                         Many statistics, methods, and programs were developed from the 1990s onward to help identify
                                         errors in protein models. These methods generally fall into two classes: one in which only
@@ -361,8 +468,7 @@ class App extends React.Component< {}, ValidationStates> {
                                     <p>
                                         If you are interested in the overall quality of a model (e.g., to decide if
                                             it's good enough to use as a starting point for comparative modelling),
-                                            strong and global quality indicators are most useful.
-                                        <b>Examples of such criteria are:</b>
+                                            strong and global quality indicators are most useful. <b>Examples of such criteria are:</b>
                                     </p>
                                     <ul>
                                         <li>Free R-value</li>
@@ -374,8 +480,7 @@ class App extends React.Component< {}, ValidationStates> {
                                     <p style={{display: 'inline-block', verticalAlign: 'top'}}>
                                         If, on the other hand, you are interested in finding the local errors
                                         (to decide if the active site of a protein has been modeled reliably enough
-                                        to use it for the design of ligands), strong and local methods are most suitable.
-                                        <b>Examples of these are:</b>
+                                        to use it for the design of ligands), strong and local methods are most suitable. <b>Examples of these are:</b>
                                     </p>
                                     <ul>
                                         <li>Real-space fit</li>
@@ -390,6 +495,7 @@ class App extends React.Component< {}, ValidationStates> {
                        // @ts-ignore */}
                     <ParallaxLayer offset={3} speed={-0} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{width: '95%'}}>
+                            <h2>Validation methods II</h2>
                             <div style={{display: 'flex'}}>
                                 <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
                                     <p>

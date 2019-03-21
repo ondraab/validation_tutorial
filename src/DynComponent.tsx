@@ -92,17 +92,24 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
     static getDerivedStateFromProps(props: DynComponentProps, state: DynComponentStates) {
         state.modelsField = `["${props.models}"]`;
         state.pdbIdField = `["${props.pdbId}"]`;
-        $.getJSON("https://www.ebi.ac.uk/pdbe/api/pdb/entry/molecules/" + props.pdbId, function (data) {
+        const xmlHttp = new XMLHttpRequest();
+        xmlHttp.open('GET',
+            `https://www.ebi.ac.uk/pdbe/api/pdb/entry/molecules/${props.pdbId}`, false);
+        xmlHttp.send();
+        if (xmlHttp.status !== 200) {
+            return;
+        } else {
             let c: string[] = [];
-            data[props.pdbId].forEach((e: string) => {
+            const mols = JSON.parse(xmlHttp.responseText)[props.pdbId];
+            mols.forEach((e: string) => {
                 e['in_chains'].forEach((x: string) => {
                     c.push(x)
                 })
             });
             let sorted = Array.from(new Set(c)).sort();
             state.chainsField = '["' + sorted.join('","') + '"]';
-        });
-        return state;
+            return state;
+        }
     }
 
     public render() {

@@ -113,22 +113,18 @@
     height: 25%;
 }
 
-.panel-heading .accordion-toggle:after {
-    /* symbol for "opening" panels */
-    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
-    content: "\e114";    /* adjust as needed, taken from bootstrap.css */
-    float: right;        /* adjust as needed */
-    color: grey;         /* adjust as needed */
+.text-field {
+    background: #f5f5f5;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-align: justify;
+    width: 90%;
+    margin-top: 5px;
 }
 
-.text-field{
-     background: #f5f5f5;
-     padding: 10px 15px;
-     border-radius: 8px;
-     text-align: justify;
-     width: 90%;
-     margin-top: 5px;
- }
+.text-field-sq > p {
+    margin-bottom: 5px;
+}
 
 .grow {
     transition: height 0.5s;
@@ -190,6 +186,7 @@
     padding: 10px 15px;
     text-align: justify;
     margin-top: 5px;
+    width: 100%;
 }
 
 .video-field {
@@ -230,8 +227,46 @@ h4.panel-title {
 video {
     width: 12.5vw;
     height: 20vh;
+    cursor: zoom-in;
+}
+
+video.modal-video {
+    width: 55vw;
+    height: 63vh;
+    margin: auto;
+    cursor: auto;
 }
 
 form * {
     margin: 5px;
+}
+
+.panel-heading {
+    width: 94%;
+    display: inline-flex;
+    vertical-align: bottom;
+}
+
+.panel-heading.question-mark {
+    width: 6%;
+    height: 100%;
+    align-items: center;
+}
+
+.panel-heading.question-mark h4 {
+    margin-bottom: 0;
+}
+
+.question-s {
+    margin-left: 10px
+}
+
+.question-heading {
+    border-left: 1px solid gray;
+    height: 100%;
+    align-items: center;
+}
+
+p.answer {
+    margin-bottom: 0;
 }
