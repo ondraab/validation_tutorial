@@ -2,7 +2,10 @@ import * as React from "react";
 import {Parallax} from 'react-spring/renderprops-addons';
 import {NavLink} from "react-router-dom";
 import * as $ from "jquery";
-import DynComponent from "./DynComponent";
+// import DynComponent from "./DynComponent";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Carousel from "nuka-carousel"
+import Litemol from "./Litemol";
 // @ts-ignore
 angular.module('myModule', ['pdb.litemol']);
 
@@ -14,6 +17,8 @@ interface LitemolStates {
     pdbId: string;
     dynComponent: any;
     isSubmited: boolean;
+    currentSlide: number;
+    firstIpsum: JSX.Element;
 }
 
 class Interactive extends React.Component<{}, LitemolStates> {
@@ -43,7 +48,7 @@ class Interactive extends React.Component<{}, LitemolStates> {
 
     constructor(props : {}) {
         super(props);
-        this.state = {pdbId: '', isSubmited: false, dynComponent: <div/>};
+        this.state = {pdbId: '', isSubmited: false, dynComponent: <div/>, currentSlide: 0, firstIpsum: <div/>};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.activeTab = 0;
@@ -56,10 +61,34 @@ class Interactive extends React.Component<{}, LitemolStates> {
     private handleSubmit(event: any) {
         event.preventDefault();
         if (this.state.pdbId.length == 4) {
-            console.log(this.state.pdbId)
-            this.setState({isSubmited: true, dynComponent: <DynComponent pdbId={this.state.pdbId} chains={"A"} models={"1"}/>})
+            this.setState({
+                isSubmited: true,
+                dynComponent: <Litemol pdbId={this.state.pdbId}/>,
+                firstIpsum: <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer vulputate sem a nibh rutrum consequat. Nam sed tellus id magna elementum tincidunt. Proin mattis lacinia justo. Nulla quis diam. Duis condimentum augue id magna semper rutrum. Aliquam erat volutpat. Vestibulum erat nulla, ullamcorper nec, rutrum non, nonummy ac, erat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Morbi imperdiet, mauris ac auctor dictum, nisl ligula egestas nulla, </p>})
         }
     }
+
+    // private nextSlide() {
+    //     this.setState(state => ({
+    //         currentSlide: state.currentSlide + 1
+    //     }));
+    // }
+    //
+    // private prevSlide() {
+    //     this.setState(state => ({
+    //         currentSlide: state.currentSlide - 1
+    //     }));
+    // }
+    //
+    // private updateCurrentSlide(index: number) {
+    //     const { currentSlide } = this.state;
+    //
+    //     if (currentSlide !== index) {
+    //         this.setState({
+    //             currentSlide: index
+    //         });
+    //     }
+    // }
 
     // private addClass(scrollTo: number) {
     //     let active = document.getElementsByClassName('page-nav')[0].childNodes[scrollTo];
@@ -126,6 +155,7 @@ class Interactive extends React.Component<{}, LitemolStates> {
 
 
     public render() {
+        // @ts-ignore
         return <div className="App">
             <div className="main-title masthead" style={{height: '54px'}}>
                 <h1 className="white-color">Validation tutorial</h1>
@@ -147,19 +177,85 @@ class Interactive extends React.Component<{}, LitemolStates> {
                     </NavLink>
                 </div>
             </div>
-            <div id={"main-content"} onScroll={this.listenScrollEvent.bind(this)}>
-                <div>
-                    <form onSubmit={this.handleSubmit.bind(this)} className={"form-inline mb-2"}>
-                        <div className="form-group" style={{marginTop: '60px'}}>
-                            <label>PDBid</label>
-                            <input type={"text"} name={"pdb-id"} value={this.state.pdbId} onChange={this.handleChange}/>
-                            <input type="submit" value="Submit" className={"btn btn-primary mb-2"}/>
+                <div id={"main-content"} onScroll={this.listenScrollEvent.bind(this)}>*/}
+                    <Carousel style={{position: 'absolute', top: '54px'}}>
+                        <div style={{margin: '10px'}}>
+                            <div style={{display: 'inline-block', width: '40%'}}>
+                                <h2>Interactive validation</h2>
+                                    <p>In this section you can find interactive validation tutorial showing you, how you may use available tools.</p>
+                                    <div>
+                                        <h3>Example I.</h3>
+                                        <div>
+                                            <p>
+                                                1CBS is a crystal structure of cellular retinoic-acid-binding proteins I and II in complex with all-trans-retionic acid and a synthetic retionid. You can find the structure <a href={"http://www.ebi.ac.uk/pdbe/entry/pdb/1cbs"}><b>here</b></a>.
+                                            </p>
+                                            <p>
+                                                First thing you can do is inspect the molecule in the litemol. Put the PDBid '1cbs' in the following input and the litemol component will load.
+                                            </p>
+                                            <div>
+                                            <form onSubmit={this.handleSubmit.bind(this)} className={"form-inline mb-2"}>
+                                                <div className="form-group">
+                                                    <label>PDBid</label>
+                                                    <input type={"text"} name={"pdb-id"} value={this.state.pdbId} onChange={this.handleChange}/>
+                                                    <input type="submit" value="Submit" className={"btn btn-primary mb-2"}/>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                        <div>
+                                            {this.state.firstIpsum}
+                                        </div>
+                                </div>
+                            </div>
+                            <div style={{display: 'inline-block', width: '58%', position: 'relative', float: 'right', height: '400px'}}>
+                                {this.state.dynComponent}
+                            </div>
                         </div>
-                    </form>
-                </div>
-                <div id={"interactive-part"}>
-                    {this.state.dynComponent}
-                </div>
+                        <div>
+                            <p>fsasf</p>
+                        </div>
+                        <div>
+                            <p>fsasf</p>
+                        </div>
+                        <div>
+                            <p>fsasf</p>
+                        </div>
+                        <div>
+                            <p>fsasf</p>
+                        </div>
+                    </Carousel>
+                {/*<div style={{width: '95%'}}>*/}
+                    {/*<h2>Interactive validation</h2>*/}
+                    {/*<p>In this section you can find interactive validation tutorial showing you, how you may use available tools.</p>*/}
+                    {/*<div>*/}
+                        {/*<h3>Example I.</h3>*/}
+                        {/*<div>*/}
+                            {/*<p>*/}
+                                {/*1CBS is a crystal structure of cellular retinoic-acid-binding proteins I and II in complex with all-trans-retionic acid and a synthetic retionid. You can find the structure <a href={"http://www.ebi.ac.uk/pdbe/entry/pdb/1cbs"}><b>here</b></a>.*/}
+                            {/*</p>*/}
+                            {/*<p>*/}
+                                {/*First thing you can do is inspect the molecule in the litemol. Put the PDBid '1cbs' in the following input and the litemol component will load.*/}
+                            {/*</p>*/}
+                            {/*<div>*/}
+                                {/*<label>PDBid</label>*/}
+                                {/*<input type={"text"} name={"pdb-id"} value={this.state.pdbId} onChange={this.handleChange}/>*/}
+                                {/*<input type="submit" value="Submit" className={"btn btn-primary mb-2"}/>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
+                {/*</div>*/}
+                {/*<div>*/}
+                    {/*<form onSubmit={this.handleSubmit.bind(this)} className={"form-inline mb-2"}>*/}
+                        {/*<div className="form-group" style={{marginTop: '60px'}}>*/}
+                            {/*<label>PDBid</label>*/}
+                            {/*<input type={"text"} name={"pdb-id"} value={this.state.pdbId} onChange={this.handleChange}/>*/}
+                            {/*<input type="submit" value="Submit" className={"btn btn-primary mb-2"}/>*/}
+                        {/*</div>*/}
+                    {/*</form>*/}
+                {/*</div>*/}
+                {/*<div id={"interactive-part"}>*/}
+                    {/*{this.state.dynComponent}*/}
+                {/*</div>*/}
             </div>
         </div>;
     }

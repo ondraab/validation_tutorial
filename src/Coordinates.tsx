@@ -20,6 +20,8 @@ interface ValidationStates {
     showAnswer2: boolean;
     showAnswer3: boolean;
     showAnswer4: boolean;
+    showAnswer5: boolean;
+    showAnswer6: boolean;
     questionStyle: string;
 }
 
@@ -79,6 +81,8 @@ class Coordinates extends React.Component< {}, ValidationStates> {
             showAnswer2: false,
             showAnswer3: false,
             showAnswer4: false,
+            showAnswer5: false,
+            showAnswer6: false,
             questionStyle: '100%'};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -87,6 +91,10 @@ class Coordinates extends React.Component< {}, ValidationStates> {
         this.handleShowAnswer3 = this.handleShowAnswer3.bind(this);
         this.handleShowAnswer4 = this.handleShowAnswer4.bind(this);
         this.handleHideAnswer4 = this.handleHideAnswer4.bind(this);
+        this.handleHideAnswer5 = this.handleHideAnswer5.bind(this);
+        this.handleShowAnswer5 = this.handleShowAnswer5.bind(this);
+        this.handleHideAnswer6 = this.handleHideAnswer6.bind(this);
+        this.handleShowAnswer6 = this.handleShowAnswer6.bind(this);
         // this.closeModals = this.closeModals.bind(this);
         this._pdbId = '1cbs';
         this._activeTab = 0;
@@ -249,6 +257,30 @@ class Coordinates extends React.Component< {}, ValidationStates> {
         })
     }
 
+    private handleShowAnswer5() {
+        this.setState({
+            showAnswer5: true
+        })
+    }
+
+    private handleHideAnswer5() {
+        this.setState({
+            showAnswer5: false
+        })
+    }
+
+    private handleShowAnswer6() {
+        this.setState({
+            showAnswer6: true
+        })
+    }
+
+    private handleHideAnswer6() {
+        this.setState({
+            showAnswer6: false
+        })
+    }
+
     public render() {
         const url = (name: any, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
 
@@ -286,7 +318,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                 </a>
                 <a className={"grow"} style={{position: 'absolute', top: '38vh', right: 0}}
                    onClick={() => this.addClass(2)}>
-                    <h2 style={{color: 'white'}}>Review II</h2>
+                    <h2 style={{color: 'white'}}>Dihedral angles</h2>
                 </a>
                 <a className={"grow"} style={{position: 'absolute', top: '57vh', right: 0}}
                    onClick={() => this.addClass(3)}>
@@ -488,9 +520,9 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                             <div className="panel-heading question-heading">
                                                 <h4 className="panel-title">
                                                     <div className={"question-s"}>
-                                                        <a>
+                                                        <p>
                                                             Do you expect the C&beta; atom of a tyrosine residue to lie in the same plane as the aromatic ring?
-                                                        </a>
+                                                        </p>
                                                         <a onClick={this.handleShowAnswer3}>
                                                             <FontAwesomeIcon icon={this.state.showAnswer3 ? faAngleRight : faAngleDown} size={"2x"} style={{float: 'right', cursor: 'pointer'}}/>
                                                         </a>
@@ -518,9 +550,9 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                             <div className="panel-heading question-heading">
                                                 <h4 className="panel-title">
                                                     <div className={"question-s"}>
-                                                        <a>
+                                                        <p>
                                                             Using your favourite graphics program or web-based 3D viewer, have a look at residue TRP D67 in PDB entry 7GPB. Does anything strike you as odd?
-                                                        </a>
+                                                        </p>
                                                         <a onClick={this.handleShowAnswer4}>
                                                             <FontAwesomeIcon icon={this.state.showAnswer4 ? faAngleRight : faAngleDown} size={"2x"} style={{float: 'right', cursor: 'pointer'}}/>
                                                         </a>
@@ -532,8 +564,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                                 onAfterOpen={this.handleShowAnswer4}
                                                 onRequestClose={this.handleHideAnswer4}
                                                 style={{content: {top: '50%', left: '50%', right: 'auto', bottom: 'auto', transform: 'translate(-50%, -50%)'}}}
-                                                contentLabel="Example Modal"
-                                            >
+                                                contentLabel="Example Modal">
                                                 <div>
                                                    <img src={'/src/videos/7gpb_63d_2.gif'} style={{width: '676px', heigh: '400px'}}/>
                                                 </div>
@@ -591,7 +622,8 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                        // @ts-ignore */}
                     <ParallaxLayer offset={2} speed={0.1} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{width: '95%'}}>
-                            <div className={"text-field-sq"} style={{width: '55%', top: '80px'}}>
+                            <h2>Dihedral angles</h2>
+                            <div className={"text-field-sq"} style={{width: '58%', top: '80px'}}>
                                 <p>
                                     The &phi; and &psi; torsion angles, on the other hand, are much less restricted, but it has been known for a long time that, due to steric hindrance, there are several clearly preferred combinations of &phi;, &psi; values (a scatter plot of &phi;, &psi; values for all residues in a protein model is called a Ramachandran plot). This is true even for proline and glycine residues, although their distributions are atypical. Also, the overwhelming majority of residues that are not in regular secondary structure elements are found to have favourable &phi;, &psi; torsion-angle combinations. For these reasons, the Ramachandran plot is an extremely simple, useful and sensitive indicator of model quality. Residues that have unusual &phi;, &psi; torsion-angle combinations should be scrutinised by the crystallographer. If they have convincing electron density, there is probably a good structural or functional reason for the protein to tolerate the energetic strain that is associated with the unusual conformation. The quality of a model's Ramachandran plot is most convincingly illustrated with a figure. Alternatively, the fraction of residues in certain predefined areas of the plot (e.g., core regions) can be quoted, but in that case it is important to indicate which definition of such areas was used.
                                 </p>
@@ -602,45 +634,64 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                     Validation potential of &phi;, &psi; combinations: excellent. A quick look at the Ramachandran plot will tell you a lot about the quality of a model. Good models have most residues tightly clustered in the most-favoured regions with relatively few outliers. Good, but low-resolution models may have less pronounced clustering, but will still have few outliers. Models that show poor clustering and many outliers are bound to be poor.
                                 </i></p>
                             </div>
-                            <div style={{width: '55%'}}>
+                            <div style={{width: '58%'}}>
                                 <div className="text-field-sq">
-                                    <div className="panel-heading" style={{width: '8%', display: 'table-cell', verticalAlign: 'middle', borderRight: '1px solid gray'}}>
-                                        <h4 data-tip="hello world" className="panel-title" style={{fontSize:'30px'}}>?</h4>
+                                    <div className={"expandable-question"} style={{height: this.state.showAnswer5 ? '50%' : '100%'}}>
+                                        <div className="panel-heading question-mark">
+                                            <h4 className="panel-title" style={{fontSize:'30px'}}>?</h4>
+                                        </div>
+                                        <div className="panel-heading question-heading">
+                                            <h4 className="panel-title">
+                                                <div className={"question-s"}>
+                                                    <p>
+                                                        The three most-densely populated areas in the Ramachandran plot are called the alpha, the beta, and the left-handed helical region. Where are these three regions located approximately in the Ramachandran plot?
+                                                    </p>
+                                                    <a onClick={this.handleShowAnswer5}>
+                                                        <FontAwesomeIcon icon={this.state.showAnswer5 ? faAngleRight : faAngleDown} size={"2x"} style={{float: 'right', cursor: 'pointer'}} className="hint--bottom" aria-label={"Show answer"}/>
+                                                    </a>
+                                                </div>
+                                            </h4>
+                                        </div>
                                     </div>
-                                    <div className="panel-heading" style={{width: '92%', display: 'table-cell', verticalAlign: 'bottom'}}>
-                                        <h4 className="panel-title">
-                                            <a className="accordion-toggle" data-toggle="collapse"
-                                               data-parent="#accordion">
-                                                The three most-densely populated areas in the Ramachandran plot are called the alpha, the beta, and the left-handed helical region. Where are these three regions located approximately in the Ramachandran plot?
-                                            </a>
-                                        </h4>
-                                    </div>
+                                    <Modal
+                                        isOpen={this.state.showAnswer5}
+                                        onAfterOpen={this.handleShowAnswer5}
+                                        onRequestClose={this.handleHideAnswer5}
+                                        style={{content: {top: '50%', left: '50%', right: 'auto', bottom: 'auto', transform: 'translate(-50%, -50%)'}}}
+                                        contentLabel="Example Modal">
+                                        <div>
+                                            <img src={'/src/videos/rama.png'} style={{width: '500px'}}/>
+                                        </div>
+                                    </Modal>
                                 </div>
-                                {/*<div className="text-field-sq">*/}
-                                    {/*<div className="panel-heading" style={{width: '8%', display: 'table-cell', borderRight: '1px solid gray'}}>*/}
-                                        {/*<h4 className="panel-title" style={{fontSize:'30px'}}>?</h4>*/}
-                                    {/*</div>*/}
-                                    {/*<div className="panel-heading" style={{width: '92%', display: 'table-cell', verticalAlign: 'bottom'}}>*/}
-                                        {/*<h4 className="panel-title">*/}
-                                            {/*<a className="accordion-toggle" data-toggle="collapse"*/}
-                                               {/*data-parent="#accordion">*/}
-                                                {/*Why do glycine residues have an atypical distribution? And proline residues?*/}
-                                            {/*</a>*/}
-                                        {/*</h4>*/}
-                                    {/*</div>*/}
-                                {/*</div>*/}
                                 <div className="text-field-sq">
-                                    <div className="panel-heading" style={{width: '8%', display: 'table-cell', borderRight: '1px solid gray'}}>
-                                        <h4 className="panel-title" style={{fontSize:'30px'}}>?</h4>
+                                    <div className={"expandable-question"} style={{height: this.state.showAnswer6 ? '50%' : '100%'}}>
+                                        <div className="panel-heading question-mark">
+                                            <h4 className="panel-title" style={{fontSize:'30px'}}>?</h4>
+                                        </div>
+                                        <div className="panel-heading question-heading">
+                                            <h4 className="panel-title">
+                                                <div className={"question-s"}>
+                                                    <p>
+                                                        Which regions would you expect to be most favourable in the Ramachandran plot of a protein that consists entirely of D-amino acids?
+                                                    </p>
+                                                    <a onClick={this.handleShowAnswer6}>
+                                                        <FontAwesomeIcon icon={this.state.showAnswer6 ? faAngleRight : faAngleDown} size={"2x"} style={{float: 'right', cursor: 'pointer'}} className="hint--bottom" aria-label={"Show answer"}/>
+                                                    </a>
+                                                </div>
+                                            </h4>
+                                        </div>
                                     </div>
-                                    <div className="panel-heading" style={{width: '92%', display: 'table-cell', verticalAlign: 'bottom'}}>
-                                        <h4 className="panel-title">
-                                            <a className="accordion-toggle" data-toggle="collapse"
-                                               data-parent="#accordion">
-                                                Which regions would you expect to be most favourable in the Ramachandran plot of a protein that consists entirely of D-amino acids?
-                                            </a>
-                                        </h4>
-                                    </div>
+                                    <Modal
+                                        isOpen={this.state.showAnswer6}
+                                        onAfterOpen={this.handleShowAnswer6}
+                                        onRequestClose={this.handleHideAnswer6}
+                                        style={{content: {top: '50%', left: '50%', right: 'auto', bottom: 'auto', transform: 'translate(-50%, -50%)'}}}
+                                        contentLabel="Example Modal">
+                                        <div>
+                                            <img src={'/src/videos/d-rama.png'} style={{width: '500px'}}/>
+                                        </div>
+                                    </Modal>
                                 </div>
                             </div>
                             <div style={{width: '39.5%', display: 'inline-block', position: 'absolute', right: '0', top: '80px'}} id={"rama-view-container"}>
@@ -656,6 +707,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                        // @ts-ignore */}
                     <ParallaxLayer offset={3} speed={-0} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{width: '95%'}}>
+                            <h2>Outliers</h2>
                             <div style={{display: 'flex'}}>
                                 <div className="text-field-sq" style={{display: 'flex', width: '60%'}}>
                                         <div style={{display: 'block'}}>

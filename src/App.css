@@ -254,11 +254,19 @@ form * {
 }
 
 .panel-heading.question-mark h4 {
-    margin-bottom: 0;
+    margin-left: 10%;
 }
 
 .question-s {
     margin-left: 10px
+}
+
+.question-s p{
+    margin-bottom: 0;
+}
+
+.question-s > path{
+    cursor: pointer;
 }
 
 .question-heading {

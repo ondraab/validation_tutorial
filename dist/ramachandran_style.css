@@ -92,16 +92,21 @@ div.outliers-container {
   border: 1px solid #7c827e;
   position: relative;
   background: white;
-  top: -30px;
 }
 .rama-set-cl {
   border-top: 1px solid #7c827e;
   background-color: #DCECD7;
 }
+#rama-settings {
+  font-size: smaller;
+}
 .rama-sum-table {
   width: 100%;
   font-style: italic;
   font-size: 13px;
+}
+.rama-sum-table-headline th {
+  display: table-cell;
 }
 #rama-sum {
   margin-top: 10px;
