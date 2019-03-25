@@ -300,11 +300,24 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                             Coordinates
                         </h3>
                     </NavLink>
-                    <NavLink to="/interactive">
-                        <h3>
+                    <div className={"expandable-div"}>
+                        <h3 >
                             Interactive
                         </h3>
-                    </NavLink>
+                        <div>
+                            <NavLink to={"/interactive"}>
+                                Example I
+                            </NavLink>
+                            <br/>
+                            <NavLink to={"/interactive"}>
+                                Example II
+                            </NavLink>
+                            <br/>
+                            <NavLink to={"/interactive"}>
+                                Example II
+                            </NavLink>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="page-nav long-5" style={{width: '10px', height: '95%', top: '54px', position: 'fixed', right: '17px', zIndex: 1}}>

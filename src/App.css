@@ -278,3 +278,45 @@ form * {
 p.answer {
     margin-bottom: 0;
 }
+
+.slider-control-centerright, .slider-control-centerleft {
+    display: none;
+}
+
+.slider-control-bottomcenter {
+    position: fixed !important;
+    z-index: 10;
+    top: 7px;
+}
+
+.expandable-div:hover > div {
+    display: block;
+    -webkit-animation-duration: .2s;
+    float: left;
+}
+
+.expandable-div {
+    width: 33%;
+}
+
+.expandable-div > h3{
+    margin-bottom: 0;
+    padding-bottom: 0.5rem;
+}
+
+.expandable-div > div {
+    display: none;
+    float: left;
+    width: 100%;
+}
+
+.expandable-div > div > a{
+    display: block;
+    width: 100%;
+    background-color: rgb(109,171,73);
+    padding: 5px;
+}
+
+.expandable-div > div:hover {
+    display: block;
+}

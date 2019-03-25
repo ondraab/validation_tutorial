@@ -19,6 +19,7 @@ interface LitemolStates {
     isSubmited: boolean;
     currentSlide: number;
     firstIpsum: JSX.Element;
+    correctInput: boolean;
 }
 
 class Interactive extends React.Component<{}, LitemolStates> {
@@ -48,7 +49,13 @@ class Interactive extends React.Component<{}, LitemolStates> {
 
     constructor(props : {}) {
         super(props);
-        this.state = {pdbId: '', isSubmited: false, dynComponent: <div/>, currentSlide: 0, firstIpsum: <div/>};
+        this.state = {
+            pdbId: '',
+            isSubmited: false,
+            dynComponent: <div/>,
+            currentSlide: 0,
+            firstIpsum: <div/>,
+            correctInput: true};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.activeTab = 0;
@@ -61,10 +68,20 @@ class Interactive extends React.Component<{}, LitemolStates> {
     private handleSubmit(event: any) {
         event.preventDefault();
         if (this.state.pdbId.length == 4) {
-            this.setState({
-                isSubmited: true,
-                dynComponent: <Litemol pdbId={this.state.pdbId}/>,
-                firstIpsum: <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer vulputate sem a nibh rutrum consequat. Nam sed tellus id magna elementum tincidunt. Proin mattis lacinia justo. Nulla quis diam. Duis condimentum augue id magna semper rutrum. Aliquam erat volutpat. Vestibulum erat nulla, ullamcorper nec, rutrum non, nonummy ac, erat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Morbi imperdiet, mauris ac auctor dictum, nisl ligula egestas nulla, </p>})
+            if (this.state.pdbId == '1cbs') {
+                this.setState({
+                    isSubmited: true,
+                    dynComponent: <Litemol pdbId={this.state.pdbId}/>,
+                    correctInput: true,
+                    firstIpsum: <p>
+                        On the right side you can see Litemol viewer with the molecule 1CBS. You can play around and try to inspect the molecule little bit. After that, you can move to next page.
+                    </p>})
+            } else {
+                this.setState({
+                    correctInput: false,
+                    firstIpsum: <p>Bad PDBid. Please put the right one. </p>
+                })
+            }
         }
     }
 
@@ -170,11 +187,24 @@ class Interactive extends React.Component<{}, LitemolStates> {
                             Coordinates
                         </h3>
                     </NavLink>
-                    <NavLink to="/interactive" activeClassName="nav-active">
-                        <h3>
+                    <div className={"expandable-div"} style={{backgroundColor: '#4E8542'}}>
+                        <h3 >
                             Interactive
                         </h3>
-                    </NavLink>
+                        <div>
+                           <NavLink to={"/interactive"}>
+                                Example I
+                           </NavLink>
+                            <br/>
+                            <NavLink to={"/interactive"}>
+                                Example II
+                            </NavLink>
+                            <br/>
+                            <NavLink to={"/interactive"}>
+                                Example II
+                            </NavLink>
+                        </div>
+                    </div>
                 </div>
             </div>
                 <div id={"main-content"} onScroll={this.listenScrollEvent.bind(this)}>*/}
@@ -182,7 +212,7 @@ class Interactive extends React.Component<{}, LitemolStates> {
                         <div style={{margin: '10px'}}>
                             <div style={{display: 'inline-block', width: '40%'}}>
                                 <h2>Interactive validation</h2>
-                                    <p>In this section you can find interactive validation tutorial showing you, how you may use available tools.</p>
+                                    <p>In this section you can find interactive validation tutorial showing you, how you may use available tools. For navigation in this interactive tutorial you can use dots in the green upper line.</p>
                                     <div>
                                         <h3>Example I.</h3>
                                         <div>
@@ -197,7 +227,7 @@ class Interactive extends React.Component<{}, LitemolStates> {
                                                 <div className="form-group">
                                                     <label>PDBid</label>
                                                     <input type={"text"} name={"pdb-id"} value={this.state.pdbId} onChange={this.handleChange}/>
-                                                    <input type="submit" value="Submit" className={"btn btn-primary mb-2"}/>
+                                                    <input type="submit" value="Submit" className={`btn ${this.state.correctInput ? "btn-primary" : "btn-danger"} mb-2`}/>
                                                 </div>
                                             </form>
                                         </div>
@@ -211,11 +241,44 @@ class Interactive extends React.Component<{}, LitemolStates> {
                                 {this.state.dynComponent}
                             </div>
                         </div>
-                        <div>
-                            <p>fsasf</p>
+                        <div style={{margin: '10px', display: 'flex'}}>
+                            <div style={{width: '50%', display: 'inline-block'}}>
+                                <p>
+                                    Very useful validation tool with lots of imformation you can find either in validation report and on PDBe entry page.
+                                </p>
+                                    <img src={"src/videos/1cbs_validation_r.png"} width={"450px"} style={{margin: '10px 0 10px 0'}}/>
+                                <p>
+                                    Every molecule in PDB has it's own validation report. Typical questions that you can often answer after a cursory look at such a report include:
+                                </p>
+                                <ul>
+                                    <li>What is your impression of the quality of this entry?</li>
+                                    <li>How does it compare to other entries in the PDB and to other crystal structures at similar resolution?</li>
+                                    <li>Are there any residues with a poor fit to the density?</li>
+                                    <li>Are there any consecutive stretches of residues with many outliers?</li>
+                                    <li>Is the geometry of the ligand in order?</li>
+                                    <li>Does it appear to fit the density well?</li>
+                                </ul>
+                                <p style={{marginTop: '10px'}}>
+                                    Try to find answers to all these questions in attached valiadation report.
+                                </p>
+                            </div>
+                            <div style={{width: '50%', display: 'inline-block'}}>
+                                <embed src={"src/videos/1cbs_full_validation.pdf"} width="100%" height="850px" />
+                            </div>
                         </div>
-                        <div>
-                            <p>fsasf</p>
+                        <div style={{margin: '10px', display: 'flex'}}>
+                            <div style={{width: '50%', display: 'inline-block'}}>
+                                <p>
+                                    An overall quality look can you give also a Ramachandran plot.
+                                </p>
+                            </div>
+                            <div style={{width: '50%', display: 'inline-block'}}>
+                                <div style={{position: 'absolute', top: '40px'}}>
+                                    {/*
+                                    // @ts-ignore */}
+                                    <ramachandran-component pdb-ids='["1cbs"]' chains-to-show='["A"]' models-to-show='["1"]' width="550"/>
+                                </div>
+                            </div>
                         </div>
                         <div>
                             <p>fsasf</p>
