@@ -174,9 +174,11 @@ class App extends React.Component< {}, ValidationStates> {
                         </h3>
                     </NavLink>
                     <div className={"expandable-div"}>
-                        <h3 >
-                            Interactive
-                        </h3>
+                        <NavLink to="/interactive">
+                            <h3>
+                                Interactive
+                            </h3>
+                        </NavLink>
                         <div>
                             <NavLink to={"/interactive"}>
                                 Example I
@@ -294,7 +296,7 @@ class App extends React.Component< {}, ValidationStates> {
                                             <li><a href={" http://www.ruppweb.org/Xray/101index.html"}>An introduction to protein crystallography</a></li>
                                             <li><a href={"https://wwpdb.org/validation/validation-reports"}>List of wwPDB documents and resources related to validation and validation reports</a></li>
                                             <li><a href={"https://wwpdb.org/task/validation-task-forces"}>Overview of wwPDB Validation Task Forces (VTFs) and their published recommendations</a></li>
-                                            <li>The websites of the wwPDB partners, <a href={"http://pdbe.org"}>PDBe</a>, <a href={"http://pdbj.org"}>PDBj</a> and <a href={"https://rcsb.org"}>RCSB PDB</a></li>
+                                            <li>The websites of the wwPDB partners, <a href={"http://pdbe.org"}><b>PDBe</b></a>, <a href={"http://pdbj.org"}><b>PDBj</b></a> and <a href={"https://rcsb.org"}><b>RCSB PDB</b></a></li>
                                             <li><a href={"http://scripts.iucr.org/cgi-bin/paper?S0907444999016364"}>An extensive review of validation in protein crystallography</a></li>
                                         </ul>
                                     </div>

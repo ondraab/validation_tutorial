@@ -189,10 +189,12 @@ class Interactive extends React.Component<{}, LitemolStates> {
                             Coordinates
                         </h3>
                     </NavLink>
-                    <div className={"expandable-div"} style={{backgroundColor: '#4E8542'}}>
-                        <h3 >
-                            Interactive
-                        </h3>
+                    <div className={"expandable-div"}>
+                        <NavLink to="/interactive" style={{backgroundColor: '#4E8542'}}>
+                            <h3>
+                                Interactive
+                            </h3>
+                        </NavLink>
                         <div>
                            <NavLink to={"/interactive"}>
                                 Example I

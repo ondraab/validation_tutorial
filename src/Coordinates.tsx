@@ -301,9 +301,11 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                         </h3>
                     </NavLink>
                     <div className={"expandable-div"}>
-                        <h3 >
-                            Interactive
-                        </h3>
+                        <NavLink to="/interactive">
+                            <h3>
+                                Interactive
+                            </h3>
+                        </NavLink>
                         <div>
                             <NavLink to={"/interactive"}>
                                 Example I
@@ -407,7 +409,7 @@ class Coordinates extends React.Component< {}, ValidationStates> {
                                             <li>If you have forgotten what dihedral or torsion angles are, look <b><a href={"http://en.wikipedia.org/wiki/Dihedral_angle"}>here</a></b></li>
                                             <li>If you have forgotten what eclipsed and staggered conformations are, look <b><a href={"http://en.wikipedia.org/wiki/Rotamer"}>here</a></b></li>
                                             <li>If you have forgotten what chiral carbon atoms are, look <b><a href={"https://en.wikipedia.org/wiki/Asymmetric_carbon"}>here</a></b></li>
-                                            <li>If you have forgotten what &phi; and &psi; are, look <b><a href={"http://employees.csbsju.edu/hjakubowski/classes/ch331/protstructure/phipsi.gif"}>here</a></b> or <b><a href={"http://www.msg.ucsf.edu/local/programs/garlic/commands/phipsi.gif"}>here</a></b></li>
+                                            <li>If you have forgotten what &phi; and &psi; are, look <b><a href={"http://employees.csbsju.edu/hjakubowski/classes/ch331/protstructure/phipsi.gif"}>here</a></b>, <b><a href={"http://www.msg.ucsf.edu/local/programs/garlic/commands/phipsi.gif"}>here</a></b> or <b><a href={"https://proteopedia.org/wiki/index.php/Phi_and_Psi_Angles"}>here</a></b></li>
                                             <li>If you have forgotten what &chi;-1, &chi;-2 etc. are, look <b><a href={"http://dunbrack.fccc.edu/bbdep2010/Images/Chi1Chi2Chi3Chi4.PNG"}>here</a></b> or <b><a href={"http://www.msg.ucsf.edu/local/programs/garlic/commands/chi_angles.gif"}>here</a></b></li>
                                         </ul>
                                     </div>
