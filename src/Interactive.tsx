@@ -74,7 +74,9 @@ class Interactive extends React.Component<{}, LitemolStates> {
                     dynComponent: <Litemol pdbId={this.state.pdbId}/>,
                     correctInput: true,
                     firstIpsum: <p>
-                        On the right side you can see Litemol viewer with the molecule 1CBS. You can play around and try to inspect the molecule little bit. After that, you can move to next page.
+                        On the right side you can see Litemol viewer with the molecule <b>1CBS</b>. The viewer allows you to
+                        select resiudes, change representations, change coloring. If you don't know, what to do, there is a help button.
+                        You can play around and try to inspect the molecule little bit. After that, you can move to next page.
                     </p>})
             } else {
                 this.setState({
@@ -196,19 +198,19 @@ class Interactive extends React.Component<{}, LitemolStates> {
                                 Example I
                            </NavLink>
                             <br/>
-                            <NavLink to={"/interactive"}>
+                            <NavLink to={"/interactive2"}>
                                 Example II
                             </NavLink>
                             <br/>
-                            <NavLink to={"/interactive"}>
-                                Example II
+                            <NavLink to={"/interactive3"}>
+                                Example III
                             </NavLink>
                         </div>
                     </div>
                 </div>
             </div>
                 <div id={"main-content"} onScroll={this.listenScrollEvent.bind(this)}>*/}
-                    <Carousel style={{position: 'absolute', top: '54px'}}>
+                    <Carousel style={{position: 'absolute', top: '54px'}} dragging={false}>
                         <div style={{margin: '10px'}}>
                             <div style={{display: 'inline-block', width: '40%'}}>
                                 <h2>Interactive validation</h2>
@@ -242,11 +244,11 @@ class Interactive extends React.Component<{}, LitemolStates> {
                             </div>
                         </div>
                         <div style={{margin: '10px', display: 'flex'}}>
-                            <div style={{width: '50%', display: 'inline-block'}}>
+                            <div style={{width: '49.5%', display: 'inline-block'}}>
                                 <p>
-                                    Very useful validation tool with lots of imformation you can find either in validation report and on PDBe entry page.
+                                    Very useful validation plot which can be found either in validation report and on PDBe entry page is above.
                                 </p>
-                                    <img src={"src/videos/1cbs_validation_r.png"} width={"450px"} style={{margin: '10px 0 10px 0'}}/>
+                                    <img src={"src/videos/1cbs_validation_r.png"} width={"95%"} style={{margin: '10px 0 10px 0'}}/>
                                 <p>
                                     Every molecule in PDB has it's own validation report. Typical questions that you can often answer after a cursory look at such a report include:
                                 </p>
@@ -270,6 +272,15 @@ class Interactive extends React.Component<{}, LitemolStates> {
                             <div style={{width: '50%', display: 'inline-block'}}>
                                 <p>
                                     An overall quality look can you give also a Ramachandran plot.
+                                    As you can read in Coordinates section, Ramachandran plot is a plot of &phi; and &psi;
+                                    angles for each residue in protein.
+                                </p>
+                                <p>
+                                    The Ramachandran plot for 1CBS may be called as pretty.
+                                    There is not any outlier, and almost all dihedral angles are evalueated as preferred.
+                                    You may think, that the glycine residues (triangles) are outside the countours, so
+                                    they are outliers, but glycine has different probabilty countours than other residues.
+                                    You can play around wit the Ramachandran plot and it's settings.
                                 </p>
                             </div>
                             <div style={{width: '50%', display: 'inline-block'}}>
@@ -279,12 +290,6 @@ class Interactive extends React.Component<{}, LitemolStates> {
                                     <ramachandran-component pdb-ids='["1cbs"]' chains-to-show='["A"]' models-to-show='["1"]' width="550"/>
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <p>fsasf</p>
-                        </div>
-                        <div>
-                            <p>fsasf</p>
                         </div>
                     </Carousel>
                 {/*<div style={{width: '95%'}}>*/}

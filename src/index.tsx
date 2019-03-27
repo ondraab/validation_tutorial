@@ -7,6 +7,8 @@ import {BrowserRouter} from "react-router-dom";
 import Coordinates from "./Coordinates";
 import App from "./App";
 import Interactive from "./Interactive";
+import Interactive2 from "./Interactive2";
+import Interactive3 from "./Interactive3";
 
 function run() {
     ReactDOM.render(
@@ -15,6 +17,8 @@ function run() {
                 <Route exact path="/" component={App}/>
                 <Route path="/coordinates" component={Coordinates}/>
                 <Route path="/interactive" component={Interactive}/>
+                <Route path="/interactive2" component={Interactive2}/>
+                <Route path="/interactive3" component={Interactive3}/>
             </div>
         </BrowserRouter>,
     document.getElementById('root') as HTMLElement);

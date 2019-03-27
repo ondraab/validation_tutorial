@@ -1,6 +1,9 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 node_modules/*
-!node_modules/react-spring
+!node_modules/react-spring/renderprops-universal.cjs.d.ts
+!node_modules/react-spring/renderprops-universal.cjs.js
+!node_modules/react-spring/renderprops-universal.d.ts
+!node_modules/react-spring/renderprops-universal.js
 
 # testing
 /coverage
@@ -19,3 +22,16 @@ node_modules/*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/src/videos/7gpb_63d.gif
+/src/videos/7gpb_63d_2.gif
+/src/videos/jh_ampli.mp4
+/src/videos/jh_phase.mp4
+/src/videos/jh_resol.mp4
+/src/videos/phi0.gif
+/src/videos/phifixed.gif
+/src/videos/planes.gif
+/src/videos/psifixed.gif
+/src/videos/psiphi.gif
+/src/videos/rama.png
+/src/videos/d-rama.png
+/src/videos

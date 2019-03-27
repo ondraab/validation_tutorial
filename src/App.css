@@ -297,6 +297,7 @@ p.answer {
 
 .expandable-div {
     width: 33%;
+    text-align: center;
 }
 
 .expandable-div > h3{

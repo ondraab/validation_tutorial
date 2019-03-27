@@ -182,12 +182,12 @@ class App extends React.Component< {}, ValidationStates> {
                                 Example I
                             </NavLink>
                             <br/>
-                            <NavLink to={"/interactive"}>
+                            <NavLink to={"/interactive2"}>
                                 Example II
                             </NavLink>
                             <br/>
-                            <NavLink to={"/interactive"}>
-                                Example II
+                            <NavLink to={"/interactive3"}>
+                                Example III
                             </NavLink>
                         </div>
                     </div>
