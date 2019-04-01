@@ -1,4 +1,4 @@
-import Interactive from "./Interactive";
+import Interactive from "./Example1";
 import * as React from "react";
 
 interface CoopComponentsProps {

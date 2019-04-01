@@ -34,9 +34,9 @@
 }
 
 .navbar {
-  width: 30%;
+  width: 45%;
   margin-bottom: 0;
-  padding: 0;
+  padding: 0 27px 0 0;
   border: white 0;
   display: block;
   top: 0;
@@ -45,7 +45,7 @@
 }
 
 .navbar a {
-  width: 33%;
+  width: 25%;
   display: block;
   float: right;
   text-align: center;
@@ -196,6 +196,7 @@
 
 .page-nav{
     font-family: 'Trocchi', serif;
+    font-size: smaller;
 }
 
 .arrow{
@@ -292,7 +293,7 @@ p.answer {
 .expandable-div:hover > div {
     display: block;
     -webkit-animation-duration: .2s;
-    float: left;
+    float: right;
 }
 
 .expandable-div {
@@ -307,8 +308,9 @@ p.answer {
 
 .expandable-div  div {
     display: none;
-    float: left;
-    width: 35%;
+    float: right;
+    width: 25%;
+    margin: 54px -25% 0 0;
 }
 
 .expandable-div  div > a{
