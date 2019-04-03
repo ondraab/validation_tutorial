@@ -24,6 +24,10 @@
   font-size: 1.5em;
 }
 
+.App h1 {
+    font-size: 2em !important;
+}
+
 .App-intro {
   font-size: large;
 }
@@ -322,4 +326,37 @@ p.answer {
 
 .expandable-div  div:hover {
     display: block;
+}
+
+li > button {
+    font-size: 5vmin !important;
+}
+
+.slider-control-bottomcenter ul {
+    top: -17px !important;
+}
+
+#dynamic-comp-container {
+    height: 1020px;
+    overflow-y: auto;
+}
+
+#dynamic-comp-container ul, li, div.slider, div.slider-frame {
+    height: 1113px !important;
+    overflow: visible !important;
+}
+
+tr.row {
+    width: 100%;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+
+
+
+@media (max-width: 900px) {
+   h3 {
+       font-size: 2vmin;
+   }
 }
