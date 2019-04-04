@@ -5,6 +5,7 @@ import * as $ from "jquery";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 // @ts-ignore
 import DynComponent from "./DynComponent";
+import './DynComponent.css'
 import * as ReactDOM from "react-dom";
 // import Litemol from "./Litemol";
 // @ts-ignore
@@ -28,6 +29,7 @@ class Interactive extends React.Component<{}, LitemolStates> {
 // @ts-ignore
     private parallax: Parallax | null;
     private _activeTab: number;
+
     get pdbId(): string {
         return this._pdbId;
     }
@@ -48,7 +50,7 @@ class Interactive extends React.Component<{}, LitemolStates> {
 
     // private parallax: any;
 
-    constructor(props : {}) {
+    constructor(props: {}) {
         super(props);
         this.state = {
             pdbId: '',
@@ -57,7 +59,8 @@ class Interactive extends React.Component<{}, LitemolStates> {
             currentSlide: 0,
             firstIpsum: <div/>,
             correctInput: true,
-            renderChild: true};
+            renderChild: true
+        };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChildUnmount = this.handleChildUnmount.bind(this);
@@ -71,9 +74,23 @@ class Interactive extends React.Component<{}, LitemolStates> {
     private handleChildUnmount() {
         this.setState({renderChild: false});
     }
+
     private handleSubmit(event: any) {
         let self = this;
         event.preventDefault();
+
+        function clickForValidationColoring() {
+            setTimeout(
+                function () {
+                        var node = document.getElementsByClassName('lm-btn lm-btn-block lm-btn-commit lm-btn-commit-on')[1];
+                        if (node) {
+                            //@ts-ignore
+                            node.click();
+                        } else
+                            clickForValidationColoring();
+                }, 5000);
+        }
+
         if (this.state.pdbId.length == 4) {
             //@ts-ignore
             if (ReactDOM.findDOMNode(document.getElementById('interactive-part'))) {
@@ -97,35 +114,37 @@ class Interactive extends React.Component<{}, LitemolStates> {
                     });
                     return sortedModels;
                 }).then((models: any) => {
-                    fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/molecules/${this.state.pdbId}`)
-                        .then((resp: any) => {
-                            return resp.json()
-                        })
-                        .then((data: any) => {
-                            let c: any[] = [];
-                            data[self.state.pdbId].forEach((e: any) => {
-                                e['in_chains'].forEach((x: any) => {
-                                    c.push(x)
-                                })
-                            });
-                            let sorted = Array.from(new Set(c)).sort();
-                            chains = '["' + sorted.join('","') + '"]';
-                            // $('#interactive-part').append(`<div>
-                            //     <DynComponent pdbId={self.state.pdbId} chains=${chains} models=${models}/>
-                            //     <img src="http://www.ebi.ac.uk/pdbe/entry-files/${self.state.pdbId}_multipercentile_validation.svg"/>
-                            // </div>`);
-                            ReactDOM.render(<div><DynComponent pdbId={self.state.pdbId} chains={chains} models={models}/></div>, document.getElementById('interactive-part'));
-                            self.setState({
-                                isSubmited: true,
-                                correctInput: true,
-                                firstIpsum: <p>
-                                    On the right side you can see Litemol viewer with the molecule <b>1CBS</b>. The viewer allows you to
-                                    select resiudes, change representations, change coloring. If you don't know, what to do, there is a help button.
-                                    You can play around and try to inspect the molecule little bit. After that, you can move to next page.
-                                </p>})
-                        })
+                fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/molecules/${this.state.pdbId}`)
+                    .then((resp: any) => {
+                        return resp.json()
+                    })
+                    .then((data: any) => {
+                        let c: any[] = [];
+                        data[self.state.pdbId].forEach((e: any) => {
+                            e['in_chains'].forEach((x: any) => {
+                                c.push(x)
+                            })
+                        });
+                        let sorted = Array.from(new Set(c)).sort();
+                        chains = '["' + sorted.join('","') + '"]';
+                        ReactDOM.render(<div><DynComponent pdbId={self.state.pdbId} chains={chains} models={models}/>
+                        </div>, document.getElementById('interactive-part'));
+                        self.setState({
+                            isSubmited: true,
+                            correctInput: true,
+                            firstIpsum: <p>
+                                On the right side you can see Litemol viewer with the molecule <b>1CBS</b>. The viewer
+                                allows you to
+                                select resiudes, change representations, change coloring. If you don't know, what to do,
+                                there is a help button.
+                                You can play around and try to inspect the molecule little bit. After that, you can move
+                                to next page.
+                            </p>
+                        });
+                        clickForValidationColoring();
+                    })
             })
-        };
+        }
     }
 
     private listenScrollEvent() {

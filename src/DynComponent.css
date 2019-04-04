@@ -1,0 +1,33 @@
+/*#interactive-part #dynamic-comp-container > ul, li, div.slider, div.slider-frame {*/
+    /*height: 1113px !important;*/
+    /*overflow: visible !important;*/
+/*}*/
+
+div.slider{
+    height: 1113px !important;
+}
+
+.td-column-green {
+    background-color: #00B600;
+}
+
+.td-column-yellow {
+    background-color: #FFFF4B;
+}
+
+.td-column-orange {
+    background-color: #FF7900;
+}
+
+.td-column-red {
+    background-color: #FF0000;
+}
+
+/*@keyframes EXPAND {*/
+    /*0% { height: 0; }*/
+    /*100% { height: 150px; }*/
+/*}*/
+
+/*.react-bs-container-body tr:nth-child(2n+2):not([hidden]) td div {*/
+    /*animation: EXPAND 0.5s;*/
+/*}*/
