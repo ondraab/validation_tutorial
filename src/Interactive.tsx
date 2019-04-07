@@ -97,6 +97,7 @@ class Interactive extends React.Component<{}, LitemolStates> {
                 //@ts-ignore
                 ReactDOM.unmountComponentAtNode(document.getElementById('interactive-part'));
             }
+            //@ts-ignore
             let chains: string;
             fetch(`https://www.ebi.ac.uk/pdbe/api/validation/rama_sidechain_listing/entry/${self.state.pdbId}`)
                 .then((resp: any) => {
@@ -127,7 +128,7 @@ class Interactive extends React.Component<{}, LitemolStates> {
                         });
                         let sorted = Array.from(new Set(c)).sort();
                         chains = '["' + sorted.join('","') + '"]';
-                        ReactDOM.render(<div><DynComponent pdbId={self.state.pdbId} chains={chains} models={models}/>
+                        ReactDOM.render(<div><DynComponent pdbId={self.state.pdbId} chains={sorted} models={models}/>
                         </div>, document.getElementById('interactive-part'));
                         self.setState({
                             isSubmited: true,

@@ -330,6 +330,7 @@ p.answer {
 
 li > button {
     font-size: 5vmin !important;
+    padding: 0.5vmin !important;
 }
 
 .slider-control-bottomcenter ul {

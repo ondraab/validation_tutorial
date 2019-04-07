@@ -542,6 +542,14 @@ class Introduction extends React.Component< {}, ValidationStates> {
                                     </p>
                                 </div>
                             </div>
+                            <h2>References</h2>
+                            <div className={"text-field-sq"}>
+                                <div>
+                                    <p><a href={"http://www.ebi.ac.uk/pdbe/modval1"}><b>Validation tutorial</b></a> created by Gerard Kleywegt.</p>
+                                    <p>Animations of aminoacid chains was taken from Eric Martz's <a href={"https://proteopedia.org/wiki/index.php/Tutorial:Ramachandran_principle_and_phi_psi_angles"}>Ramachandran principle</a> presentation.</p>
+                                    <p>Used tools: <a href={"https://webchemdev.ncbr.muni.cz/LiteMol/Viewer/"}>Litemol</a>, <a href={"http://webchem.ncbr.muni.cz/ValTrendsDB"}>ValTrendsDB</a></p>
+                                </div>
+                            </div>
                         </div>
                     </ParallaxLayer>
                 </Parallax>

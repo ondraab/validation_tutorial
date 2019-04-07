@@ -7,27 +7,52 @@ div.slider{
     height: 1113px !important;
 }
 
-.td-column-green {
+.td-column-green, .green-res {
     background-color: #00B600;
 }
 
-.td-column-yellow {
+.td-column-yellow, .yellow-res{
     background-color: #FFFF4B;
 }
 
-.td-column-orange {
+.td-column-orange, .orange-res {
     background-color: #FF7900;
 }
 
-.td-column-red {
+.td-column-red, .red-res {
     background-color: #FF0000;
 }
 
-/*@keyframes EXPAND {*/
-    /*0% { height: 0; }*/
-    /*100% { height: 150px; }*/
-/*}*/
+.tr-column-white {
+    background-color: #ffffff;
+}
 
-/*.react-bs-container-body tr:nth-child(2n+2):not([hidden]) td div {*/
-    /*animation: EXPAND 0.5s;*/
-/*}*/
+.tr-column-white:hover, .tr-column-gray:hover {
+    background-color: #7c827e;
+}
+
+table.table tbody {
+    cursor: pointer;
+}
+
+.slider-control-bottomcenter {
+    height: 54px !important;
+}
+
+.color-square {
+    border: 1px solid white;
+}
+
+.table th, .table td {
+    padding: 5px !important;
+}
+
+.iframe-parent iframe{
+    width: 100%;
+    height: 367px;
+}
+
+.modal-parent iframe {
+    width: 100%;
+    height: 90vh;
+}
