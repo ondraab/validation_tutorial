@@ -640,6 +640,9 @@ class Introduction extends React.Component< {}, ValidationStates> {
       </div>;
   }
 
+  componentDidMount(): void {
+      Modal.setAppElement('body');
+  }
 }
 
 export default Introduction;

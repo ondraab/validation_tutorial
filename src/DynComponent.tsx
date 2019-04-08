@@ -21,6 +21,7 @@ interface DynComponentStates {
     completnes: JSX.Element;
     modalShown: boolean;
     perResidQuelity: JSX.Element;
+    showStatsModal: boolean;
 }
 interface DynComponentProps {
     pdbId: string;
@@ -52,6 +53,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
         this.handleChainCheckboxChange = this.handleChainCheckboxChange.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.showModal = this.showModal.bind(this);
+        this.openModalStats = this.openModalStats.bind(this);
         let chItems: any[][] = [['1', true]];
         for (let i = 2; i <= props.models.length; i++) {
             chItems.push([i.toString(), false]);
@@ -79,6 +81,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
             checkedChainItems: new Map<any, any>(chainCheckedItems),
             litemolComponent: <Litemol pdbId={props.pdbId}/>,
             modalShown: false,
+            showStatsModal: false,
             ligandDrugbank: <div/>,
             bindingSiteTable: <div/>,
             summaryInfo: <div/>,
@@ -118,10 +121,15 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
     }
 
     public closeModal() {
-        this.setState({modalShown: false})
+        this.setState({modalShown: false, showStatsModal: false})
+    }
+
+    public openModalStats() {
+        this.setState({showStatsModal: true})
     }
 
     componentDidMount(): void {
+        Modal.setAppElement('body');
         let self = this;
         //@ts-ignore
         let commonLigands: any[] = [];
@@ -221,6 +229,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
             sidechainOutl: number = 0,
             // @ts-ignore
             ramaOutl: number = 0,
+            rsrzCount: number = 0,
             outlDict: {} = {},
             outliers: any[] = [];
 
@@ -396,21 +405,48 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                                 let residue = moleculesDict[molecule.entity_id].chainsDict[chain.chain_id].modelsDict[mod.model_id].residuesDict[res.author_residue_number];
                                                 if (typeof residue !== 'undefined')
                                                     residue.outlierTypes = res.outlier_types;
-                                                if (res.outlier_types[0] == 'RSRZ') {
+                                                if (res.outlier_types.indexOf('RSRZ') != -1) {
                                                     rsrz[res.residue_number] = {outliersType: res.outlier_types};
-                                                } else {
-                                                    if (res.outlier_types.indexOf('clashes') != -1)
-                                                        clashes++;
-                                                    if (res.outlier_types.indexOf('ramachandran_outliers') != -1)
-                                                        ramaOutl++;
-                                                    if (res.outlier_types.indexOf('sidechain_outliers') != -1)
-                                                        sidechainOutl++;
-                                                    outlDict[res.residue_number] = {outliersType: res.outlier_types};
+                                                    rsrzCount++;
                                                 }
+                                                if (res.outlier_types.indexOf('clashes') != -1)
+                                                    clashes++;
+                                                if (res.outlier_types.indexOf('ramachandran_outliers') != -1)
+                                                    ramaOutl++;
+                                                if (res.outlier_types.indexOf('sidechain_outliers') != -1)
+                                                    sidechainOutl++;
+                                                outlDict[res.residue_number] = {outliersType: res.outlier_types};
                                             }
                                         }
                                     }
                                 });
+                                let chainLen: {} = {};
+                                let molecs: {} = {};
+                                let total = 0;
+                                fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/polymer_coverage/${self.state.pdbId}`)
+                                    .then((response: any) => response.json())
+                                    .then((data: any) => {
+                                        data[self.state.pdbId].molecules.forEach((molecule: any) => {
+                                            for (const chain of molecule.chains) {
+                                                chainLen[chain.chain_id] = chain.observed[0].end.author_residue_number - chain.observed[0].start.author_residue_number;
+                                                total += chainLen[chain.chain_id];
+                                            }
+                                            molecs[molecule.entity_id] = Object.assign({}, chainLen);
+                                            chainLen = {};
+                                        });
+
+                                        self.setState({
+                                            perResidQuelity: <div>
+                                                <h3>Residues quality statistics:</h3>
+                                                <p><b>Clashes: </b>{clashes} ({(clashes/total * 100).toFixed(0)}%)</p>
+                                                <p><b>Ramachandran outliers: </b>{ramaOutl} ({(ramaOutl/total * 100).toFixed(0)}%)</p>
+                                                <p><b>Sidechain outliers: </b>{sidechainOutl} ({(sidechainOutl/total * 100).toFixed(0)}%)</p>
+                                                <p><b>RSRZ outliers: </b>{rsrzCount} ({(rsrzCount/total * 100).toFixed(0)}%)</p>
+                                                <a onClick={self.openModalStats} href="#" style={{cursor: 'pointer'}}><b>Show statistics per chain</b></a>
+
+                                            </div>
+                                        })
+                                    });
                                 bindingSites.forEach((bindingSite: any) => {
                                     bindingSite['site_residues'].forEach((residue: any) => {
                                         if (residues.length == 0) {
@@ -451,7 +487,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                             <TableHeaderColumn width='10%' isKey dataField={'siteId'} tdStyle={{cursor: 'pointer'}}>Site ID</TableHeaderColumn>
                                             <TableHeaderColumn dataField={'details'} tdStyle={{cursor: 'pointer'}} dataFormat={imageFormatter}>Details</TableHeaderColumn>
                                         </BootstrapTable>
-                                    </div>
+                                    </div>,
                                 })
                             })
                     });
@@ -537,6 +573,21 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                         <div style={{margin: '15px'}}>
                             {this.state.summaryInfo}
                             {this.state.perResidQuelity}
+                            <Modal
+                                isOpen={this.state.showStatsModal}
+                                onAfterOpen={this.openModalStats}
+                                onRequestClose={this.closeModal}
+                                style={{content: {
+                                        top: '50%',
+                                        left: '50%',
+                                        right: 'auto',
+                                        bottom: 'auto',
+                                        transform: 'translate(-50%, -50%)',
+                                        width: '95%'}}}
+                                contentLabel="Example Modal"
+                            >
+                                <div>fsjalk</div>
+                            </Modal>
                         </div>
                     </div>
                     <div>
