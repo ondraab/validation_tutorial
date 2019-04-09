@@ -4,6 +4,8 @@ import Carousel from "nuka-carousel";
 import {BootstrapTable, TableHeaderColumn} from "react-bootstrap-table";
 import '../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 import * as Modal from "react-modal";
+// @ts-ignore
+import ImageZoom from 'react-medium-image-zoom'
 
 interface DynComponentStates {
     pdbIdField: string;
@@ -188,7 +190,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                 elements.push(<div
                     className={`${className} hint--left hint--small color-square`}
                     style={{display: 'inline-block', width: `${width}%`, height: '12px'}}
-                    aria-label={`${residue.authorResNum} ${residue.chain}`}
+                    aria-label={`${residue.chemCompId} ${residue.authorResNum} ${residue.chain}`}
                 />)
             });
             return elements
@@ -206,15 +208,16 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                     </div>);
         }
 
+        function formatResNumName(cell: any, row: any) {
+            return (<div>{row.chemCompId} {row.authorResNum} {row.chain}</div>)
+        }
+
         function expandComponent(row: any) {
             return(
                 <div style={{transition: 'height 0.5s'}}>
                     <BootstrapTable data={row.residues} trClassName={lineColor}>
-                        <TableHeaderColumn isKey dataField={'authorResNum'}>Author residue name</TableHeaderColumn>
-                        <TableHeaderColumn dataField={'chain'}>Chain</TableHeaderColumn>
-                        <TableHeaderColumn dataField={'chemCompId'}>Chem comp ID</TableHeaderColumn>
+                        <TableHeaderColumn isKey dataField={'authorResNum'} dataFormat={formatResNumName} width={'20%'}>Residue identifier</TableHeaderColumn>
                         <TableHeaderColumn dataField={'outliersType'}>Outlier types</TableHeaderColumn>
-                        <TableHeaderColumn dataField={'resNum'}>Residue number</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
             )
@@ -286,7 +289,6 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
         }
 
         function coputeStatsForChains() {
-            console.log(moleculesDict);
             let chainStats: any[] = [];
             let oneChain: {} = {};
             //@ts-ignore
@@ -305,17 +307,39 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
             let tmpElement: any[] = [];
             let result: any[] = [];
             let onCh: any[] = [];
+            let modelStats: {
+                rsrz:                 number,
+                sidechainOutliers:    number,
+                ramachandranOutliers: number,
+                bondLengths:          number,
+                clashes:              number} = {rsrz: 0,
+                                                 sidechainOutliers: 0,
+                                                 ramachandranOutliers: 0,
+                                                 bondLengths: 0, clashes: 0};
             chainStats.forEach((chain: any) => {
+                onCh.push(<h5>Chain ID: {chain.chainId}</h5>);
                 // @ts-ignore
                 Object.entries(chain).forEach((ch: any) => {
                     if (typeof ch[1] == "object") {
-                        onCh.push(<h5>Chain ID: {chain.chainId}</h5>);
                         // @ts-ignore
                         Object.entries(ch[1]).forEach((resid: any) => {
                             let className = '';
+                            let rsrz: boolean = false;
                             if (typeof resid[1].outlierTypes == 'undefined') {
                                 className = 'aa-green';
                             } else {
+                                if (resid[1].outlierTypes.includes('RSRZ')) {
+                                    modelStats.rsrz++;
+                                    rsrz = true;
+                                }
+                                if (resid[1].outlierTypes.includes('ramachandran_outliers'))
+                                    modelStats.ramachandranOutliers++;
+                                if (resid[1].outlierTypes.includes('clashes'))
+                                    modelStats.clashes++;
+                                if (resid[1].outlierTypes.includes('sidechain_outliers'))
+                                    modelStats.sidechainOutliers++;
+                                if (resid[1].outlierTypes.includes('bond_lengths'))
+                                    modelStats.bondLengths++;
                                 switch (resid[1].outlierTypes.length) {
                                     case 1:
                                         className = 'aa-yellow';
@@ -327,23 +351,35 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                         className = 'aa-red';
                                 }
                             }
+                            if (rsrz) {
+                                className = `${className}-rsrz`
+                            }
                             tmpElement.push(
                                 <div
-                                    style={{display: 'inline-block'}}
-                                    className={`hint--right aa-rotate-div ${className}`}
-                                    aria-label={`${resid[1].residueName} ${resid[1].authorResNum} ${typeof resid[1].outlierTypes != 'undefined' ? resid[1].outlierTypes : ''}`}
-                                >
-                                    {translateResName(resid[1].residueName)}{resid[1].authorResNum}
-                                </div>)
-                        })
+                                    className={`hint--top`}
+                                    aria-label={`${resid[1].residueName} ${resid[1].authorResNum} ${typeof resid[1].outlierTypes != 'undefined' ? resid[1].outlierTypes : ''}`}>
+                                    <div className={`aa-rotate-div ${className}`}
+                                        style={{display: 'inline-block'}}>
+                                        {translateResName(resid[1].residueName)}{resid[1].authorResNum}
+                                    </div>
+                                </div>);
+                        });
+                        onCh.push(<div className={"statistic-line"}>
+                            <h6>Model: {ch[0]} </h6>
+                            <div>Clashes: {modelStats.clashes} </div>
+                            <div>Sidechain outliers: {modelStats.sidechainOutliers} </div>
+                            <div>Ramachandran outliers: {modelStats.ramachandranOutliers} </div>
+                            <div>Bond lengths: {modelStats.bondLengths} </div>
+                            <div>RSRZ: {modelStats.rsrz}</div></div>);
                     }
                     onCh.push(tmpElement);
                     tmpElement = [];
+                    modelStats = {rsrz: 0, sidechainOutliers: 0, ramachandranOutliers: 0, bondLengths: 0, clashes: 0};
                 });
                 result.push(onCh);
                 onCh = [];
             });
-            return (<div>{result}</div>)
+            return (<div id={"perChainsStats"}>{result}</div>)
         }
 
         function parse(molecules: any){
@@ -414,86 +450,15 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
         let siteResidues: any[] = [];
         let residues: any[] = [];
 
-        fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/summary/${this.state.pdbId}`)
-            .then((response: any) => response.json())
-            .then((data: any) => {
-                self.setState({summaryInfo: <div>
-                        <div style={{display: 'inline-block', width: '50%'}}>
-                            <h3>Summary info</h3>
-                            <div>
-                                <b>Name: </b>
-                                {data[self.state.pdbId][0]['title']}
-                            </div>
-                            <div>
-                                <b>Release date: </b>
-                                {data[self.state.pdbId][0]['release_date'].slice(0,4)}-{data[self.state.pdbId][0]['release_date'].slice(4,6)}-{data[self.state.pdbId][0]['release_date'].slice(6,8)}
-                            </div>
-                            <div>
-                                <b>Experimental method: </b>
-                                {data[self.state.pdbId][0]['experimental_method'].toString()}
-                            </div>
-                            <div>
-                                <b>Authors: </b>
-                                {data[self.state.pdbId][0]['entry_authors'].toString()}
-                            </div>
-                        </div>
-                        <div style={{display: 'inline-block', width: '50%'}}>
-                            <h3>Validation plot</h3>
-                            <img src={`https://www.ebi.ac.uk/pdbe/entry-files/${self.state.pdbId}_multipercentile_validation.svg`}/>
-                        </div>
-                    </div>,
-                completnes: <iframe src={`http://webchem.ncbr.muni.cz/ValTrendsDB/explore.php?embed&xfactor=year+of+release&yfactor=average+ligand+RSCC&plotminor=false&pdbid=${this.state.pdbId}`}/>})
-            });
-
-        fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/drugbank/${self.state.pdbId}`)
-            .then((response: any) => response.json())
-            .then((data: any) => {
-                const ligandsInBank = data[self.state.pdbId];
-                fetch(`https://proxy-helper.herokuapp.com/`, {headers: {
-                        "target-url": `https://webchem.ncbr.muni.cz/Platform/ValidatorDb/SearchData?structures=${self.state.pdbId}`
-                    }})
-                    .then((response: any) => response.json())
-                    .then((data: any) => {
-                        data['Models'].forEach((ligand: any) => {
-                            ligandsInBank.forEach((inBank: any) => {
-                                let tmpLigand = {
-                                    'ModelName'    : ligand['ModelName'],
-                                    'Entries'      : ligand['Entries'].length,
-                                    'MainResidue'  : ligand['Entries'][0]['MainResidue'],
-                                    'MissingAtoms' : ligand['Summary']['Missing_Atoms'],
-                                    'MissingRings' : ligand['Summary']['Missing_Rings'],
-                                    'BadChirality' : ligand['Summary']['HasAll_BadChirality'],
-                                    'Substitutions': ligand['Summary']['HasAll_Substitutions'],
-                                    'NameMismatch' : ligand['Summary']['HasAll_NameMismatch']
-                                };
-                                if (ligand['ModelName'] == Object.keys(inBank)[0]) {
-                                    tmpLigand['drugbankId'] = inBank[ligand['ModelName']]['drugbank_id'];
-                                    tmpLigand['targets'] = inBank[ligand['ModelName']]['targets'];
-                                    // let comLig = ligand;
-                                    // comLig.drugbankId = inBank[ligand['ModelName']]['drugbank_id'];
-                                    // comLig.targets = inBank[ligand['ModelName']]['targets'];
-
-                                }
-                                commonLigands.push(tmpLigand);
-                            })
-                        });
-                        self.setState({
-                            ligandDrugbank: <div>
-                                <BootstrapTable data={commonLigands} tableStyle={{fontSize: 'smaller'}} trClassName={colorTableLine}>
-                                    <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='8%' isKey dataField={'ModelName'}>Name</TableHeaderColumn>
-                                    <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataField={'Entries'}>Number of molecules</TableHeaderColumn>
-                                    <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='10%' dataField={'drugbankId'} dataFormat={cellFormatter}>Drugbank ID</TableHeaderColumn>
-                                    <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataField={'MainResidue'}>Main residue</TableHeaderColumn>
-                                    <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingAtoms'}>Missing atoms</TableHeaderColumn>
-                                    <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingRings'}>Missing rings</TableHeaderColumn>
-                                    <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextYellow} width='10%' dataField={'BadChirality'}>Bad chirality</TableHeaderColumn>
-                                    <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='12%' dataField={'Substitutions'}>Substituion</TableHeaderColumn>
-                                    <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataField={'NameMismatch'}>Name mismatch</TableHeaderColumn>
-                                </BootstrapTable>
-                            </div>
-                        })
-                    })
-            });
+        function groupBy2(xs: any, prop: string) {
+            var grouped = {};
+            for (var i=0; i<xs.length; i++) {
+                var p = xs[i][prop];
+                if (!grouped[p]) { grouped[p] = []; }
+                grouped[p].push(xs[i]);
+            }
+            return grouped;
+        }
 
         fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/binding_sites/${self.state.pdbId}`)
             .then((response: any) => response.json())
@@ -502,10 +467,6 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                 fetch(`https://www.ebi.ac.uk/pdbe/api/validation/rama_sidechain_listing/entry/${self.state.pdbId}`)
                     .then((response: any) => response.json())
                     .then((data: any) => {
-                        // let chainsArray: any
-                        // = [];
-                        //@ts-ignore
-                        let chainsObj: {} = {};
                         parse(data[self.state.pdbId]);
 
                         fetch(`https://www.ebi.ac.uk/pdbe/api/validation/residuewise_outlier_summary/entry/${self.state.pdbId}`)
@@ -548,14 +509,16 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
 
                                         self.setState({
                                             perResidQuelity: <div>
-                                                <h3>Residues quality statistics:</h3>
-                                                <p><b>Clashes: </b>{clashes} ({(clashes/total * 100).toFixed(0)}%)</p>
-                                                <p><b>Ramachandran outliers: </b>{ramaOutl} ({(ramaOutl/total * 100).toFixed(0)}%)</p>
-                                                <p><b>Sidechain outliers: </b>{sidechainOutl} ({(sidechainOutl/total * 100).toFixed(0)}%)</p>
-                                                <p><b>RSRZ outliers: </b>{rsrzCount} ({(rsrzCount/total * 100).toFixed(0)}%)</p>
-                                                <a onClick={self.openModalStats} href="#" style={{cursor: 'pointer'}}><b>Show statistics per chain</b></a>
+                                                <h3>Overall quality:</h3>
+                                                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                                                    <p><b>Clashes: </b>{clashes} ({(clashes/total * 100).toFixed(0)}%)</p>
+                                                    <p><b>Ramachandran outliers: </b>{ramaOutl} ({(ramaOutl/total * 100).toFixed(0)}%)</p>
+                                                    <p><b>Sidechain outliers: </b>{sidechainOutl} ({(sidechainOutl/total * 100).toFixed(0)}%)</p>
+                                                    <p><b>RSRZ outliers: </b>{rsrzCount} ({(rsrzCount/total * 100).toFixed(0)}%)</p>
+                                                </div>
                                             </div>,
                                             perResidQuelityDetail: <div>
+                                                <h3>Quality of chains:</h3>
                                                 {coputeStatsForChains()}
                                             </div>
                                         })
@@ -596,7 +559,9 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                         <BootstrapTable data={editedSites} expandableRow={(row: any) => true}
                                                         expandComponent={expandComponent}
                                                         trClassName={colorTableLine}
-                                                        tableStyle={{fontSize: 'smaller'}}>
+                                                        tableStyle={{fontSize: 'smaller'}}
+                                                        maxHeight={'550'}
+                                                        scrollTop={'Top'}>
                                             <TableHeaderColumn width='10%' isKey dataField={'siteId'} tdStyle={{cursor: 'pointer'}}>Site ID</TableHeaderColumn>
                                             <TableHeaderColumn dataField={'details'} tdStyle={{cursor: 'pointer'}} dataFormat={imageFormatter}>Details</TableHeaderColumn>
                                         </BootstrapTable>
@@ -605,6 +570,132 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                             })
                     });
             });
+
+        fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/summary/${this.state.pdbId}`)
+            .then((response: any) => response.json())
+            .then((data: any) => {
+                self.setState({summaryInfo: <div style={{display: 'flex', justifyContent:'space-between', height: '30vh'}}>
+                        <div style={{display: 'inline-block', width: '49.5%'}} className={'text-field-sq'}>
+                            <h3>Summary info</h3>
+                            <div>
+                                <b>Name: </b>
+                                {data[self.state.pdbId][0]['title']}
+                            </div>
+                            <div>
+                                <b>Release date: </b>
+                                {data[self.state.pdbId][0]['release_date'].slice(0,4)}-{data[self.state.pdbId][0]['release_date'].slice(4,6)}-{data[self.state.pdbId][0]['release_date'].slice(6,8)}
+                            </div>
+                            <div>
+                                <b>Experimental method: </b>
+                                {data[self.state.pdbId][0]['experimental_method'].toString()}
+                            </div>
+                            <div>
+                                <b>Authors: </b>
+                                {data[self.state.pdbId][0]['entry_authors'].toString()}
+                            </div>
+                        </div>
+                        <div style={{display: 'inline-block', width: '49.5%'}} className={'text-field-sq'}>
+                            <h3>Validation plot</h3>
+                            <ImageZoom
+                                image={{
+                                    src: `https://www.ebi.ac.uk/pdbe/entry-files/${self.state.pdbId}_multipercentile_validation.svg`,
+                                    alt: 'Validation plot',
+                                    className: 'img',
+                                    style: { maxHeight: '23vh' }
+                                }}
+                                zoomImage={{
+                                    src: `https://www.ebi.ac.uk/pdbe/entry-files/${self.state.pdbId}_multipercentile_validation.svg`,
+                                    alt: 'Validation plot'
+                                }}
+                                defaultStyles={{
+                                    overlay: {
+                                        opacity: 0.95
+                                    }
+                                }}
+                            />
+                        </div>
+                    </div>,
+                    // completnes: <iframe src={`http://webchem.ncbr.muni.cz/ValTrendsDB/explore.php?embed&xfactor=year+of+release&yfactor=average+ligand+RSCC&plotminor=false&pdbid=${this.state.pdbId}`}/>
+                })
+            });
+
+        fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/drugbank/${self.state.pdbId}`)
+            .then((response: any) => response.json())
+            .then((data: any) => {
+                const ligandsInBank = data[self.state.pdbId];
+                let ebiLigandsObj: {} = {};
+                fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/ligand_monomers/${self.state.pdbId}`)
+                    .then((response: any) => response.json())
+                    .then((ebiLigands: any) => {
+                        ebiLigandsObj = groupBy2(ebiLigands[self.state.pdbId], 'chem_comp_id');
+                        fetch(`https://proxy-helper.herokuapp.com/`, {headers: {
+                                "target-url": `https://webchem.ncbr.muni.cz/Platform/ValidatorDb/SearchData?structures=${self.state.pdbId}`
+                            }})
+                            .then((response: any) => response.json())
+                            .then((data: any) => {
+                                console.log(ebiLigandsObj);
+                                //@ts-ignore
+                                Object.entries(ebiLigandsObj).forEach((obj: any) => {
+                                    const specLigand = data['Models'].filter((model: any) => {
+                                        return model['ModelName'] == obj[0];
+                                    });
+                                    console.log(specLigand);
+                                })
+                                data['Models'].forEach((ligand: any) => {
+                                    ligandsInBank.forEach((inBank: any) => {
+                                        let tmpLigand = {
+                                            'ModelName'    : ligand['ModelName'],
+                                            'Entries'      : ligand['Entries'].length,
+                                            'MainResidue'  : ligand['Entries'][0]['MainResidue'],
+                                            'MissingAtoms' : ligand['Summary']['Missing_Atoms'],
+                                            'MissingRings' : ligand['Summary']['Missing_Rings'],
+                                            'BadChirality' : ligand['Summary']['HasAll_BadChirality'],
+                                            'Substitutions': ligand['Summary']['HasAll_Substitutions'],
+                                            'NameMismatch' : ligand['Summary']['HasAll_NameMismatch']
+                                        };
+                                        if (ligand['ModelName'] == Object.keys(inBank)[0]) {
+                                            tmpLigand['drugbankId'] = inBank[ligand['ModelName']]['drugbank_id'];
+                                            tmpLigand['targets'] = inBank[ligand['ModelName']]['targets'];
+                                            // let comLig = ligand;
+                                            // comLig.drugbankId = inBank[ligand['ModelName']]['drugbank_id'];
+                                            // comLig.targets = inBank[ligand['ModelName']]['targets'];
+
+                                        }
+                                        commonLigands.push(tmpLigand);
+                                    });
+                                });
+                                // commonLigands.forEach((lig: any) => {
+                                //     uncomLigands.push(ebiLigands[self.state.pdbId].filter((commLig: any) => {
+                                //         return lig['ModelName'] != commLig.chem_comp_id
+                                //     }));
+                                // });
+                                // console.log(uncomLigands);
+                                self.setState({
+                                    ligandDrugbank: <div>
+                                        <BootstrapTable
+                                            data={commonLigands}
+                                            tableStyle={{fontSize: 'smaller'}}
+                                            trClassName={colorTableLine}
+                                            maxHeight={'550'}
+                                            scrollTop={'Top'}>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='8%' isKey dataField={'ModelName'}>Name</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataField={'Entries'}>Number of molecules</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='10%' dataField={'drugbankId'} dataFormat={cellFormatter}>Drugbank ID</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataField={'MainResidue'}>Main residue</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingAtoms'}>Missing atoms</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingRings'}>Missing rings</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextYellow} width='10%' dataField={'BadChirality'}>Bad chirality</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='12%' dataField={'Substitutions'}>Substituion</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataField={'NameMismatch'}>Name mismatch</TableHeaderColumn>
+                                        </BootstrapTable>
+                                    </div>
+                                })
+                            })
+                    });
+
+            });
+
+
     }
 
     private handleCheckboxChange(event: any) {
@@ -681,35 +772,25 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
 
         return (
             <div id={"dynamic-comp-container"}>
-                <Carousel style={{position: 'absolute', top: '54px'}} dragging={false}>
+                <Carousel style={{position: 'absolute', top: '54px', backgroundColor: 'white'}} dragging={false} enableKeyboardControls={true}>
                     <div>
                         <div style={{margin: '15px'}}>
                             {this.state.summaryInfo}
-                            {this.state.perResidQuelity}
-                            <Modal
-                                isOpen={this.state.showStatsModal}
-                                onAfterOpen={this.openModalStats}
-                                onRequestClose={this.closeModal}
-                                style={{content: {
-                                        top: '550px',
-                                        left: '50%',
-                                        right: 'auto',
-                                        bottom: 'auto',
-                                        transform: 'translate(-50%, -50%)',
-                                        width: '95%'}}}
-                                contentLabel="Example Modal"
-                            >
-                                <div>{this.state.perResidQuelityDetail}</div>
-                            </Modal>
+                            <div className={'text-field-sq'} style={{maxHeight: '52vh', overflowY: 'auto', overflowX: 'hidden'}}>
+                                {this.state.perResidQuelity}
+                                {this.state.perResidQuelityDetail}
+                            </div>
                         </div>
                     </div>
                     <div>
-                        <div style={{margin: '10px'}}>{this.props.models.length > 1 ? <div><b>Models: </b>{checkBoxes}</div>: null}</div>
-                        <div style={{margin: '10px'}}>{this.props.chains.length > 1 ? <div><b>Chains: </b>{chainCheckbox}</div>: null}</div>
                         <div style={{width: '42%', display: 'inline-block', marginTop: '25px'}} id={"rama-parent-container"}>
                             {this.state.ramaComponent}
+                            <div style={{margin: '-30px 0 10px 0'}}>
+                                <div>{this.props.models.length > 1 ? <div><b>Models: </b>{checkBoxes}</div>: null}</div>
+                                <div>{this.props.chains.length > 1 ? <div><b>Chains: </b>{chainCheckbox}</div>: null}</div>
+                            </div>
                         </div>
-                        <div style={{width: '57%', display: 'inline-block', position: 'relative', float: 'right', height: '780px', marginTop: '5px', marginRight: '10px'}}>
+                        <div style={{width: '57%', display: 'inline-block', position: 'relative', float: 'right', height: '84vh', marginTop: '5px', marginRight: '10px'}}>
                             {this.state.litemolComponent}
                         </div>
                     </div>
@@ -725,15 +806,15 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                 <b>Data retrieved from ValidatorDB</b>
                             </a>
                             {this.state.ligandDrugbank}
-                            <p>
-                                On the plot below, you can compare check the quality of specified PDB ligand compared to all ligands over time.
-                                As a quality factor, average ligand RSCC (real space correlation coefficient) is used.
-                            </p>
-                            <div style={{textAlign: 'center'}}>
-                                <a href="#" onClick={this.showModal}>
-                                    <b>Expand plot</b>
-                                </a>
-                            </div>
+                            {/*<p>*/}
+                                {/*On the plot below, you can compare check the quality of specified PDB ligand compared to all ligands over time.*/}
+                                {/*As a quality factor, average ligand RSCC (real space correlation coefficient) is used.*/}
+                            {/*</p>*/}
+                            {/*<div style={{textAlign: 'center'}}>*/}
+                                {/*<a href="#" onClick={this.showModal}>*/}
+                                    {/*<b>Expand plot</b>*/}
+                                {/*</a>*/}
+                            {/*</div>*/}
                             <div className={"iframe-parent"}>
                                 {this.state.completnes}
                             </div>

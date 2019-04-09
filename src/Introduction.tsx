@@ -220,49 +220,6 @@ class Introduction extends React.Component< {}, ValidationStates> {
                 <Parallax ref={ref => (this.parallax = ref)} pages={4}>
                     {/*
                        // @ts-ignore */}
-                    <ParallaxLayer offset={1} speed={1} style={{ backgroundColor: '#aeaeae' }} />
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={2} speed={1} />
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={0} speed={0} factor={3} />
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={1.3} speed={-0.3} style={{ pointerEvents: 'none' }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={1} speed={0.8} style={{ opacity: 0.1 }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={1.75} speed={0.5} style={{ opacity: 0.1 }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={1} speed={0.2} style={{ opacity: 0.2 }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={1.6} speed={-0.1} style={{ opacity: 0.4 }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={2.6} speed={0.4} style={{ opacity: 0.6 }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={2.5} speed={-0.4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
-                    </ParallaxLayer>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={2} speed={-0.3} style={{backgroundSize: '80%', backgroundPosition: 'center'}}/>
-                    {/*
-                       // @ts-ignore */}
-                    <ParallaxLayer offset={3} speed={1} style={{ backgroundColor: '#aeaeae' }}/>
-                    {/*
-                       // @ts-ignore */}
                     <ParallaxLayer offset={0} speed={0.1} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{width: '95%', marginTop:'50px'}}>
                             <div style={{width: '100%', display: 'inline-block'}}>

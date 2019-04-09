@@ -3,10 +3,6 @@
     /*overflow: visible !important;*/
 /*}*/
 
-div.slider{
-    height: 1113px !important;
-}
-
 .td-column-green, .green-res, .aa-green {
     background-color: #00B600;
 }
@@ -84,7 +80,31 @@ table.table tbody {
 }
 
 .aa-rotate-div:hover {
-    background-color: magenta;
+    background: magenta;
+}
+.statistic-line {
+    display: flex;
+    justify-content: space-between;
 }
 
+.aa-yellow-rsrz {
+    background: linear-gradient(to right, #222d9f 0%,#222d9f 25%,#FFFF4B 25%,#FFFF4B 100%);
+}
+
+.aa-green-rsrz {
+    background: linear-gradient(to right, #222d9f 0%,#222d9f 25%,#00B600 25%,#00B600 100%);
+}
+
+.aa-red-rsrz {
+    background: linear-gradient(to right, #222d9f 0%,#222d9f 25%,#FF0000 25%,#FF0000 100%);
+}
+
+.aa-orange-rsrz {
+    background: linear-gradient(to right, #222d9f 0%,#222d9f 25%,#FF7900 25%,#FF7900 100%);
+}
+
+
+div.slider:before {
+    visibility: hidden;
+}
 

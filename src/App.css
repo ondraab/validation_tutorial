@@ -191,6 +191,7 @@
     text-align: justify;
     margin-top: 5px;
     width: 100%;
+    box-shadow: 5px 5px rgba(128, 128, 128, 0.38);
 }
 
 .video-field {
@@ -288,12 +289,6 @@ p.answer {
     display: none;
 }
 
-.slider-control-bottomcenter {
-    position: fixed !important;
-    z-index: 10;
-    top: 7px;
-}
-
 .expandable-div:hover > div {
     display: block;
     -webkit-animation-duration: .2s;
@@ -331,15 +326,6 @@ p.answer {
 li > button {
     font-size: 5vmin !important;
     padding: 0.5vmin !important;
-}
-
-.slider-control-bottomcenter ul {
-    top: -17px !important;
-}
-
-#dynamic-comp-container {
-    height: 1020px;
-    overflow-y: auto;
 }
 
 tr.row {
