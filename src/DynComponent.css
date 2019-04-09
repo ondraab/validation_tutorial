@@ -7,19 +7,19 @@ div.slider{
     height: 1113px !important;
 }
 
-.td-column-green, .green-res {
+.td-column-green, .green-res, .aa-green {
     background-color: #00B600;
 }
 
-.td-column-yellow, .yellow-res{
+.td-column-yellow, .yellow-res, .aa-yellow{
     background-color: #FFFF4B;
 }
 
-.td-column-orange, .orange-res {
+.td-column-orange, .orange-res, .aa-orange {
     background-color: #FF7900;
 }
 
-.td-column-red, .red-res {
+.td-column-red, .red-res, .aa-red {
     background-color: #FF0000;
 }
 
@@ -56,3 +56,35 @@ table.table tbody {
     width: 100%;
     height: 90vh;
 }
+
+.aa-rotate-div {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    padding-left: 5px;
+    height: 19px;
+    text-align: center;
+    width: 35px;
+    margin-right: -17px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    font-family: serif;
+    font-weight: bold;
+    transition-duration: 100ms;
+}
+
+.aa-rotate-div:after {
+    -webkit-transform: rotate(90deg) !important;
+    -moz-transform: rotate(90deg) !important;
+    -o-transform: rotate(90deg) !important;
+    -ms-transform: rotate(90deg) !important;
+    top: 0 !important;
+}
+
+.aa-rotate-div:hover {
+    background-color: magenta;
+}
+
+

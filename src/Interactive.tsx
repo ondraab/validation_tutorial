@@ -1,7 +1,6 @@
 import * as React from "react";
 import {Parallax} from 'react-spring/renderprops-addons';
 import {NavLink} from "react-router-dom";
-import * as $ from "jquery";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 // @ts-ignore
 import DynComponent from "./DynComponent";
@@ -150,49 +149,6 @@ class Interactive extends React.Component<{}, LitemolStates> {
 
     private listenScrollEvent() {
         //@ts-ignore
-        let currPos = this.parallax.current / this.parallax.space;
-        if (currPos < 0.75 && this.activeTab != 0) {
-            $('div.page-nav a').each((a: number, obj: any) => {
-                $(obj).removeClass('active').removeClass('onHover');});
-            $('div.page-nav a:first').addClass('active').addClass('onHover');
-            setTimeout(() => {
-                $('div.page-nav a:first').removeClass('onHover')
-            }, 2000);
-            this.activeTab = 0;
-        } else if (this.activeTab != 1 && currPos >= 0.75 && currPos < 1.5) {
-            $('div.page-nav a').each((a: number, obj: any) => {
-                $(obj).removeClass('active').removeClass('onHover');
-                if (a == 1) {
-                    $(obj).addClass('active').addClass('onHover');
-                    setTimeout(() => {
-                        $(obj).removeClass('onHover')
-                    }, 2000);
-                    this.activeTab = 1;
-                }
-            })
-        } else if (this.activeTab != 2 && currPos >= 1.5 && currPos < 2.25) {
-            $('div.page-nav a').each((a: number, obj: any) => {
-                $(obj).removeClass('active').removeClass('onHover');
-                if (a == 2) {
-                    $(obj).addClass('active').addClass('onHover');
-                    setTimeout(() => {
-                        $(obj).removeClass('onHover')
-                    }, 2000);
-                    this.activeTab = 2;
-                }
-            })
-        } else if (this.activeTab != 3 && currPos >= 2.25) {
-            $('div.page-nav a').each((a: number, obj: any) => {
-                $(obj).removeClass('active').removeClass('onHover');
-                if (a == 3) {
-                    $(obj).addClass('active').addClass('onHover');
-                    setTimeout(() => {
-                        $(obj).removeClass('onHover')
-                    }, 2000);
-                    this.activeTab = 3;
-                }
-            })
-        }
     }
 
 

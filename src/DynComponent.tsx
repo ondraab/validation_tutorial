@@ -21,6 +21,7 @@ interface DynComponentStates {
     completnes: JSX.Element;
     modalShown: boolean;
     perResidQuelity: JSX.Element;
+    perResidQuelityDetail: JSX.Element;
     showStatsModal: boolean;
 }
 interface DynComponentProps {
@@ -86,6 +87,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
             bindingSiteTable: <div/>,
             summaryInfo: <div/>,
             perResidQuelity: <div/>,
+            perResidQuelityDetail: <div/>,
             completnes: <div/>};
     }
 
@@ -231,7 +233,118 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
             ramaOutl: number = 0,
             rsrzCount: number = 0,
             outlDict: {} = {},
-            outliers: any[] = [];
+            outliers: any[] = [],
+            chainLen: {} = {},
+            molecs: {} = {},
+            total = 0;
+
+        function translateResName(resName: string) {
+            switch (resName) {
+                case 'ALA':
+                    return 'A';
+                case 'ARG':
+                    return'R';
+                case 'ASN':
+                    return'N';
+                case 'ASP':
+                    return'D';
+                case 'CYS':
+                    return'C';
+                case 'GLN':
+                    return'Q';
+                case 'GLU':
+                    return'E';
+                case 'GLY':
+                    return'G';
+                case 'HIS':
+                    return'H';
+                case 'ILE':
+                    return'I';
+                case 'LEU':
+                    return'L';
+                case 'LYS':
+                    return'K';
+                case 'MET':
+                    return'M';
+                case 'PHE':
+                    return'F';
+                case 'PRO':
+                    return'P';
+                case 'SER':
+                    return'S';
+                case 'THR':
+                    return'T';
+                case 'TRP':
+                    return'W';
+                case 'TYR':
+                    return'Y';
+                case 'VAL':
+                    return'V';
+                default:
+                    return '';
+            }
+        }
+
+        function coputeStatsForChains() {
+            console.log(moleculesDict);
+            let chainStats: any[] = [];
+            let oneChain: {} = {};
+            //@ts-ignore
+            Object.entries(moleculesDict).forEach((arr: any) => {
+                arr[1].chains.forEach((chain: any) => {
+                    oneChain = {};
+                    chain.models.forEach((model: any) => {
+                        oneChain[model.model_id] = model.residuesDict;
+                        oneChain['chainId'] = chain.chain_id;
+                        oneChain['length'] = molecs[arr[0]][chain.chain_id];
+                    });
+                    chainStats.push(oneChain);
+                })
+            });
+
+            let tmpElement: any[] = [];
+            let result: any[] = [];
+            let onCh: any[] = [];
+            chainStats.forEach((chain: any) => {
+                // @ts-ignore
+                Object.entries(chain).forEach((ch: any) => {
+                    if (typeof ch[1] == "object") {
+                        onCh.push(<h5>Chain ID: {chain.chainId}</h5>);
+                        // @ts-ignore
+                        Object.entries(ch[1]).forEach((resid: any) => {
+                            let className = '';
+                            if (typeof resid[1].outlierTypes == 'undefined') {
+                                className = 'aa-green';
+                            } else {
+                                switch (resid[1].outlierTypes.length) {
+                                    case 1:
+                                        className = 'aa-yellow';
+                                        break;
+                                    case 2:
+                                        className = 'aa-orange';
+                                        break;
+                                    default:
+                                        className = 'aa-red';
+                                }
+                            }
+                            tmpElement.push(
+                                <div
+                                    style={{display: 'inline-block'}}
+                                    className={`hint--right aa-rotate-div ${className}`}
+                                    aria-label={`${resid[1].residueName} ${resid[1].authorResNum} ${typeof resid[1].outlierTypes != 'undefined' ? resid[1].outlierTypes : ''}`}
+                                >
+                                    {translateResName(resid[1].residueName)}{resid[1].authorResNum}
+                                </div>)
+                        })
+                    }
+                    onCh.push(tmpElement);
+                    tmpElement = [];
+                });
+                result.push(onCh);
+                onCh = [];
+            });
+            return (<div>{result}</div>)
+        }
 
         function parse(molecules: any){
             let residuesDict: {[id: number]: any};
@@ -420,9 +533,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                         }
                                     }
                                 });
-                                let chainLen: {} = {};
-                                let molecs: {} = {};
-                                let total = 0;
+
                                 fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/polymer_coverage/${self.state.pdbId}`)
                                     .then((response: any) => response.json())
                                     .then((data: any) => {
@@ -443,7 +554,9 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                                 <p><b>Sidechain outliers: </b>{sidechainOutl} ({(sidechainOutl/total * 100).toFixed(0)}%)</p>
                                                 <p><b>RSRZ outliers: </b>{rsrzCount} ({(rsrzCount/total * 100).toFixed(0)}%)</p>
                                                 <a onClick={self.openModalStats} href="#" style={{cursor: 'pointer'}}><b>Show statistics per chain</b></a>
-
+                                            </div>,
+                                            perResidQuelityDetail: <div>
+                                                {coputeStatsForChains()}
                                             </div>
                                         })
                                     });
@@ -578,7 +691,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                 onAfterOpen={this.openModalStats}
                                 onRequestClose={this.closeModal}
                                 style={{content: {
-                                        top: '50%',
+                                        top: '550px',
                                         left: '50%',
                                         right: 'auto',
                                         bottom: 'auto',
@@ -586,7 +699,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                         width: '95%'}}}
                                 contentLabel="Example Modal"
                             >
-                                <div>fsjalk</div>
+                                <div>{this.state.perResidQuelityDetail}</div>
                             </Modal>
                         </div>
                     </div>
