@@ -250,7 +250,7 @@ class Introduction extends React.Component< {}, ValidationStates> {
                                         <li>Select the better of a set of related models (assuming there are noticeable differences in the quality of these models), e.g. for purposes of homology modelling, ligand design, mutant design, or molecular replacement calculations.</li>
                                     </ol>
                                 </div>
-                                <div style={{display: 'flex'}}>
+                                <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
                                         <h3>The following are useful links that you may want to explore:</h3>
                                         <ul>
@@ -262,7 +262,7 @@ class Introduction extends React.Component< {}, ValidationStates> {
                                             <li><a href={"http://scripts.iucr.org/cgi-bin/paper?S0907444999016364"}>An extensive review of validation in protein crystallography</a></li>
                                         </ul>
                                     </div>
-                                    <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%', marginRight: 'auto'}}>
+                                    <div className={"text-field-sq"} style={{display: 'inline-block', width: '49.5%'}}>
                                         <p>
                                             <b><a href={"http://profiles.ucsf.edu/james.holton"}>James Holton</a></b>,
                                             while at Berkeley, produced a number of movies that demonstrate the
@@ -511,89 +511,6 @@ class Introduction extends React.Component< {}, ValidationStates> {
                     </ParallaxLayer>
                 </Parallax>
             </div>
-            {/*<div>*/}
-                {/*<p><b>The conformation of the backbone of every non-terminal amino-acid residue is determined by three torsion angles, called:</b></p>*/}
-                {/*<div>*/}
-                    {/*<li>phi <b>(&phi;)</b> (C<sub>(-1)</sub>&mdash;N&mdash;C<sub>&alpha;</sub>&mdash;C)</li>*/}
-                    {/*<li>psi <b>(&psi;)</b> (N&mdash;C<sub>&alpha;</sub>&mdash;C&mdash;N<sub>(+1)</sub>)</li>*/}
-                    {/*<li>omega <b>(&omega;)</b> (C<sub>&alpha;(-1)</sub>&mdash;C<sub>(-1)</sub>&mdash;N&mdash;C<sub>&alpha;</sub>) </li>*/}
-                {/*</div>*/}
-                {/*<div>*/}
-                    {/*<p>*/}
-                        {/*Due to resonance, the peptide bond has partial double-bond character.*/}
-                        {/*Therefore, the omega torsion angle is restrained to values near 0 <i>(cis-peptide)</i> and*/}
-                        {/*180° <i>(trans-peptide)</i>. Cis-peptides are relatively rare and usually (but not always)*/}
-                        {/*occur if the next residue is a proline. The &omega; angle therefore offers little in the way*/}
-                        {/*of validation checks, although values in the range of ±20° to ±160° should be treated with*/}
-                        {/*caution in anything but very high-resolution models.*/}
-                    {/*</p>*/}
-                    {/*<p><i>Validation potential of omega: poor.</i></p>*/}
-                {/*</div>*/}
-            {/*</div>*/}
-            {/*<img src={"/src/backbone.svg"} alt={"backbone"}/>*/}
-            {/*<Expandable headers={[*/}
-              {/*(isOpened: boolean) => (*/}
-              {/*<div className={"main-expandable-div"}>*/}
-                  {/*<div className={"expandable-element-title"}>*/}
-                      {/*<h3>About the torsion angles</h3>*/}
-                      {/*<h4>{isOpened ? '+' : '-'}</h4>*/}
-                  {/*</div>*/}
-              {/*</div>*/}
-              {/*),*/}
-              {/*(isOpened: boolean) => (*/}
-                  {/*<div className={"main-expandable-div"}>*/}
-                      {/*<div className={"expandable-element-title"}>*/}
-                          {/*<h3>Ramachandran plot - simple and useful model quality indicator</h3>*/}
-                          {/*<h4>{isOpened? '+' : '-'}</h4>*/}
-                      {/*</div>*/}
-                  {/*</div>*/}
-              {/*),*/}
-              {/*(isOpened: boolean) => (*/}
-                  {/*<div className={"main-expandable-div"}>*/}
-                      {/*<div className={"expandable-element-title"}>*/}
-                          {/*<h3>Tab3</h3>*/}
-                          {/*<h4>{isOpened? '+' : '-'}</h4>*/}
-                      {/*</div>*/}
-                  {/*</div>*/}
-              {/*),*/}
-          {/*]} enableMultiOpen>*/}
-              {/*<div>*/}
-                  {/*<div className={"collapsed-div"}>*/}
-                      {/*<div>*/}
-                          {/*<p><b>The conformation of the backbone of every non-terminal amino-acid residue is determined by three torsion angles, called:</b></p>*/}
-                          {/*<div>*/}
-                              {/*<li>phi <b>(&phi;)</b> (C<sub>(-1)</sub>&mdash;N&mdash;C<sub>&alpha;</sub>&mdash;C)</li>*/}
-                              {/*<li>psi <b>(&psi;)</b> (N&mdash;C<sub>&alpha;</sub>&mdash;C&mdash;N<sub>(+1)</sub>)</li>*/}
-                              {/*<li>omega <b>(&omega;)</b> (C<sub>&alpha;(-1)</sub>&mdash;C<sub>(-1)</sub>&mdash;N&mdash;C<sub>&alpha;</sub>) </li>*/}
-                          {/*</div>*/}
-                          {/*<div>*/}
-                          {/*<p>*/}
-                              {/*Due to resonance, the peptide bond has partial double-bond character.*/}
-                              {/*Therefore, the omega torsion angle is restrained to values near 0 <i>(cis-peptide)</i> and*/}
-                              {/*180° <i>(trans-peptide)</i>. Cis-peptides are relatively rare and usually (but not always)*/}
-                              {/*occur if the next residue is a proline. The &omega; angle therefore offers little in the way*/}
-                              {/*of validation checks, although values in the range of ±20° to ±160° should be treated with*/}
-                              {/*caution in anything but very high-resolution models.*/}
-                          {/*</p>*/}
-                              {/*<p><i>Validation potential of omega: poor.</i></p>*/}
-                          {/*</div>*/}
-                      {/*</div>*/}
-                      {/*<img src={"/src/backbone.svg"} alt={"backbone"}/>*/}
-                  {/*</div>*/}
-              {/*</div>*/}
-                {/*<div className={"collapsed-div"} id={"component-main-div"}>*/}
-                    {/*<div className={"form-div"}>*/}
-                        {/*<form className={"form-inline"} onSubmit={this.handleSubmit}>*/}
-                            {/*<input type="pdbId" className="form-control" id="inputPDB" placeholder="PDBid" onChange={this.handleChange}/>*/}
-                            {/*<button type="submit" className="btn btn-primary mb-2">Submit</button>*/}
-                        {/*</form>*/}
-                    {/*</div>*/}
-                    {/*<CoopComponents pdbId={[this.state.pdbId]} chains={this.state.chains} models={this.state.models}/>*/}
-                {/*</div>*/}
-              {/*<div>*/}
-                  {/*third item*/}
-              {/*</div>*/}
-          {/*</Expandable>*/}
       </div>;
   }
 

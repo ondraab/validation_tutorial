@@ -139,7 +139,15 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
         let commonLigands: any[] = [];
 
         function cellFormatter(cell: any, row: any) {
-            return (<div><b><a target="_blank" rel="noopener noreferrer" href={`https://www.drugbank.ca/drugs/${cell}`}>{cell}</a></b></div>);
+            return (<div
+                style={typeof row.MissingAtoms != 'undefined' ? {cursor: 'pointer'} : {}}>
+                <b>
+                    <a target="_blank" rel="noopener noreferrer"
+                       href={`https://www.drugbank.ca/drugs/${cell}`}
+                       style={{cursor: 'pointer'}}>{cell}
+                       </a>
+                </b>
+            </div>);
         }
 
         function lineColor(row: any) {
@@ -160,12 +168,25 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
         }
 
         function dataColorTextYellow(cell: any, row: any) {
+            if (typeof cell == 'undefined') {
+                return <div style={{cursor: 'default'}}>No validation data available</div>
+            }
+            if (typeof row.Entries != 'undefined')
+                return cell == 0 ? (<div style={{color: '#3CA53A', cursor: 'pointer'}}>{cell}</div>) : (<div style={{color: '#D6BD42', cursor: 'pointer'}}>{cell}</div>);
             return cell == 0 ? (<div style={{color: '#3CA53A'}}>{cell}</div>) : (<div style={{color: '#D6BD42'}}>{cell}</div>);
         }
 
         function dataColorTextRed(cell: any, row: any) {
+            if (typeof cell == 'undefined') {
+                return <div style={{cursor: 'default'}}>No validation data available</div>
+            }
+            if (typeof row.Entries != 'undefined')
+                return cell == 0 ? (<div style={{color: '#3CA53A', cursor: 'pointer'}}>{cell}</div>) : (<div style={{color: '#DD191D', cursor: 'pointer'}}>{cell}</div>);
             return cell == 0 ? (<div style={{color: '#3CA53A'}}>{cell}</div>) : (<div style={{color: '#DD191D'}}>{cell}</div>);
+        }
 
+        function plainData(cell: any, row: any) {
+            return <div style={typeof row.MissingAtoms != 'undefined' ? {cursor: 'pointer'} : {}}>{cell}</div>
         }
 
         //@ts-ignore
@@ -197,7 +218,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
         }
 
         function imageFormatter(cell: any, row: any){
-            return  (<div >{cell}
+            return  (<div style={{cursor: 'pointer'}}>{cell}
                         <div style={{
                             width: '10%',
                             display: 'inline-block',
@@ -218,6 +239,21 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                     <BootstrapTable data={row.residues} trClassName={lineColor}>
                         <TableHeaderColumn isKey dataField={'authorResNum'} dataFormat={formatResNumName} width={'20%'}>Residue identifier</TableHeaderColumn>
                         <TableHeaderColumn dataField={'outliersType'}>Outlier types</TableHeaderColumn>
+                    </BootstrapTable>
+                </div>
+            )
+        }
+
+        function expandLigandSummary(row: any) {
+            return (
+                <div style={{transition: 'height 0.5s'}}>
+                    <BootstrapTable data={row.Entries}>
+                        <TableHeaderColumn isKey dataField={'MainResidue'} dataFormat={dataEmptyFormat}>Main residue</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'MissingAtomCount'} dataFormat={dataColorTextRed}>Missing atoms</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'MissingRingCount'} dataFormat={dataColorTextRed}>Missing rings</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'ChiralityMismatchCount'} dataFormat={dataColorTextYellow}>Chirality mismatch</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'SubstitutionCount'} dataFormat={dataEmptyFormat}>Substitutions</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'NameMismatchCount'} dataFormat={dataEmptyFormat}>Name mismatch</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
             )
@@ -286,6 +322,12 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                 default:
                     return '';
             }
+        }
+
+        function dataEmptyFormat(cell: any, row: any) {
+            if (typeof cell == 'undefined')
+                return <div>No validation data avalible</div>
+            return <div style={{cursor: 'pointer'}}>{cell}</div>
         }
 
         function coputeStatsForChains() {
@@ -562,8 +604,8 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                                         tableStyle={{fontSize: 'smaller'}}
                                                         maxHeight={'550'}
                                                         scrollTop={'Top'}>
-                                            <TableHeaderColumn width='10%' isKey dataField={'siteId'} tdStyle={{cursor: 'pointer'}}>Site ID</TableHeaderColumn>
-                                            <TableHeaderColumn dataField={'details'} tdStyle={{cursor: 'pointer'}} dataFormat={imageFormatter}>Details</TableHeaderColumn>
+                                            <TableHeaderColumn width='10%' dataField={'siteId'} tdStyle={{cursor: 'pointer'}}>Site ID</TableHeaderColumn>
+                                            <TableHeaderColumn isKey dataField={'details'} tdStyle={{cursor: 'pointer'}} dataFormat={imageFormatter}>Details</TableHeaderColumn>
                                         </BootstrapTable>
                                     </div>,
                                 })
@@ -633,60 +675,59 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                             }})
                             .then((response: any) => response.json())
                             .then((data: any) => {
-                                console.log(ebiLigandsObj);
+                                let specLigand: any[] = [];
                                 //@ts-ignore
                                 Object.entries(ebiLigandsObj).forEach((obj: any) => {
-                                    const specLigand = data['Models'].filter((model: any) => {
+                                    const common = data['Models'].filter((model: any) => {
                                         return model['ModelName'] == obj[0];
                                     });
-                                    console.log(specLigand);
-                                })
-                                data['Models'].forEach((ligand: any) => {
+                                    if (common.length == 0)
+                                        specLigand.push({ModelName: obj[0], Entries: obj[1]});
+                                    else
+                                        specLigand.push(common[0]);
+
+                                });
+                                specLigand.forEach((ligand: any) => {
                                     ligandsInBank.forEach((inBank: any) => {
                                         let tmpLigand = {
-                                            'ModelName'    : ligand['ModelName'],
-                                            'Entries'      : ligand['Entries'].length,
-                                            'MainResidue'  : ligand['Entries'][0]['MainResidue'],
-                                            'MissingAtoms' : ligand['Summary']['Missing_Atoms'],
-                                            'MissingRings' : ligand['Summary']['Missing_Rings'],
-                                            'BadChirality' : ligand['Summary']['HasAll_BadChirality'],
-                                            'Substitutions': ligand['Summary']['HasAll_Substitutions'],
-                                            'NameMismatch' : ligand['Summary']['HasAll_NameMismatch']
+                                            'ModelName'     : ligand['ModelName'],
+                                            'EntriesLength' : ligand['Entries'].length,
+                                            'Entries' : ligand['Entries'],
                                         };
+                                        if (typeof ligand['LongName'] != 'undefined') {
+                                            tmpLigand['MissingAtoms']  = ligand['Summary']['Missing_Atoms'];
+                                            tmpLigand['MissingRings']  = ligand['Summary']['Missing_Rings'];
+                                            tmpLigand['BadChirality']  = ligand['Summary']['HasAll_BadChirality'];
+                                            tmpLigand['Substitutions'] = ligand['Summary']['HasAll_Substitutions'];
+                                            tmpLigand['NameMismatch']  = ligand['Summary']['HasAll_NameMismatch'];
+                                        }
                                         if (ligand['ModelName'] == Object.keys(inBank)[0]) {
                                             tmpLigand['drugbankId'] = inBank[ligand['ModelName']]['drugbank_id'];
                                             tmpLigand['targets'] = inBank[ligand['ModelName']]['targets'];
-                                            // let comLig = ligand;
-                                            // comLig.drugbankId = inBank[ligand['ModelName']]['drugbank_id'];
-                                            // comLig.targets = inBank[ligand['ModelName']]['targets'];
-
                                         }
                                         commonLigands.push(tmpLigand);
-                                    });
+                                    })
                                 });
-                                // commonLigands.forEach((lig: any) => {
-                                //     uncomLigands.push(ebiLigands[self.state.pdbId].filter((commLig: any) => {
-                                //         return lig['ModelName'] != commLig.chem_comp_id
-                                //     }));
-                                // });
-                                // console.log(uncomLigands);
                                 self.setState({
                                     ligandDrugbank: <div>
                                         <BootstrapTable
                                             data={commonLigands}
                                             tableStyle={{fontSize: 'smaller'}}
                                             trClassName={colorTableLine}
+                                            expandableRow={(row: any) => {return typeof row['BadChirality'] != 'undefined'}}
+                                            expandComponent={expandLigandSummary}
                                             maxHeight={'550'}
                                             scrollTop={'Top'}>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='8%' isKey dataField={'ModelName'}>Name</TableHeaderColumn>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataField={'Entries'}>Number of molecules</TableHeaderColumn>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='10%' dataField={'drugbankId'} dataFormat={cellFormatter}>Drugbank ID</TableHeaderColumn>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataField={'MainResidue'}>Main residue</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='8%' isKey dataField={'ModelName'} dataFormat={plainData}>Name</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataField={'EntriesLength'} dataFormat={plainData}>Number of molecules</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='10%' dataField={'drugbankId'} dataFormat={cellFormatter} tdStyle={(cell: any, row: any) => {
+                                                return typeof row.MissingRings != 'undefined' ? {cursor: 'pointer'} : {}
+                                            }}>Drugbank ID</TableHeaderColumn>
                                             <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingAtoms'}>Missing atoms</TableHeaderColumn>
                                             <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingRings'}>Missing rings</TableHeaderColumn>
                                             <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextYellow} width='10%' dataField={'BadChirality'}>Bad chirality</TableHeaderColumn>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='12%' dataField={'Substitutions'}>Substituion</TableHeaderColumn>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataField={'NameMismatch'}>Name mismatch</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='12%' dataFormat={dataEmptyFormat} dataField={'Substitutions'}>Substitution</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataFormat={dataEmptyFormat} dataField={'NameMismatch'}>Name mismatch</TableHeaderColumn>
                                         </BootstrapTable>
                                     </div>
                                 })
