@@ -211,7 +211,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                 elements.push(<div
                     className={`${className} hint--left hint--small color-square`}
                     style={{display: 'inline-block', width: `${width}%`, height: '12px'}}
-                    aria-label={`${residue.chemCompId} ${residue.authorResNum} ${residue.chain}`}
+                    aria-label={`${residue.chemCompId} ${residue.authorResNum} ${residue.chain}, ${residue.outliersType.length} ${residue.outliersType.length == 1 ? 'error' : 'errors'}`}
                 />)
             });
             return elements
@@ -244,16 +244,27 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
             )
         }
 
+        function validatorLink(cell: any, row: any) {
+            return (
+                <div style={{cursor: 'pointer'}}>
+                    <a target="_blank" rel="noopener noreferrer"
+                           href={encodeURI(`http://webchem.ncbr.muni.cz/Platform/ValidatorDb/Molecule/${self.state.pdbId}/${row.MainResidue.split(/ (.+)/)[1]}`)}
+                           style={{cursor: 'pointer'}}>
+                        <b style={{cursor: 'pointer'}}>{cell}</b>
+                    </a>
+                </div>)
+        }
+
         function expandLigandSummary(row: any) {
             return (
                 <div style={{transition: 'height 0.5s'}}>
                     <BootstrapTable data={row.Entries}>
-                        <TableHeaderColumn isKey dataField={'MainResidue'} dataFormat={dataEmptyFormat}>Main residue</TableHeaderColumn>
-                        <TableHeaderColumn dataField={'MissingAtomCount'} dataFormat={dataColorTextRed}>Missing atoms</TableHeaderColumn>
-                        <TableHeaderColumn dataField={'MissingRingCount'} dataFormat={dataColorTextRed}>Missing rings</TableHeaderColumn>
-                        <TableHeaderColumn dataField={'ChiralityMismatchCount'} dataFormat={dataColorTextYellow}>Chirality mismatch</TableHeaderColumn>
-                        <TableHeaderColumn dataField={'SubstitutionCount'} dataFormat={dataEmptyFormat}>Substitutions</TableHeaderColumn>
-                        <TableHeaderColumn dataField={'NameMismatchCount'} dataFormat={dataEmptyFormat}>Name mismatch</TableHeaderColumn>
+                        <TableHeaderColumn isKey dataField={'MainResidue'} dataFormat={validatorLink}>Main residue</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'MissingAtomCount'} dataFormat={dataColorTextRed} tdStyle={{whiteSpace: 'normal'}}>Missing atoms</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'MissingRingCount'} dataFormat={dataColorTextRed} tdStyle={{whiteSpace: 'normal'}}>Missing rings</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'ChiralityMismatchCount'} dataFormat={dataColorTextYellow} tdStyle={{whiteSpace: 'normal'}}>Chirality mismatch</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'SubstitutionCount'} dataFormat={dataEmptyFormat} tdStyle={{whiteSpace: 'normal'}}>Substitutions</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'NameMismatchCount'} dataFormat={dataEmptyFormat} tdStyle={{whiteSpace: 'normal'}}>Name mismatch</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
             )
@@ -723,11 +734,11 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                             <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='10%' dataField={'drugbankId'} dataFormat={cellFormatter} tdStyle={(cell: any, row: any) => {
                                                 return typeof row.MissingRings != 'undefined' ? {cursor: 'pointer'} : {}
                                             }}>Drugbank ID</TableHeaderColumn>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingAtoms'}>Missing atoms</TableHeaderColumn>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingRings'}>Missing rings</TableHeaderColumn>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextYellow} width='10%' dataField={'BadChirality'}>Bad chirality</TableHeaderColumn>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='12%' dataFormat={dataEmptyFormat} dataField={'Substitutions'}>Substitution</TableHeaderColumn>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataFormat={dataEmptyFormat} dataField={'NameMismatch'}>Name mismatch</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingAtoms'} tdStyle={{whiteSpace: 'normal'}}>Missing atoms</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingRings'} tdStyle={{whiteSpace: 'normal'}}>Missing rings</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextYellow} width='10%' dataField={'BadChirality'} tdStyle={{whiteSpace: 'normal'}}>Bad chirality</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='12%' dataFormat={dataEmptyFormat} dataField={'Substitutions'} tdStyle={{whiteSpace: 'normal'}}>Substitution</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataFormat={dataEmptyFormat} dataField={'NameMismatch'} tdStyle={{whiteSpace: 'normal'}}>Name mismatch</TableHeaderColumn>
                                         </BootstrapTable>
                                     </div>
                                 })
@@ -878,11 +889,6 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                             </Modal>
                         </div>
                     </div>
-                    <div style={{margin: '15px'}}>
-
-                    </div>
-
-                    <div/>
                 </Carousel>
             </div>
         );

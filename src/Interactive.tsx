@@ -89,7 +89,7 @@ class Interactive extends React.Component<{}, LitemolStates> {
                             document.getElementsByClassName('lm-icon lm-icon-tools')[0].parentNode.click();
                         } else
                             clickForValidationColoring();
-                }, 5000);
+                }, 3000);
 
         }
 

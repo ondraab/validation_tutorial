@@ -1,17 +1,11 @@
 import * as React from "react";
-import {Parallax} from 'react-spring/renderprops-addons';
 import {NavLink} from "react-router-dom";
-import * as $ from "jquery";
-// import DynComponent from "./DynComponent";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Carousel from "nuka-carousel"
 import Litemol from "./Litemol";
+import DynComponent from "./DynComponent";
+import "./Example1.css"
 // @ts-ignore
 angular.module('myModule', ['pdb.litemol']);
-
-// interface LitemolProps {
-//     pdbId: string;
-// }
 
 interface LitemolStates {
     pdbId: string;
@@ -23,8 +17,6 @@ interface LitemolStates {
 }
 
 class Example1 extends React.Component<{}, LitemolStates> {
-// @ts-ignore
-    private parallax: Parallax | null;
     private _activeTab: number;
     get pdbId(): string {
         return this._pdbId;
@@ -86,91 +78,6 @@ class Example1 extends React.Component<{}, LitemolStates> {
         }
     }
 
-    // private nextSlide() {
-    //     this.setState(state => ({
-    //         currentSlide: state.currentSlide + 1
-    //     }));
-    // }
-    //
-    // private prevSlide() {
-    //     this.setState(state => ({
-    //         currentSlide: state.currentSlide - 1
-    //     }));
-    // }
-    //
-    // private updateCurrentSlide(index: number) {
-    //     const { currentSlide } = this.state;
-    //
-    //     if (currentSlide !== index) {
-    //         this.setState({
-    //             currentSlide: index
-    //         });
-    //     }
-    // }
-
-    // private addClass(scrollTo: number) {
-    //     let active = document.getElementsByClassName('page-nav')[0].childNodes[scrollTo];
-    //     // loop through all 'a' elements
-    //     let a = document.getElementsByClassName('page-nav')[0].childNodes;
-    //     for (let i = 0; i < a.length; i++) {
-    //         // @ts-ignore
-    //         a[i].classList.remove('active')
-    //     }
-    //     // @ts-ignore
-    //     active.classList.add('active');
-    //     // @ts-ignore
-    //     this.parallax.scrollTo(scrollTo)
-    // }
-
-
-
-    private listenScrollEvent() {
-        //@ts-ignore
-        let currPos = this.parallax.current / this.parallax.space;
-        if (currPos < 0.75 && this.activeTab != 0) {
-            $('div.page-nav a').each((a: number, obj: any) => {
-                $(obj).removeClass('active').removeClass('onHover');});
-            $('div.page-nav a:first').addClass('active').addClass('onHover');
-            setTimeout(() => {
-                $('div.page-nav a:first').removeClass('onHover')
-            }, 2000);
-            this.activeTab = 0;
-        } else if (this.activeTab != 1 && currPos >= 0.75 && currPos < 1.5) {
-            $('div.page-nav a').each((a: number, obj: any) => {
-                $(obj).removeClass('active').removeClass('onHover');
-                if (a == 1) {
-                    $(obj).addClass('active').addClass('onHover');
-                    setTimeout(() => {
-                        $(obj).removeClass('onHover')
-                    }, 2000);
-                    this.activeTab = 1;
-                }
-            })
-        } else if (this.activeTab != 2 && currPos >= 1.5 && currPos < 2.25) {
-            $('div.page-nav a').each((a: number, obj: any) => {
-                $(obj).removeClass('active').removeClass('onHover');
-                if (a == 2) {
-                    $(obj).addClass('active').addClass('onHover');
-                    setTimeout(() => {
-                        $(obj).removeClass('onHover')
-                    }, 2000);
-                    this.activeTab = 2;
-                }
-            })
-        } else if (this.activeTab != 3 && currPos >= 2.25) {
-            $('div.page-nav a').each((a: number, obj: any) => {
-                $(obj).removeClass('active').removeClass('onHover');
-                if (a == 3) {
-                    $(obj).addClass('active').addClass('onHover');
-                    setTimeout(() => {
-                        $(obj).removeClass('onHover')
-                    }, 2000);
-                    this.activeTab = 3;
-                }
-            })
-        }
-    }
-
 
     public render() {
         // @ts-ignore
@@ -215,141 +122,56 @@ class Example1 extends React.Component<{}, LitemolStates> {
                     </NavLink>
                 </div>
             </div>
-                <div id={"main-content"} onScroll={this.listenScrollEvent.bind(this)}>*/}
-                    <Carousel style={{position: 'absolute', top: '54px'}} dragging={false}>
-                        <div style={{margin: '10px'}}>
-                            <div style={{display: 'inline-block', width: '40%'}}>
-                                <h2>Interactive validation</h2>
-                                    <p>In this section you can find interactive validation tutorial showing you, how you may use available tools. For navigation in this interactive tutorial you can use dots in the green upper line.</p>
-                                    <div>
-                                        <h3>Example I.</h3>
-                                        <div>
-                                            <p>
-                                                1CBS is a crystal structure of cellular retinoic-acid-binding proteins I and II in complex with all-trans-retionic acid and a synthetic retionid. You can find the structure <a href={"http://www.ebi.ac.uk/pdbe/entry/pdb/1cbs"}><b>here</b></a>.
-                                            </p>
-                                            <p>
-                                                First thing you can do is inspect the molecule in the litemol. Put the PDBid '1cbs' in the following input and the litemol component will load.
-                                            </p>
-                                            <div>
-                                            <form onSubmit={this.handleSubmit.bind(this)} className={"form-inline mb-2"}>
-                                                <div className="form-group">
-                                                    <label>PDBid</label>
-                                                    <input type={"text"} name={"pdb-id"} value={this.state.pdbId} onChange={this.handleChange}/>
-                                                    <input type="submit" value="Submit" className={`btn ${this.state.correctInput ? "btn-primary" : "btn-danger"} mb-2`}/>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                        <div>
-                                            {this.state.firstIpsum}
-                                        </div>
-                                </div>
-                            </div>
-                            <div style={{display: 'inline-block', width: '58%', position: 'relative', float: 'right', height: '400px'}}>
-                                {this.state.dynComponent}
-                            </div>
+            <div id={"main-content"}>
+                <div>
+                    <div style={{display: 'inline-block', margin: '60px 0 0 10px'}}>
+                        <h2>Example I.</h2>
+                        <div>
+                            <p>
+                                1CBS is a crystal structure of cellular retinoic-acid-binding proteins I and II in complex with all-trans-retionic acid and a synthetic retionid. You can find the structure <a href={"http://www.ebi.ac.uk/pdbe/entry/pdb/1cbs"}><b>here</b></a>.
+                            </p>
+                            <p>
+                                First thing, you may notice in the interactive validation, is overall chain quality. The protein has only one chain and one model. Most of the residues are colored by green color.
+                                That means, that the data does not contain any faults. 10 residues contains clashes and 3 residues ontain sidechain outliers. There are no Ramachandran or RSRZ outliers.
+                            </p>
+                            <p>
+                                On the second slide there are visualization tools, The ramachandran component on the left side and the litemol viewer on the right. On the ramachandran plot,
+                                you can see, that there are just three residues ouutside the contours. Why they aren't highlighted as outliers? The residues are glycines (triangle symbol) and
+                                the probability map for dihedral angles is different. You can check that by pointing cursor on the residues for few seconds. Or you can change the contours with settings
+                                below the plot.
+                            </p>
+                            <p>
+                                The litemol viewer colors residues by their quality. The coloring is the same as on the first slide. By clicking on each residue, you can inspect it's density.
+                            </p>
+                            <p>
+                                The tables on the third slide are about binding sites and ligands. 
+                            </p>
                         </div>
-                        <div style={{margin: '10px', display: 'flex'}}>
-                            <div style={{width: '49.5%', display: 'inline-block'}}>
-                                <p>
-                                    Very useful validation plot which can be found either in validation report and on PDBe entry page is above.
-                                </p>
-                                    <img src={"src/videos/1cbs_validation_r.png"} width={"95%"} style={{margin: '10px 0 10px 0'}}/>
-                                <p>
-                                    Every molecule in PDB has it's own validation report. Typical questions that you can often answer after a cursory look at such a report include:
-                                </p>
-                                <ul>
-                                    <li>What is your impression of the quality of this entry?</li>
-                                    <li>How does it compare to other entries in the PDB and to other crystal structures at similar resolution?</li>
-                                    <li>Are there any residues with a poor fit to the density?</li>
-                                    <li>Are there any consecutive stretches of residues with many outliers?</li>
-                                    <li>Is the geometry of the ligand in order?</li>
-                                    <li>Does it appear to fit the density well?</li>
-                                </ul>
-                                <p style={{marginTop: '10px'}}>
-                                    Try to find answers to all these questions in attached valiadation report.
-                                </p>
-                            </div>
-                            <div style={{width: '50%', display: 'inline-block'}}>
-                                <embed src={"src/videos/1cbs_full_validation.pdf"} width="100%" height="850px" />
-                            </div>
-                        </div>
-                        <div style={{margin: '10px', display: 'flex'}}>
-                            <div style={{width: '50%', display: 'inline-block'}}>
-                                <p>
-                                    An overall quality look can you give also a Ramachandran plot.
-                                    As you can read in Coordinates section, Ramachandran plot is a plot of &phi; and &psi;
-                                    angles for each residue in protein.
-                                </p>
-                                <p>
-                                    The Ramachandran plot for 1CBS may be called as pretty.
-                                    There is not any outlier, and almost all dihedral angles are evalueated as preferred.
-                                    You may think, that the glycine residues (triangles) are outside the countours, so
-                                    they are outliers, but glycine has different probabilty countours than other residues.
-                                    You can play around wit the Ramachandran plot and it's settings.
-                                </p>
-                            </div>
-                            <div style={{width: '50%', display: 'inline-block'}}>
-                                <div style={{position: 'absolute', top: '40px'}}>
-                                    {/*
-                                    // @ts-ignore */}
-                                    <ramachandran-component pdb-ids='["1cbs"]' chains-to-show='["A"]' models-to-show='["1"]' width="550"/>
-                                </div>
-                            </div>
-                        </div>
-                    </Carousel>
-                {/*<div style={{width: '95%'}}>*/}
-                    {/*<h2>Interactive validation</h2>*/}
-                    {/*<p>In this section you can find interactive validation tutorial showing you, how you may use available tools.</p>*/}
-                    {/*<div>*/}
-                        {/*<h3>Example I.</h3>*/}
-                        {/*<div>*/}
-                            {/*<p>*/}
-                                {/*1CBS is a crystal structure of cellular retinoic-acid-binding proteins I and II in complex with all-trans-retionic acid and a synthetic retionid. You can find the structure <a href={"http://www.ebi.ac.uk/pdbe/entry/pdb/1cbs"}><b>here</b></a>.*/}
-                            {/*</p>*/}
-                            {/*<p>*/}
-                                {/*First thing you can do is inspect the molecule in the litemol. Put the PDBid '1cbs' in the following input and the litemol component will load.*/}
-                            {/*</p>*/}
-                            {/*<div>*/}
-                                {/*<label>PDBid</label>*/}
-                                {/*<input type={"text"} name={"pdb-id"} value={this.state.pdbId} onChange={this.handleChange}/>*/}
-                                {/*<input type="submit" value="Submit" className={"btn btn-primary mb-2"}/>*/}
-                            {/*</div>*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
-                {/*</div>*/}
-                {/*<div>*/}
-                    {/*<form onSubmit={this.handleSubmit.bind(this)} className={"form-inline mb-2"}>*/}
-                        {/*<div className="form-group" style={{marginTop: '60px'}}>*/}
-                            {/*<label>PDBid</label>*/}
-                            {/*<input type={"text"} name={"pdb-id"} value={this.state.pdbId} onChange={this.handleChange}/>*/}
-                            {/*<input type="submit" value="Submit" className={"btn btn-primary mb-2"}/>*/}
-                        {/*</div>*/}
-                    {/*</form>*/}
-                {/*</div>*/}
-                {/*<div id={"interactive-part"}>*/}
-                    {/*{this.state.dynComponent}*/}
-                {/*</div>*/}
+                    </div>
+                    <div style={{marginTop: '300px', height: '600px'}} id={'example1'}>
+                        <DynComponent pdbId={"1cbs"} models={[1]} chains={['A']}/>
+                    </div>
+                </div>
             </div>
         </div>;
     }
+    componentDidMount(): void {
+        clickForValidationColoring();
+
+        function clickForValidationColoring() {
+            setTimeout(
+                function () {
+                    var node = document.getElementsByClassName('lm-btn lm-btn-block lm-btn-commit lm-btn-commit-on')[1];
+                    if (node) {
+                        //@ts-ignore
+                        node.click();
+                        //@ts-ignore
+                        document.getElementsByClassName('lm-icon lm-icon-tools')[0].parentNode.click();
+                    } else
+                        clickForValidationColoring();
+                }, 3000);
+        }
+    }
 }
 
-// const DynComponent = (props: any) => {
-//     let pdbIdField = `["${props.pdbId}"]`;
-//     let chainsField = `["${props.chains}"]`;
-//     let modelsField = `["${props.models}"]`;
-//     return (
-//         <div>
-//             <div style={{width: '42%', display: 'inline-block', marginTop: '20px'}}>
-//             {/*
-//                // @ts-ignore */}
-//                 <ramachandran-component pdb-ids={pdbIdField} chains-to-show={chainsField} models-to-show={modelsField} width="550" id='ramachandran-component'/>
-//             </div>
-//             <div style={{width: '57%', display: 'inline-block', position: 'relative', float: 'right', height: '800px'}}>
-//                 <Litemol pdbId={props.pdbId}/>
-//             </div>
-//         </div>
-//     );
-// };
 export default Example1;

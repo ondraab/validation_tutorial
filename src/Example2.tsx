@@ -1,11 +1,9 @@
 import * as React from "react";
 import {Parallax} from 'react-spring/renderprops-addons';
 import {NavLink} from "react-router-dom";
-import * as $ from "jquery";
-// import DynComponent from "./DynComponent";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Carousel from "nuka-carousel"
 import Litemol from "./Litemol";
+import DynComponent from "./DynComponent";
 // @ts-ignore
 angular.module('myModule', ['pdb.litemol']);
 
@@ -82,54 +80,6 @@ class Example2 extends React.Component<{}, LitemolStates> {
         }
     }
 
-    private listenScrollEvent() {
-        //@ts-ignore
-        let currPos = this.parallax.current / this.parallax.space;
-        if (currPos < 0.75 && this.activeTab != 0) {
-            $('div.page-nav a').each((a: number, obj: any) => {
-                $(obj).removeClass('active').removeClass('onHover');});
-            $('div.page-nav a:first').addClass('active').addClass('onHover');
-            setTimeout(() => {
-                $('div.page-nav a:first').removeClass('onHover')
-            }, 2000);
-            this.activeTab = 0;
-        } else if (this.activeTab != 1 && currPos >= 0.75 && currPos < 1.5) {
-            $('div.page-nav a').each((a: number, obj: any) => {
-                $(obj).removeClass('active').removeClass('onHover');
-                if (a == 1) {
-                    $(obj).addClass('active').addClass('onHover');
-                    setTimeout(() => {
-                        $(obj).removeClass('onHover')
-                    }, 2000);
-                    this.activeTab = 1;
-                }
-            })
-        } else if (this.activeTab != 2 && currPos >= 1.5 && currPos < 2.25) {
-            $('div.page-nav a').each((a: number, obj: any) => {
-                $(obj).removeClass('active').removeClass('onHover');
-                if (a == 2) {
-                    $(obj).addClass('active').addClass('onHover');
-                    setTimeout(() => {
-                        $(obj).removeClass('onHover')
-                    }, 2000);
-                    this.activeTab = 2;
-                }
-            })
-        } else if (this.activeTab != 3 && currPos >= 2.25) {
-            $('div.page-nav a').each((a: number, obj: any) => {
-                $(obj).removeClass('active').removeClass('onHover');
-                if (a == 3) {
-                    $(obj).addClass('active').addClass('onHover');
-                    setTimeout(() => {
-                        $(obj).removeClass('onHover')
-                    }, 2000);
-                    this.activeTab = 3;
-                }
-            })
-        }
-    }
-
-
     public render() {
         // @ts-ignore
         return <div className="App">
@@ -173,77 +123,41 @@ class Example2 extends React.Component<{}, LitemolStates> {
                     </NavLink>
                 </div>
             </div>
-            <div id={"main-content"} onScroll={this.listenScrollEvent.bind(this)}>*/}
-                <Carousel style={{position: 'absolute', top: '54px'}} dragging={false}>
-                    <div style={{margin: '10px'}}>
-                        <div style={{display: 'inline-block', width: '40%'}}>
-                            <h3>Example II</h3>
-                            <div>
-                                <p>
-                                    2GN5 is refined structure of the gene 5 DNA binding protein from bacteriophage FD.
-                                    It was released in January 1986.
-                                    You can find the structure <a href={"http://www.ebi.ac.uk/pdbe/entry/pdb/2gn5"}><b>here</b></a>.
-                                    The structure was determined using X-ray and it's resolution is 2.3Å.
-                                </p>
-                                <p>
-                                    The structure is not large, it's length is only 87 amino acids.
-                                </p>
-                                <p>
-                                    You can look over the structure in Litemol again.
-                                </p>
-                                <div>
-                            </div>
-                        </div>
-                            <div>
-
-                            </div>
-                        </div>
-                        <div style={{display: 'inline-block', width: '58%', position: 'relative', float: 'right', height: '400px'}}>
-                            <Litemol pdbId={'2gn5'}/>
+            <div id={"main-content"}>
+                <div>
+                    <div style={{display: 'inline-block', margin: '60px 0 0 10px'}}>
+                        <h2>Example I.</h2>
+                        <div>
+                            <p>
+                                2GN5
+                            </p>
+                            <p></p>
                         </div>
                     </div>
-                    <div style={{margin: '10px', display: 'flex'}}>
-                        <div style={{width: '49.5%', display: 'inline-block'}}>
-                            <p>
-                                Very useful validation plot which can be found either in validation report and on PDBe entry page is above.
-                            </p>
-                                <img src={"src/videos/2gn5_validation.png"} width={"95%"} style={{margin: '10px 0 10px 0'}}/>
-                            <p>
-                                As you can see in the plot above, scores are in red areas. This means, that the quality of the structure is not very well.
-                                On the right sight is validation report. You can go through it and try to find, where may be problems.
-                            </p>
-                            <p>
-                                First thing, what you should notice is on the bottom of page 2 of VR. The table summarizes
-                                the quality of chain. You can see, that 67% of residues contains 3 or more errors, the rest
-                                of the the residues contains 2 errors per residue. This means, that the structure has very poor fit.
-                                Similar, but more detailed plot is on the page 4.
-                            </p>
-                        </div>
-                        <div style={{width: '50%', display: 'inline-block'}}>
-                            <embed src={"src/videos/2gn5_full_validation.pdf"} width="100%" height="850px" />
-                        </div>
+                    <div style={{marginTop: '300px', height: '600px'}} id={'example1'}>
+                        <DynComponent pdbId={"2gn5"} models={[1]} chains={['A']}/>
                     </div>
-                </Carousel>
+                </div>
             </div>
         </div>;
     }
-}
 
-// const DynComponent = (props: any) => {
-//     let pdbIdField = `["${props.pdbId}"]`;
-//     let chainsField = `["${props.chains}"]`;
-//     let modelsField = `["${props.models}"]`;
-//     return (
-//         <div>
-//             <div style={{width: '42%', display: 'inline-block', marginTop: '20px'}}>
-//             {/*
-//                // @ts-ignore */}
-//                 <ramachandran-component pdb-ids={pdbIdField} chains-to-show={chainsField} models-to-show={modelsField} width="550" id='ramachandran-component'/>
-//             </div>
-//             <div style={{width: '57%', display: 'inline-block', position: 'relative', float: 'right', height: '800px'}}>
-//                 <Litemol pdbId={props.pdbId}/>
-//             </div>
-//         </div>
-//     );
-// };
+    componentDidMount(): void {
+        clickForValidationColoring();
+
+        function clickForValidationColoring() {
+            setTimeout(
+                function () {
+                    var node = document.getElementsByClassName('lm-btn lm-btn-block lm-btn-commit lm-btn-commit-on')[1];
+                    if (node) {
+                        //@ts-ignore
+                        node.click();
+                        //@ts-ignore
+                        document.getElementsByClassName('lm-icon lm-icon-tools')[0].parentNode.click();
+                    } else
+                        clickForValidationColoring();
+                }, 3000);
+        }
+    }
+}
 export default Example2;
