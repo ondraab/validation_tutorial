@@ -365,10 +365,11 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                 sidechainOutliers:    number,
                 ramachandranOutliers: number,
                 bondLengths:          number,
-                clashes:              number} = {rsrz: 0,
+                clashes:              number,
+                len:                  number} = {rsrz: 0,
                                                  sidechainOutliers: 0,
                                                  ramachandranOutliers: 0,
-                                                 bondLengths: 0, clashes: 0};
+                                                 bondLengths: 0, clashes: 0, len: 0};
             chainStats.forEach((chain: any) => {
                 onCh.push(<h5>Chain ID: {chain.chainId}</h5>);
                 // @ts-ignore
@@ -376,6 +377,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                     if (typeof ch[1] == "object") {
                         // @ts-ignore
                         Object.entries(ch[1]).forEach((resid: any) => {
+                            modelStats.len++;
                             let className = '';
                             let rsrz: boolean = false;
                             if (typeof resid[1].outlierTypes == 'undefined') {
@@ -419,15 +421,15 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                         });
                         onCh.push(<div className={"statistic-line"}>
                             <h6>Model: {ch[0]} </h6>
-                            <div>Clashes: {modelStats.clashes} </div>
-                            <div>Sidechain outliers: {modelStats.sidechainOutliers} </div>
-                            <div>Ramachandran outliers: {modelStats.ramachandranOutliers} </div>
-                            <div>Bond lengths: {modelStats.bondLengths} </div>
-                            <div>RSRZ: {modelStats.rsrz}</div></div>);
+                            <div>Clashes: {modelStats.clashes} ({(modelStats.clashes/modelStats.len*100).toFixed(0)}%) </div>
+                            <div>Sidechain outliers: {modelStats.sidechainOutliers} ({(modelStats.sidechainOutliers/modelStats.len*100).toFixed(0)}%) </div>
+                            <div>Ramachandran outliers: {modelStats.ramachandranOutliers} ({(modelStats.ramachandranOutliers/modelStats.len*100).toFixed(0)}%) </div>
+                            <div>Bond lengths: {modelStats.bondLengths} ({(modelStats.bondLengths/modelStats.len*100).toFixed(0)}%) </div>
+                            <div>RSRZ: {modelStats.rsrz} ({(modelStats.rsrz/modelStats.len*100).toFixed(0)}%)</div></div>);
                     }
                     onCh.push(tmpElement);
                     tmpElement = [];
-                    modelStats = {rsrz: 0, sidechainOutliers: 0, ramachandranOutliers: 0, bondLengths: 0, clashes: 0};
+                    modelStats = {rsrz: 0, sidechainOutliers: 0, ramachandranOutliers: 0, bondLengths: 0, clashes: 0, len: 0};
                 });
                 result.push(onCh);
                 onCh = [];
@@ -524,8 +526,8 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
 
                         fetch(`https://www.ebi.ac.uk/pdbe/api/validation/residuewise_outlier_summary/entry/${self.state.pdbId}`)
                             .then((response: any) => response.json())
-                            .then((data: any) => {
-                                data[self.state.pdbId].molecules.forEach((molecule: any) => {
+                            .then((residueWiseData: any) => {
+                                residueWiseData[self.state.pdbId].molecules.forEach((molecule: any) => {
                                     for (const chain of molecule.chains) {
                                         for (const mod of chain.models) {
                                             for (const res of mod.residues) {
@@ -559,15 +561,15 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                             molecs[molecule.entity_id] = Object.assign({}, chainLen);
                                             chainLen = {};
                                         });
-
+                                        let numberOfModels = residueWiseData[self.state.pdbId].molecules[0].chains[0].models.length;
                                         self.setState({
                                             perResidQuelity: <div>
                                                 <h3>Overall quality:</h3>
                                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                                                    <p><b>Clashes: </b>{clashes} ({(clashes/total * 100).toFixed(0)}%)</p>
-                                                    <p><b>Ramachandran outliers: </b>{ramaOutl} ({(ramaOutl/total * 100).toFixed(0)}%)</p>
-                                                    <p><b>Sidechain outliers: </b>{sidechainOutl} ({(sidechainOutl/total * 100).toFixed(0)}%)</p>
-                                                    <p><b>RSRZ outliers: </b>{rsrzCount} ({(rsrzCount/total * 100).toFixed(0)}%)</p>
+                                                    <p><b>Clashes: </b>{(clashes/numberOfModels).toFixed(0)} ({((clashes/total * 100)/numberOfModels).toFixed(0)}%)</p>
+                                                    <p><b>Ramachandran outliers: </b>{(ramaOutl/numberOfModels).toFixed(0)} ({((ramaOutl/total * 100)/numberOfModels).toFixed(0)}%)</p>
+                                                    <p><b>Sidechain outliers: </b>{(sidechainOutl/numberOfModels).toFixed(0)} ({((sidechainOutl/total * 100)/numberOfModels).toFixed(0)}%)</p>
+                                                    <p><b>RSRZ outliers: </b>{(rsrzCount/numberOfModels).toFixed(0)} ({((rsrzCount/total * 100)/numberOfModels).toFixed(0)}%)</p>
                                                 </div>
                                             </div>,
                                             perResidQuelityDetail: <div>
@@ -848,7 +850,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                     </div>
                     <div style={{margin: '15px'}}>
                         <div style={{width: '49.5%', display: 'inline-block'}}>
-                            <h3>Queality of binding sites</h3>
+                            <h3>Quality of binding sites</h3>
                             {this.state.bindingSiteTable}
                         </div>
                         <div style={{width: '49.5%', display: 'inline-block', verticalAlign: 'top', float: 'right'}}>
@@ -858,15 +860,6 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                 <b>Data retrieved from ValidatorDB</b>
                             </a>
                             {this.state.ligandDrugbank}
-                            {/*<p>*/}
-                                {/*On the plot below, you can compare check the quality of specified PDB ligand compared to all ligands over time.*/}
-                                {/*As a quality factor, average ligand RSCC (real space correlation coefficient) is used.*/}
-                            {/*</p>*/}
-                            {/*<div style={{textAlign: 'center'}}>*/}
-                                {/*<a href="#" onClick={this.showModal}>*/}
-                                    {/*<b>Expand plot</b>*/}
-                                {/*</a>*/}
-                            {/*</div>*/}
                             <div className={"iframe-parent"}>
                                 {this.state.completnes}
                             </div>

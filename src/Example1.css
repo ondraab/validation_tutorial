@@ -1,4 +1,14 @@
 #example1 .slider {
     height: 700px !important;
-    margin-top: 300px;
+    margin-top: 400px;
+}
+
+#example2 .slider {
+     height: 700px !important;
+     margin-top: 250px;
+}
+
+#example3 .slider {
+    height: 700px !important;
+    margin-top: 250px;
 }

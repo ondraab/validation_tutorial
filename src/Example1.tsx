@@ -144,11 +144,20 @@ class Example1 extends React.Component<{}, LitemolStates> {
                                 The litemol viewer colors residues by their quality. The coloring is the same as on the first slide. By clicking on each residue, you can inspect it's density.
                             </p>
                             <p>
-                                The tables on the third slide are about binding sites and ligands. 
+                                The tables on the third slide are about binding sites and ligands. In the left table, you can
+                                 check the quality of binding sites. In the protein 1CBS, there is only one binding site,
+                                <b>AC1</b>. It's binding site for <b>REA</b> ligand. The coloring in the left table represents,
+                                how many faults are in individual binding site residues.
+                            </p>
+                            <p>
+                                In the right table is summary of ligands in protein and their annotation validations, retrieved
+                                from ValidatorDB. The <b>REA</b> ligand does not have any problems. The corresponding
+                                 drugbank ID is <a href={'https://www.drugbank.ca/drugs/DB00755'}><b>DB00755</b></a>. On the
+                                drugbank site you can check more information about the ligand.
                             </p>
                         </div>
                     </div>
-                    <div style={{marginTop: '300px', height: '600px'}} id={'example1'}>
+                    <div style={{marginTop: '500px', height: '214px'}} id={'example1'}>
                         <DynComponent pdbId={"1cbs"} models={[1]} chains={['A']}/>
                     </div>
                 </div>

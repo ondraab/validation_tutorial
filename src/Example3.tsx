@@ -131,12 +131,27 @@ class Example3 extends React.Component<{}, LitemolStates> {
                         <h2>Example III.</h2>
                         <div>
                             <p>
-                                1RIP
+                                The last example is 1RIP. It's ribosomal protein and in opposite to two preceding examples,
+                                this structure was determined using NMR. Because of that, it has more models of one chain.
                             </p>
-                            <p></p>
+                            <p>
+                                The values on validation plot are all in red area. When you take a look at the quality
+                                of individual models, you can see differences. For example the third model has the greatest
+                                number of residues, which contains some error. You can see, that there is only one residue
+                                colored green. This means, that only one residue does not contains any faults.
+                                The overall quality of each model is low, according to the fact, that most of the residues
+                                contains some error.
+                            </p>
+                            <p>
+                                On the second slide, you can see the Ramachandran plot and 3D structure. In the Ramachandran plot,
+                                you can use checkboxes below the plot, to select, which models will be displayed in plot. In
+                                default settings, the first model is displayed. You may notice, that most of the residues are colored
+                                red, this means, that they are outliers, their dihedral angles are not in preferred or allowed regions.
+                                You can also check the differences between individual models.
+                            </p>
                         </div>
                     </div>
-                    <div style={{marginTop: '300px', height: '600px'}} id={'example1'}>
+                    <div style={{marginTop: '300px', height: '600px'}} id={'example3'}>
                         <DynComponent pdbId={"1rip"} models={[1,2,3,4,5,6]} chains={['A']}/>
                     </div>
                 </div>

@@ -126,15 +126,28 @@ class Example2 extends React.Component<{}, LitemolStates> {
             <div id={"main-content"}>
                 <div>
                     <div style={{display: 'inline-block', margin: '60px 0 0 10px'}}>
-                        <h2>Example I.</h2>
+                        <h2>Example II.</h2>
                         <div>
                             <p>
-                                2GN5
+                                Second example is much more interesting, while talking about quality. The first impression
+                                may be the Validation plot. All values are in red area. The next thing to notice is overall
+                                quality of residues. Most of the residues are colored red, that means that they are flagged,
+                                to contain 3 or more errors. You may see, that 99% or residues contains clashes. The red
+                                flags in both plot show us, that the quality of molecule is not good.
                             </p>
-                            <p></p>
+                            <p>
+                                On the second slide, you can check the Ramachandran plot and the 3D structure of gene 5 DNA binding protein.
+                                On the Ramachandran plot, you can see, that only about a half of residues is laying in
+                                preferred regions and about a quarter of them, is marked as outliers. You can also check
+                                the quality of individual residues in both components. In litemol it is colored by default,
+                                in Ramachandran comoponent you have to change the coloring to quality.
+                            </p>
+                            <p>
+                                In this protein, there are not any binding sites or ligands.
+                            </p>
                         </div>
                     </div>
-                    <div style={{marginTop: '300px', height: '600px'}} id={'example1'}>
+                    <div style={{marginTop: '300px', height: '398px'}} id={'example2'}>
                         <DynComponent pdbId={"2gn5"} models={[1]} chains={['A']}/>
                     </div>
                 </div>
