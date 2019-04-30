@@ -526,8 +526,8 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
 
                         fetch(`https://www.ebi.ac.uk/pdbe/api/validation/residuewise_outlier_summary/entry/${self.state.pdbId}`)
                             .then((response: any) => response.json())
-                            .then((residueWiseData: any) => {
-                                residueWiseData[self.state.pdbId].molecules.forEach((molecule: any) => {
+                            .then((data: any) => {
+                                data[self.state.pdbId].molecules.forEach((molecule: any) => {
                                     for (const chain of molecule.chains) {
                                         for (const mod of chain.models) {
                                             for (const res of mod.residues) {
@@ -561,7 +561,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                             molecs[molecule.entity_id] = Object.assign({}, chainLen);
                                             chainLen = {};
                                         });
-                                        let numberOfModels = residueWiseData[self.state.pdbId].molecules[0].chains[0].models.length;
+                                        let numberOfModels = data[self.state.pdbId].molecules[0].chains[0].models.length;
                                         self.setState({
                                             perResidQuelity: <div>
                                                 <h3>Overall quality:</h3>
@@ -578,6 +578,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                             </div>
                                         })
                                     });
+
                                 bindingSites.forEach((bindingSite: any) => {
                                     bindingSite['site_residues'].forEach((residue: any) => {
                                         if (residues.length == 0) {
@@ -594,12 +595,13 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                             });
                                         }
                                         let finded: any = residues.find(obj => obj.author_residue_number == residue.author_residue_number);
+
                                         siteResidues.push({
                                             authorResNum: residue.author_residue_number,
                                             resNum: residue.residue_number,
                                             chemCompId: residue.chem_comp_id,
                                             chain: residue.chain_id,
-                                            outliersType: typeof finded != 'undefined' ? finded.outlier_types : [],
+                                            outliersType: typeof finded !== 'undefined' ? finded.outlier_types : [],
                                         })
                                     });
                                     editedSites.push({
@@ -617,8 +619,8 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                                         tableStyle={{fontSize: 'smaller'}}
                                                         maxHeight={'550'}
                                                         scrollTop={'Top'}>
-                                            <TableHeaderColumn width='10%' dataField={'siteId'} tdStyle={{cursor: 'pointer'}}>Site ID</TableHeaderColumn>
-                                            <TableHeaderColumn isKey dataField={'details'} tdStyle={{cursor: 'pointer'}} dataFormat={imageFormatter}>Details</TableHeaderColumn>
+                                            <TableHeaderColumn isKey width='10%' dataField={'siteId'} tdStyle={{cursor: 'pointer'}}>Site ID</TableHeaderColumn>
+                                            <TableHeaderColumn dataField={'details'} tdStyle={{cursor: 'pointer'}} dataFormat={imageFormatter}>Details</TableHeaderColumn>
                                         </BootstrapTable>
                                     </div>,
                                 })
