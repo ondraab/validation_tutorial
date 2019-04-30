@@ -1,14 +1,14 @@
-#example1 .slider {
+#example1 .slider:not(.contour):not(.outlier) {
     height: 700px !important;
     margin-top: 400px;
 }
 
-#example2 .slider {
+#example2 .slider:not(.contour):not(.outlier) {
      height: 700px !important;
      margin-top: 250px;
 }
 
-#example3 .slider {
+#example3 .slider:not(.contour):not(.outlier) {
     height: 700px !important;
     margin-top: 250px;
 }
