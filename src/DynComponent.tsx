@@ -217,6 +217,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
             return elements
         }
 
+        // @ts-ignore
         function imageFormatter(cell: any, row: any){
             return  (<div style={{cursor: 'pointer'}}>{cell}
                         <div style={{
@@ -233,11 +234,12 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
             return (<div>{row.chemCompId} {row.authorResNum} {row.chain}</div>)
         }
 
+        // @ts-ignore
         function expandComponent(row: any) {
             return(
                 <div style={{transition: 'height 0.5s'}}>
                     <BootstrapTable data={row.residues} trClassName={lineColor}>
-                        <TableHeaderColumn isKey dataField={'authorResNum'} dataFormat={formatResNumName} width={'20%'}>Residue identifier</TableHeaderColumn>
+                            <TableHeaderColumn isKey dataField={'authorResNum'} dataFormat={formatResNumName} width={'20%'}>Residue identifier</TableHeaderColumn>
                         <TableHeaderColumn dataField={'outliersType'}>Outlier types</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
@@ -526,8 +528,8 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
 
                         fetch(`https://www.ebi.ac.uk/pdbe/api/validation/residuewise_outlier_summary/entry/${self.state.pdbId}`)
                             .then((response: any) => response.json())
-                            .then((data: any) => {
-                                data[self.state.pdbId].molecules.forEach((molecule: any) => {
+                            .then((residueWise: any) => {
+                                residueWise[self.state.pdbId].molecules.forEach((molecule: any) => {
                                     for (const chain of molecule.chains) {
                                         for (const mod of chain.models) {
                                             for (const res of mod.residues) {
@@ -561,7 +563,8 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                             molecs[molecule.entity_id] = Object.assign({}, chainLen);
                                             chainLen = {};
                                         });
-                                        let numberOfModels = data[self.state.pdbId].molecules[0].chains[0].models.length;
+                                        let numberOfModels = residueWise[self.state.pdbId].molecules[0].chains[0].models.length;
+
                                         self.setState({
                                             perResidQuelity: <div>
                                                 <h3>Overall quality:</h3>
@@ -578,12 +581,11 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                             </div>
                                         })
                                     });
-
                                 bindingSites.forEach((bindingSite: any) => {
                                     bindingSite['site_residues'].forEach((residue: any) => {
                                         if (residues.length == 0) {
                                             let chain = residue['chain_id'];
-                                            let molecules = data[self.state.pdbId]['molecules'];
+                                            let molecules = residueWise[self.state.pdbId]['molecules'];
                                             molecules.forEach((molecule: any) => {
                                                 molecule['chains'].forEach((currChain: any) => {
                                                     if (currChain['chain_id'] == chain) {
@@ -619,7 +621,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                                         tableStyle={{fontSize: 'smaller'}}
                                                         maxHeight={'550'}
                                                         scrollTop={'Top'}>
-                                            <TableHeaderColumn isKey width='10%' dataField={'siteId'} tdStyle={{cursor: 'pointer'}}>Site ID</TableHeaderColumn>
+                                            <TableHeaderColumn width='10%' isKey dataField={'siteId'} tdStyle={{cursor: 'pointer'}}>Site ID</TableHeaderColumn>
                                             <TableHeaderColumn dataField={'details'} tdStyle={{cursor: 'pointer'}} dataFormat={imageFormatter}>Details</TableHeaderColumn>
                                         </BootstrapTable>
                                     </div>,
