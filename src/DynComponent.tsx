@@ -100,7 +100,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
             .then((data: any) => {
                 const ligandsInBank = data[pdbId];
                 fetch(`https://proxy-helper.herokuapp.com/`, {headers: {
-                    "target-url": `https://webchem.ncbr.muni.cz/Platform/ValidatorDb/SearchData?structures=${pdbId}`
+                    "target-url": `http://webchem.ncbr.muni.cz/Platform/ValidatorDb/SearchData?structures=${pdbId}`
                     }})
                     .then((response: any) => response.json())
                     .then((data: any) => {
@@ -688,7 +688,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                     .then((ebiLigands: any) => {
                         ebiLigandsObj = groupBy2(ebiLigands[self.state.pdbId], 'chem_comp_id');
                         fetch(`https://proxy-helper.herokuapp.com/`, {headers: {
-                                "target-url": `https://webchem.ncbr.muni.cz/Platform/ValidatorDb/SearchData?structures=${self.state.pdbId}`
+                                "target-url": `http://webchem.ncbr.muni.cz/Platform/ValidatorDb/SearchData?structures=${self.state.pdbId}`
                             }})
                             .then((response: any) => response.json())
                             .then((data: any) => {
