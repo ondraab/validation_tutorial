@@ -25,6 +25,7 @@ interface DynComponentStates {
     perResidQuelity: JSX.Element;
     perResidQuelityDetail: JSX.Element;
     showStatsModal: boolean;
+    boundMolecules: JSX.Element;
 }
 interface DynComponentProps {
     pdbId: string;
@@ -90,7 +91,8 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
             summaryInfo: <div/>,
             perResidQuelity: <div/>,
             perResidQuelityDetail: <div/>,
-            completnes: <div/>};
+            completnes: <div/>,
+            boundMolecules: <div/>};
     }
 
     static getDrugbankData(pdbId: string) {
@@ -138,17 +140,6 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
         //@ts-ignore
         let commonLigands: any[] = [];
 
-        function cellFormatter(cell: any, row: any) {
-            return (<div
-                style={typeof row.MissingAtoms != 'undefined' ? {cursor: 'pointer'} : {}}>
-                <b>
-                    <a target="_blank" rel="noopener noreferrer"
-                       href={`https://www.drugbank.ca/drugs/${cell}`}
-                       style={{cursor: 'pointer'}}>{cell}
-                       </a>
-                </b>
-            </div>);
-        }
 
         function lineColor(row: any) {
             switch (row.outliersType.length) {
@@ -167,23 +158,77 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
             return rowIdx % 2 === 0 ? 'tr-column-white' : 'tr-column-gray';
         }
 
-        function dataColorTextYellow(cell: any, row: any) {
-            if (typeof cell == 'undefined') {
-                return <div style={{cursor: 'default'}}>No validation data available</div>
-            }
-            if (typeof row.Entries != 'undefined')
-                return cell == 0 ? (<div style={{color: '#3CA53A', cursor: 'pointer'}}>{cell}</div>) : (<div style={{color: '#D6BD42', cursor: 'pointer'}}>{cell}</div>);
-            return cell == 0 ? (<div style={{color: '#3CA53A'}}>{cell}</div>) : (<div style={{color: '#D6BD42'}}>{cell}</div>);
-        }
-
-        function dataColorTextRed(cell: any, row: any) {
-            if (typeof cell == 'undefined') {
-                return <div style={{cursor: 'default'}}>No validation data available</div>
-            }
-            if (typeof row.Entries != 'undefined')
-                return cell == 0 ? (<div style={{color: '#3CA53A', cursor: 'pointer'}}>{cell}</div>) : (<div style={{color: '#DD191D', cursor: 'pointer'}}>{cell}</div>);
-            return cell == 0 ? (<div style={{color: '#3CA53A'}}>{cell}</div>) : (<div style={{color: '#DD191D'}}>{cell}</div>);
-        }
+        // function dataColorTextYellow(cell: any, row: any) {
+        //     if (typeof cell == 'undefined') {
+        //         return <div style={{cursor: 'default'}}>No validation data available</div>
+        //     }
+        //     if (typeof row.Entries != 'undefined')
+        //         return cell == 0 ? (<div style={{color: '#3CA53A', cursor: 'pointer'}}>{cell}</div>) : (<div style={{color: '#D6BD42', cursor: 'pointer'}}>{cell}</div>);
+        //     return cell == 0 ? (<div style={{color: '#3CA53A'}}>{cell}</div>) : (<div style={{color: '#D6BD42'}}>{cell}</div>);
+        // }
+        //
+        // function dataColorTextRed(cell: any, row: any) {
+        //     if (typeof cell == 'undefined') {
+        //         return <div style={{cursor: 'default'}}>No validation data available</div>
+        //     }
+        //     if (typeof row.Entries != 'undefined')
+        //         return cell == 0 ? (<div style={{color: '#3CA53A', cursor: 'pointer'}}>{cell}</div>) : (<div style={{color: '#DD191D', cursor: 'pointer'}}>{cell}</div>);
+        //     return cell == 0 ? (<div style={{color: '#3CA53A'}}>{cell}</div>) : (<div style={{color: '#DD191D'}}>{cell}</div>);
+        // }
+        //
+        // function cellFormatter(cell: any, row: any) {
+        //     return (<div
+        //         style={typeof row.MissingAtoms != 'undefined' ? {cursor: 'pointer'} : {}}>
+        //         <b>
+        //             <a target="_blank" rel="noopener noreferrer"
+        //                href={`https://www.drugbank.ca/drugs/${cell}`}
+        //                style={{cursor: 'pointer'}}>{cell}
+        //                </a>
+        //         </b>
+        //     </div>);
+        // }
+        //
+        // function validatorLink(cell: any, row: any) {
+        //     return (
+        //         <div style={{cursor: 'pointer'}}>
+        //             <a target="_blank" rel="noopener noreferrer"
+        //                    href={encodeURI(`http://webchem.ncbr.muni.cz/Platform/ValidatorDb/Molecule/${self.state.pdbId}/${row.MainResidue.split(/ (.+)/)[1]}`)}
+        //                    style={{cursor: 'pointer'}}>
+        //                 <b style={{cursor: 'pointer'}}>{cell}</b>
+        //             </a>
+        //         </div>)
+        // }
+        //
+        // function expandLigandSummary(row: any) {
+        //     return (
+        //         <div style={{transition: 'height 0.5s'}}>
+        //             <BootstrapTable data={row.Entries}>
+        //                 <TableHeaderColumn isKey dataField={'MainResidue'} dataFormat={validatorLink}>Main residue</TableHeaderColumn>
+        //                 <TableHeaderColumn dataField={'MissingAtomCount'} dataFormat={dataColorTextRed} tdStyle={{whiteSpace: 'normal'}}>Missing atoms</TableHeaderColumn>
+        //                 <TableHeaderColumn dataField={'MissingRingCount'} dataFormat={dataColorTextRed} tdStyle={{whiteSpace: 'normal'}}>Missing rings</TableHeaderColumn>
+        //                 <TableHeaderColumn dataField={'ChiralityMismatchCount'} dataFormat={dataColorTextYellow} tdStyle={{whiteSpace: 'normal'}}>Chirality mismatch</TableHeaderColumn>
+        //                 <TableHeaderColumn dataField={'SubstitutionCount'} dataFormat={dataEmptyFormat} tdStyle={{whiteSpace: 'normal'}}>Substitutions</TableHeaderColumn>
+        //                 <TableHeaderColumn dataField={'NameMismatchCount'} dataFormat={dataEmptyFormat} tdStyle={{whiteSpace: 'normal'}}>Name mismatch</TableHeaderColumn>
+        //             </BootstrapTable>
+        //         </div>
+        //     )
+        // }
+        //
+        // function dataEmptyFormat(cell: any, row: any) {
+        //     if (typeof cell == 'undefined')
+        //         return <div>No validation data avalible</div>
+        //     return <div style={{cursor: 'pointer'}}>{cell}</div>
+        // }
+        //
+        // function groupBy2(xs: any, prop: string) {
+        //     var grouped = {};
+        //     for (var i=0; i<xs.length; i++) {
+        //         var p = xs[i][prop];
+        //         if (!grouped[p]) { grouped[p] = []; }
+        //         grouped[p].push(xs[i]);
+        //     }
+        //     return grouped;
+        // }
 
         function plainData(cell: any, row: any) {
             return <div style={typeof row.MissingAtoms != 'undefined' ? {cursor: 'pointer'} : {}}>{cell}</div>
@@ -246,31 +291,26 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
             )
         }
 
-        function validatorLink(cell: any, row: any) {
-            return (
-                <div style={{cursor: 'pointer'}}>
-                    <a target="_blank" rel="noopener noreferrer"
-                           href={encodeURI(`http://webchem.ncbr.muni.cz/Platform/ValidatorDb/Molecule/${self.state.pdbId}/${row.MainResidue.split(/ (.+)/)[1]}`)}
-                           style={{cursor: 'pointer'}}>
-                        <b style={{cursor: 'pointer'}}>{cell}</b>
-                    </a>
-                </div>)
+        function makeIdentifier(cell: any, row: any) {
+            return (<div>{`${cell.chem_comp_id} ${cell.author_residue_number} ${cell.chain_id}`}</div>)
         }
 
-        function expandLigandSummary(row: any) {
+        function mergeInteractions(cell: any, row: any) {
+            return (<div>{cell.atom_atom.join(', ')}</div>)
+        }
+
+        function expandBoundMolecule(row: any) {
             return (
                 <div style={{transition: 'height 0.5s'}}>
-                    <BootstrapTable data={row.Entries}>
-                        <TableHeaderColumn isKey dataField={'MainResidue'} dataFormat={validatorLink}>Main residue</TableHeaderColumn>
-                        <TableHeaderColumn dataField={'MissingAtomCount'} dataFormat={dataColorTextRed} tdStyle={{whiteSpace: 'normal'}}>Missing atoms</TableHeaderColumn>
-                        <TableHeaderColumn dataField={'MissingRingCount'} dataFormat={dataColorTextRed} tdStyle={{whiteSpace: 'normal'}}>Missing rings</TableHeaderColumn>
-                        <TableHeaderColumn dataField={'ChiralityMismatchCount'} dataFormat={dataColorTextYellow} tdStyle={{whiteSpace: 'normal'}}>Chirality mismatch</TableHeaderColumn>
-                        <TableHeaderColumn dataField={'SubstitutionCount'} dataFormat={dataEmptyFormat} tdStyle={{whiteSpace: 'normal'}}>Substitutions</TableHeaderColumn>
-                        <TableHeaderColumn dataField={'NameMismatchCount'} dataFormat={dataEmptyFormat} tdStyle={{whiteSpace: 'normal'}}>Name mismatch</TableHeaderColumn>
+                    <BootstrapTable data={row.interactions}>
+                        <TableHeaderColumn isKey dataField={'begin'} dataFormat={makeIdentifier}>Begin</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'end'} dataFormat={makeIdentifier} tdStyle={{whiteSpace: 'normal'}}>End</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'interactions'} dataFormat={mergeInteractions} tdStyle={{whiteSpace: 'normal'}}>Interactions</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
             )
         }
+
 
         let chainsArray: any[] = [],
             modelArray: any[] = [],
@@ -337,11 +377,6 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
             }
         }
 
-        function dataEmptyFormat(cell: any, row: any) {
-            if (typeof cell == 'undefined')
-                return <div>No validation data avalible</div>
-            return <div style={{cursor: 'pointer'}}>{cell}</div>
-        }
 
         function coputeStatsForChains() {
             let chainStats: any[] = [];
@@ -507,15 +542,6 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
         let siteResidues: any[] = [];
         let residues: any[] = [];
 
-        function groupBy2(xs: any, prop: string) {
-            var grouped = {};
-            for (var i=0; i<xs.length; i++) {
-                var p = xs[i][prop];
-                if (!grouped[p]) { grouped[p] = []; }
-                grouped[p].push(xs[i]);
-            }
-            return grouped;
-        }
 
         fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/binding_sites/${self.state.pdbId}`)
             .then((response: any) => response.json())
@@ -678,80 +704,114 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                 })
             });
 
-        fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/drugbank/${self.state.pdbId}`)
+        fetch(`https://wwwdev.ebi.ac.uk/pdbe/graph-api/pdb/bound_molecules/${self.state.pdbId}`)
             .then((response: any) => response.json())
             .then((data: any) => {
-                const ligandsInBank = data[self.state.pdbId];
-                let ebiLigandsObj: {} = {};
-                fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/ligand_monomers/${self.state.pdbId}`)
-                    .then((response: any) => response.json())
-                    .then((ebiLigands: any) => {
-                        ebiLigandsObj = groupBy2(ebiLigands[self.state.pdbId], 'chem_comp_id');
-                        fetch(`https://proxy-helper.herokuapp.com/`, {headers: {
-                                "target-url": `http://webchem.ncbr.muni.cz/Platform/ValidatorDb/SearchData?structures=${self.state.pdbId}`
-                            }})
-                            .then((response: any) => response.json())
-                            .then((data: any) => {
-                                let specLigand: any[] = [];
-                                //@ts-ignore
-                                Object.entries(ebiLigandsObj).forEach((obj: any) => {
-                                    const common = data['Models'].filter((model: any) => {
-                                        return model['ModelName'] == obj[0];
-                                    });
-                                    if (common.length == 0)
-                                        specLigand.push({ModelName: obj[0], Entries: obj[1]});
-                                    else
-                                        specLigand.push(common[0]);
+                let boundMoleucles = data[self.state.pdbId];
+                let finalBoundMolecules: any = [];
+                boundMoleucles.forEach((boundMolecule: any) => {
+                    let interactions: any = [];
+                    fetch(`https://wwwdev.ebi.ac.uk/pdbe/graph-api/pdb/bound_molecule_interactions/${self.state.pdbId}/${boundMolecule.bm_id}`)
+                        .then((response: any) => response.json())
+                        .then((boundMoleculeDetail: any) => {
+                            interactions.push(...boundMoleculeDetail[self.state.pdbId][0]['interactions'])
+                        });
+                    finalBoundMolecules.push({
+                        'bm_id': boundMolecule.bm_id,
+                        'interactions': interactions
+                    })
+                });
 
-                                });
-                                specLigand.forEach((ligand: any) => {
-                                    ligandsInBank.forEach((inBank: any) => {
-                                        let tmpLigand = {
-                                            'ModelName'     : ligand['ModelName'],
-                                            'EntriesLength' : ligand['Entries'].length,
-                                            'Entries' : ligand['Entries'],
-                                        };
-                                        if (typeof ligand['LongName'] != 'undefined') {
-                                            tmpLigand['MissingAtoms']  = ligand['Summary']['Missing_Atoms'];
-                                            tmpLigand['MissingRings']  = ligand['Summary']['Missing_Rings'];
-                                            tmpLigand['BadChirality']  = ligand['Summary']['HasAll_BadChirality'];
-                                            tmpLigand['Substitutions'] = ligand['Summary']['HasAll_Substitutions'];
-                                            tmpLigand['NameMismatch']  = ligand['Summary']['HasAll_NameMismatch'];
-                                        }
-                                        if (ligand['ModelName'] == Object.keys(inBank)[0]) {
-                                            tmpLigand['drugbankId'] = inBank[ligand['ModelName']]['drugbank_id'];
-                                            tmpLigand['targets'] = inBank[ligand['ModelName']]['targets'];
-                                        }
-                                        commonLigands.push(tmpLigand);
-                                    })
-                                });
-                                self.setState({
-                                    ligandDrugbank: <div>
-                                        <BootstrapTable
-                                            data={commonLigands}
-                                            tableStyle={{fontSize: 'smaller'}}
-                                            trClassName={colorTableLine}
-                                            expandableRow={(row: any) => {return typeof row['BadChirality'] != 'undefined'}}
-                                            expandComponent={expandLigandSummary}
-                                            maxHeight={'550'}
-                                            scrollTop={'Top'}>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='8%' isKey dataField={'ModelName'} dataFormat={plainData}>Name</TableHeaderColumn>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataField={'EntriesLength'} dataFormat={plainData}>Number of molecules</TableHeaderColumn>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='10%' dataField={'drugbankId'} dataFormat={cellFormatter} tdStyle={(cell: any, row: any) => {
-                                                return typeof row.MissingRings != 'undefined' ? {cursor: 'pointer'} : {}
-                                            }}>Drugbank ID</TableHeaderColumn>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingAtoms'} tdStyle={{whiteSpace: 'normal'}}>Missing atoms</TableHeaderColumn>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingRings'} tdStyle={{whiteSpace: 'normal'}}>Missing rings</TableHeaderColumn>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextYellow} width='10%' dataField={'BadChirality'} tdStyle={{whiteSpace: 'normal'}}>Bad chirality</TableHeaderColumn>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='12%' dataFormat={dataEmptyFormat} dataField={'Substitutions'} tdStyle={{whiteSpace: 'normal'}}>Substitution</TableHeaderColumn>
-                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataFormat={dataEmptyFormat} dataField={'NameMismatch'} tdStyle={{whiteSpace: 'normal'}}>Name mismatch</TableHeaderColumn>
-                                        </BootstrapTable>
-                                    </div>
-                                })
-                            })
-                    });
-
+                self.setState({
+                    boundMolecules: <div>
+                        <BootstrapTable
+                            data={finalBoundMolecules}
+                            tableStyle={{fontSize: 'smaller'}}
+                            trClassName={colorTableLine}
+                            expandableRow={() => {return true}}
+                            expandComponent={expandBoundMolecule}
+                            maxHeight={'550'}
+                            scrollTop={'Top'}>
+                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='8%' isKey dataField={'bm_id'} dataFormat={plainData}>Bound molecule ID</TableHeaderColumn>
+                        </BootstrapTable>
+                    </div>
+                    })
             });
+
+        // fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/drugbank/${self.state.pdbId}`)
+        //     .then((response: any) => response.json())
+        //     .then((data: any) => {
+        //         const ligandsInBank = data[self.state.pdbId];
+        //         let ebiLigandsObj: {} = {};
+        //         fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/ligand_monomers/${self.state.pdbId}`)
+        //             .then((response: any) => response.json())
+        //             .then((ebiLigands: any) => {
+        //                 ebiLigandsObj = groupBy2(ebiLigands[self.state.pdbId], 'chem_comp_id');
+        //                 fetch(`https://proxy-helper.herokuapp.com/`, {headers: {
+        //                         "target-url": `http://webchem.ncbr.muni.cz/Platform/ValidatorDb/SearchData?structures=${self.state.pdbId}`
+        //                     }})
+        //                     .then((response: any) => response.json())
+        //                     .then((data: any) => {
+        //                         let specLigand: any[] = [];
+        //                         //@ts-ignore
+        //                         Object.entries(ebiLigandsObj).forEach((obj: any) => {
+        //                             const common = data['Models'].filter((model: any) => {
+        //                                 return model['ModelName'] == obj[0];
+        //                             });
+        //                             if (common.length == 0)
+        //                                 specLigand.push({ModelName: obj[0], Entries: obj[1]});
+        //                             else
+        //                                 specLigand.push(common[0]);
+        //
+        //                         });
+        //                         specLigand.forEach((ligand: any) => {
+        //                             ligandsInBank.forEach((inBank: any) => {
+        //                                 let tmpLigand = {
+        //                                     'ModelName'     : ligand['ModelName'],
+        //                                     'EntriesLength' : ligand['Entries'].length,
+        //                                     'Entries' : ligand['Entries'],
+        //                                 };
+        //                                 if (typeof ligand['LongName'] != 'undefined') {
+        //                                     tmpLigand['MissingAtoms']  = ligand['Summary']['Missing_Atoms'];
+        //                                     tmpLigand['MissingRings']  = ligand['Summary']['Missing_Rings'];
+        //                                     tmpLigand['BadChirality']  = ligand['Summary']['HasAll_BadChirality'];
+        //                                     tmpLigand['Substitutions'] = ligand['Summary']['HasAll_Substitutions'];
+        //                                     tmpLigand['NameMismatch']  = ligand['Summary']['HasAll_NameMismatch'];
+        //                                 }
+        //                                 if (ligand['ModelName'] == Object.keys(inBank)[0]) {
+        //                                     tmpLigand['drugbankId'] = inBank[ligand['ModelName']]['drugbank_id'];
+        //                                     tmpLigand['targets'] = inBank[ligand['ModelName']]['targets'];
+        //                                 }
+        //                                 commonLigands.push(tmpLigand);
+        //                             })
+        //                         });
+        //                         self.setState({
+        //                             ligandDrugbank: <div>
+        //                                 <BootstrapTable
+        //                                     data={commonLigands}
+        //                                     tableStyle={{fontSize: 'smaller'}}
+        //                                     trClassName={colorTableLine}
+        //                                     expandableRow={(row: any) => {return typeof row['BadChirality'] != 'undefined'}}
+        //                                     expandComponent={expandLigandSummary}
+        //                                     maxHeight={'550'}
+        //                                     scrollTop={'Top'}>
+        //                                     <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='8%' isKey dataField={'ModelName'} dataFormat={plainData}>Name</TableHeaderColumn>
+        //                                     <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataField={'EntriesLength'} dataFormat={plainData}>Number of molecules</TableHeaderColumn>
+        //                                     <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='10%' dataField={'drugbankId'} dataFormat={cellFormatter} tdStyle={(cell: any, row: any) => {
+        //                                         return typeof row.MissingRings != 'undefined' ? {cursor: 'pointer'} : {}
+        //                                     }}>Drugbank ID</TableHeaderColumn>
+        //                                     <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingAtoms'} tdStyle={{whiteSpace: 'normal'}}>Missing atoms</TableHeaderColumn>
+        //                                     <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingRings'} tdStyle={{whiteSpace: 'normal'}}>Missing rings</TableHeaderColumn>
+        //                                     <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextYellow} width='10%' dataField={'BadChirality'} tdStyle={{whiteSpace: 'normal'}}>Bad chirality</TableHeaderColumn>
+        //                                     <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='12%' dataFormat={dataEmptyFormat} dataField={'Substitutions'} tdStyle={{whiteSpace: 'normal'}}>Substitution</TableHeaderColumn>
+        //                                     <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataFormat={dataEmptyFormat} dataField={'NameMismatch'} tdStyle={{whiteSpace: 'normal'}}>Name mismatch</TableHeaderColumn>
+        //                                 </BootstrapTable>
+        //                             </div>
+        //                         })
+        //                     })
+        //             });
+        //
+        //     });
 
 
     }
@@ -864,6 +924,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                 <b>Data retrieved from ValidatorDB</b>
                             </a>
                             {this.state.ligandDrugbank}
+                            {this.state.boundMolecules}
                             <div className={"iframe-parent"}>
                                 {this.state.completnes}
                             </div>
