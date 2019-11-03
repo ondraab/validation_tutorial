@@ -515,7 +515,7 @@ class Theory extends React.Component< {}, ValidationStates> {
                                                 style={{content: {top: '50%', left: '50%', right: 'auto', bottom: 'auto', transform: 'translate(-50%, -50%)'}}}
                                                 contentLabel="Example Modal">
                                                 <div>
-                                                    <img src={'/src/videos/tyrosine.gif'} style={{width: '676px', heigh: '400px'}}/>
+                                                    <img src={'/src/videos/tyrosine.gif'} style={{width: '676px', height: '400px'}}/>
                                                 </div>
                                             </Modal>
                                         </div>
@@ -546,7 +546,7 @@ class Theory extends React.Component< {}, ValidationStates> {
                                                 style={{content: {top: '50%', left: '50%', right: 'auto', bottom: 'auto', transform: 'translate(-50%, -50%)'}}}
                                                 contentLabel="Example Modal">
                                                 <div>
-                                                   <img src={'/src/videos/7gpb_63d_2.gif'} style={{width: '676px', heigh: '400px'}}/>
+                                                   <img src={'/src/videos/7gpb_63d_2.gif'} style={{width: '676px', height: '400px'}}/>
                                                 </div>
                                             </Modal>
                                         </div>

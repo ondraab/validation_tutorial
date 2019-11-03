@@ -158,77 +158,77 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
             return rowIdx % 2 === 0 ? 'tr-column-white' : 'tr-column-gray';
         }
 
-        // function dataColorTextYellow(cell: any, row: any) {
-        //     if (typeof cell == 'undefined') {
-        //         return <div style={{cursor: 'default'}}>No validation data available</div>
-        //     }
-        //     if (typeof row.Entries != 'undefined')
-        //         return cell == 0 ? (<div style={{color: '#3CA53A', cursor: 'pointer'}}>{cell}</div>) : (<div style={{color: '#D6BD42', cursor: 'pointer'}}>{cell}</div>);
-        //     return cell == 0 ? (<div style={{color: '#3CA53A'}}>{cell}</div>) : (<div style={{color: '#D6BD42'}}>{cell}</div>);
-        // }
-        //
-        // function dataColorTextRed(cell: any, row: any) {
-        //     if (typeof cell == 'undefined') {
-        //         return <div style={{cursor: 'default'}}>No validation data available</div>
-        //     }
-        //     if (typeof row.Entries != 'undefined')
-        //         return cell == 0 ? (<div style={{color: '#3CA53A', cursor: 'pointer'}}>{cell}</div>) : (<div style={{color: '#DD191D', cursor: 'pointer'}}>{cell}</div>);
-        //     return cell == 0 ? (<div style={{color: '#3CA53A'}}>{cell}</div>) : (<div style={{color: '#DD191D'}}>{cell}</div>);
-        // }
-        //
-        // function cellFormatter(cell: any, row: any) {
-        //     return (<div
-        //         style={typeof row.MissingAtoms != 'undefined' ? {cursor: 'pointer'} : {}}>
-        //         <b>
-        //             <a target="_blank" rel="noopener noreferrer"
-        //                href={`https://www.drugbank.ca/drugs/${cell}`}
-        //                style={{cursor: 'pointer'}}>{cell}
-        //                </a>
-        //         </b>
-        //     </div>);
-        // }
-        //
-        // function validatorLink(cell: any, row: any) {
-        //     return (
-        //         <div style={{cursor: 'pointer'}}>
-        //             <a target="_blank" rel="noopener noreferrer"
-        //                    href={encodeURI(`http://webchem.ncbr.muni.cz/Platform/ValidatorDb/Molecule/${self.state.pdbId}/${row.MainResidue.split(/ (.+)/)[1]}`)}
-        //                    style={{cursor: 'pointer'}}>
-        //                 <b style={{cursor: 'pointer'}}>{cell}</b>
-        //             </a>
-        //         </div>)
-        // }
-        //
-        // function expandLigandSummary(row: any) {
-        //     return (
-        //         <div style={{transition: 'height 0.5s'}}>
-        //             <BootstrapTable data={row.Entries}>
-        //                 <TableHeaderColumn isKey dataField={'MainResidue'} dataFormat={validatorLink}>Main residue</TableHeaderColumn>
-        //                 <TableHeaderColumn dataField={'MissingAtomCount'} dataFormat={dataColorTextRed} tdStyle={{whiteSpace: 'normal'}}>Missing atoms</TableHeaderColumn>
-        //                 <TableHeaderColumn dataField={'MissingRingCount'} dataFormat={dataColorTextRed} tdStyle={{whiteSpace: 'normal'}}>Missing rings</TableHeaderColumn>
-        //                 <TableHeaderColumn dataField={'ChiralityMismatchCount'} dataFormat={dataColorTextYellow} tdStyle={{whiteSpace: 'normal'}}>Chirality mismatch</TableHeaderColumn>
-        //                 <TableHeaderColumn dataField={'SubstitutionCount'} dataFormat={dataEmptyFormat} tdStyle={{whiteSpace: 'normal'}}>Substitutions</TableHeaderColumn>
-        //                 <TableHeaderColumn dataField={'NameMismatchCount'} dataFormat={dataEmptyFormat} tdStyle={{whiteSpace: 'normal'}}>Name mismatch</TableHeaderColumn>
-        //             </BootstrapTable>
-        //         </div>
-        //     )
-        // }
-        //
-        // function dataEmptyFormat(cell: any, row: any) {
-        //     if (typeof cell == 'undefined')
-        //         return <div>No validation data avalible</div>
-        //     return <div style={{cursor: 'pointer'}}>{cell}</div>
-        // }
-        //
-        // function groupBy2(xs: any, prop: string) {
-        //     var grouped = {};
-        //     for (var i=0; i<xs.length; i++) {
-        //         var p = xs[i][prop];
-        //         if (!grouped[p]) { grouped[p] = []; }
-        //         grouped[p].push(xs[i]);
-        //     }
-        //     return grouped;
-        // }
+        function dataColorTextYellow(cell: any, row: any) {
+            if (typeof cell == 'undefined') {
+                return <div style={{cursor: 'default'}}>No validation data available</div>
+            }
+            if (typeof row.Entries != 'undefined')
+                return cell == 0 ? (<div style={{color: '#3CA53A', cursor: 'pointer'}}>{cell}</div>) : (<div style={{color: '#D6BD42', cursor: 'pointer'}}>{cell}</div>);
+            return cell == 0 ? (<div style={{color: '#3CA53A'}}>{cell}</div>) : (<div style={{color: '#D6BD42'}}>{cell}</div>);
+        }
+
+        function dataColorTextRed(cell: any, row: any) {
+            if (typeof cell == 'undefined') {
+                return <div style={{cursor: 'default'}}>No validation data available</div>
+            }
+            if (typeof row.Entries != 'undefined')
+                return cell == 0 ? (<div style={{color: '#3CA53A', cursor: 'pointer'}}>{cell}</div>) : (<div style={{color: '#DD191D', cursor: 'pointer'}}>{cell}</div>);
+            return cell == 0 ? (<div style={{color: '#3CA53A'}}>{cell}</div>) : (<div style={{color: '#DD191D'}}>{cell}</div>);
+        }
+
+        function cellFormatter(cell: any, row: any) {
+            return (<div
+                style={typeof row.MissingAtoms != 'undefined' ? {cursor: 'pointer'} : {}}>
+                <b>
+                    <a target="_blank" rel="noopener noreferrer"
+                       href={`https://www.drugbank.ca/drugs/${cell}`}
+                       style={{cursor: 'pointer'}}>{cell}
+                       </a>
+                </b>
+            </div>);
+        }
+
+        function validatorLink(cell: any, row: any) {
+            return (
+                <div style={{cursor: 'pointer'}}>
+                    <a target="_blank" rel="noopener noreferrer"
+                           href={encodeURI(`http://webchem.ncbr.muni.cz/Platform/ValidatorDb/Molecule/${self.state.pdbId}/${row.MainResidue.split(/ (.+)/)[1]}`)}
+                           style={{cursor: 'pointer'}}>
+                        <b style={{cursor: 'pointer'}}>{cell}</b>
+                    </a>
+                </div>)
+        }
+
+        function expandLigandSummary(row: any) {
+            return (
+                <div style={{transition: 'height 0.5s'}}>
+                    <BootstrapTable data={row.Entries}>
+                        <TableHeaderColumn isKey dataField={'MainResidue'} dataFormat={validatorLink}>Main residue</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'MissingAtomCount'} dataFormat={dataColorTextRed} tdStyle={{whiteSpace: 'normal'}}>Missing atoms</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'MissingRingCount'} dataFormat={dataColorTextRed} tdStyle={{whiteSpace: 'normal'}}>Missing rings</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'ChiralityMismatchCount'} dataFormat={dataColorTextYellow} tdStyle={{whiteSpace: 'normal'}}>Chirality mismatch</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'SubstitutionCount'} dataFormat={dataEmptyFormat} tdStyle={{whiteSpace: 'normal'}}>Substitutions</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'NameMismatchCount'} dataFormat={dataEmptyFormat} tdStyle={{whiteSpace: 'normal'}}>Name mismatch</TableHeaderColumn>
+                    </BootstrapTable>
+                </div>
+            )
+        }
+
+        function dataEmptyFormat(cell: any, row: any) {
+            if (typeof cell == 'undefined')
+                return <div>No validation data avalible</div>
+            return <div style={{cursor: 'pointer'}}>{cell}</div>
+        }
+
+        function groupBy2(xs: any, prop: string) {
+            var grouped = {};
+            for (var i=0; i<xs.length; i++) {
+                var p = xs[i][prop];
+                if (!grouped[p]) { grouped[p] = []; }
+                grouped[p].push(xs[i]);
+            }
+            return grouped;
+        }
 
         function plainData(cell: any, row: any) {
             return <div style={typeof row.MissingAtoms != 'undefined' ? {cursor: 'pointer'} : {}}>{cell}</div>
@@ -270,7 +270,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                             display: 'inline-block',
                             height: '12px',
                             float: 'right'}}>
-                            {computeNumberOfSq(row.residues)}
+                            {computeNumberOfSq(row.ligands)}
                         </div>
                     </div>);
         }
@@ -303,9 +303,9 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
             return (
                 <div style={{transition: 'height 0.5s'}}>
                     <BootstrapTable data={row.interactions}>
-                        <TableHeaderColumn isKey dataField={'begin'} dataFormat={makeIdentifier}>Begin</TableHeaderColumn>
-                        <TableHeaderColumn dataField={'end'} dataFormat={makeIdentifier} tdStyle={{whiteSpace: 'normal'}}>End</TableHeaderColumn>
-                        <TableHeaderColumn dataField={'interactions'} dataFormat={mergeInteractions} tdStyle={{whiteSpace: 'normal'}}>Interactions</TableHeaderColumn>
+                        <TableHeaderColumn isKey dataField={'begin'} dataFormat={makeIdentifier}>Interaction begin</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'end'} dataFormat={makeIdentifier} tdStyle={{whiteSpace: 'normal'}}>Interaction end</TableHeaderColumn>
+                        <TableHeaderColumn dataField={'interactions'} dataFormat={mergeInteractions} tdStyle={{whiteSpace: 'normal'}}>Interaction types</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
             )
@@ -537,22 +537,217 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
             });
         }
 
+        // @ts-ignore
         let bindingSites: any[] = [];
         let editedSites: any[] = [];
-        let siteResidues: any[] = [];
-        let residues: any[] = [];
+        // let siteResidues: any[] = [];
+        // let residues: any[] = [];
 
 
-        fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/binding_sites/${self.state.pdbId}`)
+        fetch(`https://wwwdev.ebi.ac.uk/pdbe/graph-api/pdb/bound_molecules/${self.state.pdbId}`)
+            .then((response: any) => response.json())
+            .then((data: any) => {
+                let boundMoleucles = data[self.state.pdbId];
+                let finalBoundMolecules: any = [];
+                boundMoleucles.forEach((boundMolecule: any) => {
+                    let interactions: any = [];
+                    let residues: any = [];
+                    fetch(`https://wwwdev.ebi.ac.uk/pdbe/graph-api/pdb/bound_molecule_interactions/${self.state.pdbId}/${boundMolecule.bm_id}`)
+                        .then((response: any) => response.json())
+                        .then((boundMoleculeDetail: any) => {
+                            interactions.push(...boundMoleculeDetail[self.state.pdbId][0]['interactions']);
+                            residues.push(...boundMoleculeDetail[self.state.pdbId][0]['composition']['ligands']);
+                        });
+                    finalBoundMolecules.push({
+                        'bm_id': boundMolecule.bm_id,
+                        'interactions': interactions,
+                        'residues': residues
+                    })
+                });
+
+                // fetch(`https://proxy-helper.herokuapp.com/`, {headers: {
+                //         "target-url": `https://www.ebi.ac.uk/pdbe/api/validation/residuewise_outlier_summary/entry/${self.state.pdbId}`
+                //     }})
+                //     .then((response: any) => response.json())
+                //     .then((residueWise: any) => {
+                //         residueWise[self.state.pdbId].molecules.forEach((molecule: any) => {
+                //             for (const chain of molecule.chains) {
+                //                 for (const mod of chain.models) {
+                //                     for (const res of mod.residues) {
+                //                         let residue = moleculesDict[molecule.entity_id].chainsDict[chain.chain_id].modelsDict[mod.model_id].residuesDict[res.author_residue_number];
+                //                         finalBoundMolecules.forEach((molecule: any) => {
+                //                             console.log(molecule.residues);
+                //                            molecule.residues.forEach((resid: any) => {
+                //                               if (resid['chain_id'].match(/[a-zA-Z0-9]+/g)[0] === chain['chain_id']) {
+                //                                   if (resid['author_residue_number'] === res['author_residue_number']) {
+                //                                       console.log(res['outlier_types']);
+                //                                   }
+                //                               }
+                //                            });
+                //                         });
+                //                         console.log(residue);
+                //                         if (typeof residue !== 'undefined')
+                //                             residue.outlierTypes = res.outlier_types;
+                //                         if (res.outlier_types.indexOf('RSRZ') != -1) {
+                //                             rsrz[res.residue_number] = {outliersType: res.outlier_types};
+                //                             rsrzCount++;
+                //                         }
+                //                         if (res.outlier_types.indexOf('clashes') != -1)
+                //                             clashes++;
+                //                         if (res.outlier_types.indexOf('ramachandran_outliers') != -1)
+                //                             ramaOutl++;
+                //                         if (res.outlier_types.indexOf('sidechain_outliers') != -1)
+                //                             sidechainOutl++;
+                //                         outlDict[res.residue_number] = {outliersType: res.outlier_types};
+                //                     }
+                //                 }
+                //             }
+                //         });
+                //
+                //         fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/polymer_coverage/${self.state.pdbId}`)
+                //             .then((response: any) => response.json())
+                //             .then((data: any) => {
+                //                 data[self.state.pdbId].molecules.forEach((molecule: any) => {
+                //                     for (const chain of molecule.chains) {
+                //                         chainLen[chain.chain_id] = chain.observed[0].end.author_residue_number - chain.observed[0].start.author_residue_number;
+                //                         total += chainLen[chain.chain_id];
+                //                     }
+                //                     molecs[molecule.entity_id] = Object.assign({}, chainLen);
+                //                     chainLen = {};
+                //                 });
+                //                 let numberOfModels = residueWise[self.state.pdbId].molecules[0].chains[0].models.length;
+                //
+                //                 self.setState({
+                //                     perResidQuelity: <div>
+                //                         <h3>Overall quality:</h3>
+                //                         <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                //                             <p><b>Clashes: </b>{(clashes/numberOfModels).toFixed(0)} ({((clashes/total * 100)/numberOfModels).toFixed(0)}%)</p>
+                //                             <p><b>Ramachandran outliers: </b>{(ramaOutl/numberOfModels).toFixed(0)} ({((ramaOutl/total * 100)/numberOfModels).toFixed(0)}%)</p>
+                //                             <p><b>Sidechain outliers: </b>{(sidechainOutl/numberOfModels).toFixed(0)} ({((sidechainOutl/total * 100)/numberOfModels).toFixed(0)}%)</p>
+                //                             <p><b>RSRZ outliers: </b>{(rsrzCount/numberOfModels).toFixed(0)} ({((rsrzCount/total * 100)/numberOfModels).toFixed(0)}%)</p>
+                //                         </div>
+                //                     </div>,
+                //                     perResidQuelityDetail: <div>
+                //                         <h3>Quality of chains:</h3>
+                //                         {coputeStatsForChains()}
+                //                     </div>
+                //                 })
+                //             });
+                //
+                //         // bindingSites.forEach((boundMolecule: any) => {
+                //         //     fetch(`https://wwwdev.ebi.ac.uk/pdbe/graph-api/pdb/bound_molecule_interactions/${self.state.pdbId}/${boundMolecule['bm_id']}`)
+                //         //         .then((response: any) => response.json())
+                //         //         .then((boundDetailData: any) => {
+                //         //             boundDetailData[0]['composition']['ligands'].forEach((ligand: any) => {
+                //         //                     if (residues.length == 0) {
+                //         //                         let chain = ligand['chain_id'];
+                //         //                         let molecules = residueWise[self.state.pdbId]['molecules'];
+                //         //                         molecules.forEach((molecule: any) => {
+                //         //                             molecule['chains'].forEach((currChain: any) => {
+                //         //                                 if (currChain['chain_id'] == chain) {
+                //         //                                     currChain['models'].forEach((model: any) => {
+                //         //                                         residues = model['residues'];
+                //         //                                     });
+                //         //                                 }
+                //         //                             })
+                //         //                         })
+                //         //                     };
+                //         //                     let finded: any = residues.find(obj => obj.author_residue_number == ligand.author_residue_number);
+                //         //                     siteResidues.push({
+                //         //                         authorResNum: ligand.author_residue_number,
+                //         //                         chemCompId: ligand.chem_comp_id,
+                //         //                         chain: ligand.chain_id,
+                //         //                         outliersType: typeof finded !== 'undefined' ? finded.outlier_types : [],
+                //         //                     })
+                //         //                 });
+                //         //                 editedSites.push({
+                //         //                     // details: bindingSite['details'].toLowerCase(),
+                //         //                     siteId: boundMolecule['bm_id'],
+                //         //                     residues: siteResidues});
+                //         //                 residues = [];
+                //         //                 siteResidues = [];
+                //         //         });
+                //         //     console.log(editedSites);
+                //         // });
+                //         // bindingSites.forEach((bindingSite: any) => {
+                //         //     bindingSite['site_residues'].forEach((residue: any) => {
+                //         //         if (residues.length == 0) {
+                //         //             let chain = residue['chain_id'];
+                //         //             let molecules = residueWise[self.state.pdbId]['molecules'];
+                //         //             molecules.forEach((molecule: any) => {
+                //         //                 molecule['chains'].forEach((currChain: any) => {
+                //         //                     if (currChain['chain_id'] == chain) {
+                //         //                         currChain['models'].forEach((model: any) => {
+                //         //                             residues = model['residues'];
+                //         //                         });
+                //         //                     }
+                //         //                 })
+                //         //             });
+                //         //         }
+                //         //         let finded: any = residues.find(obj => obj.author_residue_number == residue.author_residue_number);
+                //         //
+                //         //         siteResidues.push({
+                //         //             authorResNum: residue.author_residue_number,
+                //         //             resNum: residue.residue_number,
+                //         //             chemCompId: residue.chem_comp_id,
+                //         //             chain: residue.chain_id,
+                //         //             outliersType: typeof finded !== 'undefined' ? finded.outlier_types : [],
+                //         //         })
+                //         //     });
+                //         //     editedSites.push({
+                //         //         details: bindingSite['details'].toLowerCase(),
+                //         //         siteId: bindingSite['site_id'],
+                //         //         residues: siteResidues});
+                //         //     residues = [];
+                //         //     siteResidues = [];
+                //         // });
+                //         console.log(editedSites);
+                //         self.setState({
+                //             bindingSiteTable: <div>
+                //                 <BootstrapTable data={editedSites} expandableRow={(row: any) => true}
+                //                                 expandComponent={expandComponent}
+                //                                 trClassName={colorTableLine}
+                //                                 tableStyle={{fontSize: 'smaller'}}
+                //                                 maxHeight={'550'}
+                //                                 scrollTop={'Top'}>
+                //                     <TableHeaderColumn width='10%' isKey dataField={'siteId'} tdStyle={{cursor: 'pointer'}}>Site ID</TableHeaderColumn>
+                //                     <TableHeaderColumn dataField={'details'} tdStyle={{cursor: 'pointer'}} dataFormat={imageFormatter}>Details</TableHeaderColumn>
+                //                 </BootstrapTable>
+                //             </div>,
+                //         })
+                //     })
+
+                self.setState({
+                    boundMolecules: <div>
+                        <BootstrapTable
+                            data={finalBoundMolecules}
+                            tableStyle={{fontSize: 'smaller'}}
+                            trClassName={colorTableLine}
+                            expandableRow={() => {return true}}
+                            expandComponent={expandBoundMolecule}
+                            maxHeight={'550'}
+                            scrollTop={'Top'}>
+                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='8%' isKey dataField={'bm_id'} dataFormat={plainData}>Bound molecule ID</TableHeaderColumn>
+                        </BootstrapTable>
+                    </div>
+                })
+            });
+
+        fetch(`https://wwwdev.ebi.ac.uk/pdbe/graph-api/pdb/bound_molecules/${self.state.pdbId}`)
             .then((response: any) => response.json())
             .then((data: any) => {
                 bindingSites = data[self.state.pdbId];
+                // let finalBindingSites: any = [];
+
+
                 fetch(`https://www.ebi.ac.uk/pdbe/api/validation/rama_sidechain_listing/entry/${self.state.pdbId}`)
                     .then((response: any) => response.json())
                     .then((data: any) => {
                         parse(data[self.state.pdbId]);
 
-                        fetch(`https://www.ebi.ac.uk/pdbe/api/validation/residuewise_outlier_summary/entry/${self.state.pdbId}`)
+                        fetch(`https://proxy-helper.herokuapp.com/`, {headers: {
+                                "target-url": `https://www.ebi.ac.uk/pdbe/api/validation/residuewise_outlier_summary/entry/${self.state.pdbId}`
+                            }})
                             .then((response: any) => response.json())
                             .then((residueWise: any) => {
                                 residueWise[self.state.pdbId].molecules.forEach((molecule: any) => {
@@ -607,38 +802,75 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                             </div>
                                         })
                                     });
-                                bindingSites.forEach((bindingSite: any) => {
-                                    bindingSite['site_residues'].forEach((residue: any) => {
-                                        if (residues.length == 0) {
-                                            let chain = residue['chain_id'];
-                                            let molecules = residueWise[self.state.pdbId]['molecules'];
-                                            molecules.forEach((molecule: any) => {
-                                                molecule['chains'].forEach((currChain: any) => {
-                                                    if (currChain['chain_id'] == chain) {
-                                                        currChain['models'].forEach((model: any) => {
-                                                            residues = model['residues'];
-                                                        });
-                                                    }
-                                                })
-                                            });
-                                        }
-                                        let finded: any = residues.find(obj => obj.author_residue_number == residue.author_residue_number);
 
-                                        siteResidues.push({
-                                            authorResNum: residue.author_residue_number,
-                                            resNum: residue.residue_number,
-                                            chemCompId: residue.chem_comp_id,
-                                            chain: residue.chain_id,
-                                            outliersType: typeof finded !== 'undefined' ? finded.outlier_types : [],
-                                        })
-                                    });
-                                    editedSites.push({
-                                        details: bindingSite['details'].toLowerCase(),
-                                        siteId: bindingSite['site_id'],
-                                        residues: siteResidues});
-                                    residues = [];
-                                    siteResidues = [];
-                                });
+                                // bindingSites.forEach((boundMolecule: any) => {
+                                //     fetch(`https://wwwdev.ebi.ac.uk/pdbe/graph-api/pdb/bound_molecule_interactions/${self.state.pdbId}/${boundMolecule['bm_id']}`)
+                                //         .then((response: any) => response.json())
+                                //         .then((boundDetailData: any) => {
+                                //             boundDetailData[0]['composition']['ligands'].forEach((ligand: any) => {
+                                //                     if (residues.length == 0) {
+                                //                         let chain = ligand['chain_id'];
+                                //                         let molecules = residueWise[self.state.pdbId]['molecules'];
+                                //                         molecules.forEach((molecule: any) => {
+                                //                             molecule['chains'].forEach((currChain: any) => {
+                                //                                 if (currChain['chain_id'] == chain) {
+                                //                                     currChain['models'].forEach((model: any) => {
+                                //                                         residues = model['residues'];
+                                //                                     });
+                                //                                 }
+                                //                             })
+                                //                         })
+                                //                     };
+                                //                     let finded: any = residues.find(obj => obj.author_residue_number == ligand.author_residue_number);
+                                //                     siteResidues.push({
+                                //                         authorResNum: ligand.author_residue_number,
+                                //                         chemCompId: ligand.chem_comp_id,
+                                //                         chain: ligand.chain_id,
+                                //                         outliersType: typeof finded !== 'undefined' ? finded.outlier_types : [],
+                                //                     })
+                                //                 });
+                                //                 editedSites.push({
+                                //                     // details: bindingSite['details'].toLowerCase(),
+                                //                     siteId: boundMolecule['bm_id'],
+                                //                     residues: siteResidues});
+                                //                 residues = [];
+                                //                 siteResidues = [];
+                                //         });
+                                //     console.log(editedSites);
+                                // });
+                                // bindingSites.forEach((bindingSite: any) => {
+                                //     bindingSite['site_residues'].forEach((residue: any) => {
+                                //         if (residues.length == 0) {
+                                //             let chain = residue['chain_id'];
+                                //             let molecules = residueWise[self.state.pdbId]['molecules'];
+                                //             molecules.forEach((molecule: any) => {
+                                //                 molecule['chains'].forEach((currChain: any) => {
+                                //                     if (currChain['chain_id'] == chain) {
+                                //                         currChain['models'].forEach((model: any) => {
+                                //                             residues = model['residues'];
+                                //                         });
+                                //                     }
+                                //                 })
+                                //             });
+                                //         }
+                                //         let finded: any = residues.find(obj => obj.author_residue_number == residue.author_residue_number);
+                                //
+                                //         siteResidues.push({
+                                //             authorResNum: residue.author_residue_number,
+                                //             resNum: residue.residue_number,
+                                //             chemCompId: residue.chem_comp_id,
+                                //             chain: residue.chain_id,
+                                //             outliersType: typeof finded !== 'undefined' ? finded.outlier_types : [],
+                                //         })
+                                //     });
+                                //     editedSites.push({
+                                //         details: bindingSite['details'].toLowerCase(),
+                                //         siteId: bindingSite['site_id'],
+                                //         residues: siteResidues});
+                                //     residues = [];
+                                //     siteResidues = [];
+                                // });
+                                // console.log(editedSites);
                                 self.setState({
                                     bindingSiteTable: <div>
                                         <BootstrapTable data={editedSites} expandableRow={(row: any) => true}
@@ -704,114 +936,80 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                 })
             });
 
-        fetch(`https://wwwdev.ebi.ac.uk/pdbe/graph-api/pdb/bound_molecules/${self.state.pdbId}`)
+        fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/drugbank/${self.state.pdbId}`)
             .then((response: any) => response.json())
             .then((data: any) => {
-                let boundMoleucles = data[self.state.pdbId];
-                let finalBoundMolecules: any = [];
-                boundMoleucles.forEach((boundMolecule: any) => {
-                    let interactions: any = [];
-                    fetch(`https://wwwdev.ebi.ac.uk/pdbe/graph-api/pdb/bound_molecule_interactions/${self.state.pdbId}/${boundMolecule.bm_id}`)
-                        .then((response: any) => response.json())
-                        .then((boundMoleculeDetail: any) => {
-                            interactions.push(...boundMoleculeDetail[self.state.pdbId][0]['interactions'])
-                        });
-                    finalBoundMolecules.push({
-                        'bm_id': boundMolecule.bm_id,
-                        'interactions': interactions
-                    })
-                });
+                const ligandsInBank = data[self.state.pdbId];
+                let ebiLigandsObj: {} = {};
+                fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/ligand_monomers/${self.state.pdbId}`)
+                    .then((response: any) => response.json())
+                    .then((ebiLigands: any) => {
+                        ebiLigandsObj = groupBy2(ebiLigands[self.state.pdbId], 'chem_comp_id');
+                        fetch(`https://proxy-helper.herokuapp.com/`, {headers: {
+                                "target-url": `http://webchem.ncbr.muni.cz/Platform/ValidatorDb/SearchData?structures=${self.state.pdbId}`
+                            }})
+                            .then((response: any) => response.json())
+                            .then((data: any) => {
+                                let specLigand: any[] = [];
+                                //@ts-ignore
+                                Object.entries(ebiLigandsObj).forEach((obj: any) => {
+                                    const common = data['Models'].filter((model: any) => {
+                                        return model['ModelName'] == obj[0];
+                                    });
+                                    if (common.length == 0)
+                                        specLigand.push({ModelName: obj[0], Entries: obj[1]});
+                                    else
+                                        specLigand.push(common[0]);
 
-                self.setState({
-                    boundMolecules: <div>
-                        <BootstrapTable
-                            data={finalBoundMolecules}
-                            tableStyle={{fontSize: 'smaller'}}
-                            trClassName={colorTableLine}
-                            expandableRow={() => {return true}}
-                            expandComponent={expandBoundMolecule}
-                            maxHeight={'550'}
-                            scrollTop={'Top'}>
-                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='8%' isKey dataField={'bm_id'} dataFormat={plainData}>Bound molecule ID</TableHeaderColumn>
-                        </BootstrapTable>
-                    </div>
-                    })
+                                });
+                                specLigand.forEach((ligand: any) => {
+                                    ligandsInBank.forEach((inBank: any) => {
+                                        let tmpLigand = {
+                                            'ModelName'     : ligand['ModelName'],
+                                            'EntriesLength' : ligand['Entries'].length,
+                                            'Entries' : ligand['Entries'],
+                                        };
+                                        if (typeof ligand['LongName'] != 'undefined') {
+                                            tmpLigand['MissingAtoms']  = ligand['Summary']['Missing_Atoms'];
+                                            tmpLigand['MissingRings']  = ligand['Summary']['Missing_Rings'];
+                                            tmpLigand['BadChirality']  = ligand['Summary']['HasAll_BadChirality'];
+                                            tmpLigand['Substitutions'] = ligand['Summary']['HasAll_Substitutions'];
+                                            tmpLigand['NameMismatch']  = ligand['Summary']['HasAll_NameMismatch'];
+                                        }
+                                        if (ligand['ModelName'] == Object.keys(inBank)[0]) {
+                                            tmpLigand['drugbankId'] = inBank[ligand['ModelName']]['drugbank_id'];
+                                            tmpLigand['targets'] = inBank[ligand['ModelName']]['targets'];
+                                        }
+                                        commonLigands.push(tmpLigand);
+                                    })
+                                });
+                                self.setState({
+                                    ligandDrugbank: <div>
+                                        <BootstrapTable
+                                            data={commonLigands}
+                                            tableStyle={{fontSize: 'smaller'}}
+                                            trClassName={colorTableLine}
+                                            expandableRow={(row: any) => {return typeof row['BadChirality'] != 'undefined'}}
+                                            expandComponent={expandLigandSummary}
+                                            maxHeight={'550'}
+                                            scrollTop={'Top'}>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='8%' isKey dataField={'ModelName'} dataFormat={plainData}>Name</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataField={'EntriesLength'} dataFormat={plainData}>Number of molecules</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='10%' dataField={'drugbankId'} dataFormat={cellFormatter} tdStyle={(cell: any, row: any) => {
+                                                return typeof row.MissingRings != 'undefined' ? {cursor: 'pointer'} : {}
+                                            }}>Drugbank ID</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingAtoms'} tdStyle={{whiteSpace: 'normal'}}>Missing atoms</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingRings'} tdStyle={{whiteSpace: 'normal'}}>Missing rings</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextYellow} width='10%' dataField={'BadChirality'} tdStyle={{whiteSpace: 'normal'}}>Bad chirality</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='12%' dataFormat={dataEmptyFormat} dataField={'Substitutions'} tdStyle={{whiteSpace: 'normal'}}>Substitution</TableHeaderColumn>
+                                            <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataFormat={dataEmptyFormat} dataField={'NameMismatch'} tdStyle={{whiteSpace: 'normal'}}>Name mismatch</TableHeaderColumn>
+                                        </BootstrapTable>
+                                    </div>
+                                })
+                            })
+                    });
+
             });
-
-        // fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/drugbank/${self.state.pdbId}`)
-        //     .then((response: any) => response.json())
-        //     .then((data: any) => {
-        //         const ligandsInBank = data[self.state.pdbId];
-        //         let ebiLigandsObj: {} = {};
-        //         fetch(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/ligand_monomers/${self.state.pdbId}`)
-        //             .then((response: any) => response.json())
-        //             .then((ebiLigands: any) => {
-        //                 ebiLigandsObj = groupBy2(ebiLigands[self.state.pdbId], 'chem_comp_id');
-        //                 fetch(`https://proxy-helper.herokuapp.com/`, {headers: {
-        //                         "target-url": `http://webchem.ncbr.muni.cz/Platform/ValidatorDb/SearchData?structures=${self.state.pdbId}`
-        //                     }})
-        //                     .then((response: any) => response.json())
-        //                     .then((data: any) => {
-        //                         let specLigand: any[] = [];
-        //                         //@ts-ignore
-        //                         Object.entries(ebiLigandsObj).forEach((obj: any) => {
-        //                             const common = data['Models'].filter((model: any) => {
-        //                                 return model['ModelName'] == obj[0];
-        //                             });
-        //                             if (common.length == 0)
-        //                                 specLigand.push({ModelName: obj[0], Entries: obj[1]});
-        //                             else
-        //                                 specLigand.push(common[0]);
-        //
-        //                         });
-        //                         specLigand.forEach((ligand: any) => {
-        //                             ligandsInBank.forEach((inBank: any) => {
-        //                                 let tmpLigand = {
-        //                                     'ModelName'     : ligand['ModelName'],
-        //                                     'EntriesLength' : ligand['Entries'].length,
-        //                                     'Entries' : ligand['Entries'],
-        //                                 };
-        //                                 if (typeof ligand['LongName'] != 'undefined') {
-        //                                     tmpLigand['MissingAtoms']  = ligand['Summary']['Missing_Atoms'];
-        //                                     tmpLigand['MissingRings']  = ligand['Summary']['Missing_Rings'];
-        //                                     tmpLigand['BadChirality']  = ligand['Summary']['HasAll_BadChirality'];
-        //                                     tmpLigand['Substitutions'] = ligand['Summary']['HasAll_Substitutions'];
-        //                                     tmpLigand['NameMismatch']  = ligand['Summary']['HasAll_NameMismatch'];
-        //                                 }
-        //                                 if (ligand['ModelName'] == Object.keys(inBank)[0]) {
-        //                                     tmpLigand['drugbankId'] = inBank[ligand['ModelName']]['drugbank_id'];
-        //                                     tmpLigand['targets'] = inBank[ligand['ModelName']]['targets'];
-        //                                 }
-        //                                 commonLigands.push(tmpLigand);
-        //                             })
-        //                         });
-        //                         self.setState({
-        //                             ligandDrugbank: <div>
-        //                                 <BootstrapTable
-        //                                     data={commonLigands}
-        //                                     tableStyle={{fontSize: 'smaller'}}
-        //                                     trClassName={colorTableLine}
-        //                                     expandableRow={(row: any) => {return typeof row['BadChirality'] != 'undefined'}}
-        //                                     expandComponent={expandLigandSummary}
-        //                                     maxHeight={'550'}
-        //                                     scrollTop={'Top'}>
-        //                                     <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='8%' isKey dataField={'ModelName'} dataFormat={plainData}>Name</TableHeaderColumn>
-        //                                     <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataField={'EntriesLength'} dataFormat={plainData}>Number of molecules</TableHeaderColumn>
-        //                                     <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='10%' dataField={'drugbankId'} dataFormat={cellFormatter} tdStyle={(cell: any, row: any) => {
-        //                                         return typeof row.MissingRings != 'undefined' ? {cursor: 'pointer'} : {}
-        //                                     }}>Drugbank ID</TableHeaderColumn>
-        //                                     <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingAtoms'} tdStyle={{whiteSpace: 'normal'}}>Missing atoms</TableHeaderColumn>
-        //                                     <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextRed} width='10%' dataField={'MissingRings'} tdStyle={{whiteSpace: 'normal'}}>Missing rings</TableHeaderColumn>
-        //                                     <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} dataFormat={dataColorTextYellow} width='10%' dataField={'BadChirality'} tdStyle={{whiteSpace: 'normal'}}>Bad chirality</TableHeaderColumn>
-        //                                     <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='12%' dataFormat={dataEmptyFormat} dataField={'Substitutions'} tdStyle={{whiteSpace: 'normal'}}>Substitution</TableHeaderColumn>
-        //                                     <TableHeaderColumn thStyle={{ whiteSpace: 'normal'}} width='11%' dataFormat={dataEmptyFormat} dataField={'NameMismatch'} tdStyle={{whiteSpace: 'normal'}}>Name mismatch</TableHeaderColumn>
-        //                                 </BootstrapTable>
-        //                             </div>
-        //                         })
-        //                     })
-        //             });
-        //
-        //     });
 
 
     }
@@ -915,7 +1113,7 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                     <div style={{margin: '15px'}}>
                         <div style={{width: '49.5%', display: 'inline-block'}}>
                             <h3>Quality of binding sites</h3>
-                            {this.state.bindingSiteTable}
+                            {this.state.boundMolecules}
                         </div>
                         <div style={{width: '49.5%', display: 'inline-block', verticalAlign: 'top', float: 'right'}}>
                             <h3 style={{display: 'inline-block'}}>Ligands summary</h3>
@@ -924,7 +1122,6 @@ class DynComponent extends React.Component<DynComponentProps, DynComponentStates
                                 <b>Data retrieved from ValidatorDB</b>
                             </a>
                             {this.state.ligandDrugbank}
-                            {this.state.boundMolecules}
                             <div className={"iframe-parent"}>
                                 {this.state.completnes}
                             </div>

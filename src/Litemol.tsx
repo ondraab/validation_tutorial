@@ -22,7 +22,7 @@ class Litemol extends React.Component<LitemolProps, LitemolStates> {
     }
 
     public html = `<pdb-lite-mol pdb-id="'${this.props.pdbId}'" id="litemol-1" subscribe-events="true" 
-        load-ed-maps="true" is-expanded="false" validation-annotation="true"/>`;
+                    custom-query="full?dataSource=hydrogen" load-ed-maps="true" is-expanded="false" validation-annotation="true"/>`;
 
     public render() {
         // @ts-ignore
