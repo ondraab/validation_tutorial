@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import './index.css';
+import 'uikit';
 import registerServiceWorker from './registerServiceWorker';
 import {Route} from "react-router";
 import {BrowserRouter} from "react-router-dom";

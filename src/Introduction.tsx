@@ -4,6 +4,7 @@ import './theme-ebi-research.css'
 import {NavLink} from "react-router-dom";
 import {Parallax, ParallaxLayer} from "react-spring/renderprops-addons";
 import * as $ from 'jquery';
+import '../node_modules/uikit/dist/css/uikit.css';
 import * as Modal from "react-modal";
 
 interface ValidationStates {
@@ -157,9 +158,12 @@ class Introduction extends React.Component< {}, ValidationStates> {
 
     public render() {
         return <div className="App">
-            <div className="main-title masthead" style={{height: '54px'}}>
-                <h1 className="white-color">Validation tutorial</h1>
-                <div className="navbar">
+            <div className="main-title masthead">
+                <div className="uk-grid uk-margin-small-left uk-margin-small-top uk-margin-small-bottom">
+                    <div>
+                        <h1 className={"uk-dark"}>Validation tutorial</h1>
+                    </div>
+                    <div className="navbar uk-position-right">
                     <div className={"expandable-div"}>
                         <NavLink to="/example1">
                             <h3>
@@ -195,6 +199,7 @@ class Introduction extends React.Component< {}, ValidationStates> {
                             Introduction
                         </h3>
                     </NavLink>
+                </div>
                 </div>
             </div>
             <div className="page-nav long-4" style={{width: '10px', height: '95%', top: '54px', position: 'fixed', right: '17px', zIndex: 1}}>

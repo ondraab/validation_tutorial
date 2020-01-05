@@ -1,5 +1,5 @@
 /*
-  Colour palette: EMBL-EBI Research
+  Colour palette: EMBL-EBI Green
 */
 
 a {
@@ -12,33 +12,32 @@ a.label,
 a:hover,
 a:focus,
 a:active {
-  color: rgb(109,171,73);
+  color: rgb(116,179,96) !important;
 }
 
-h1 { color: #f7f7f7; }
-h2 { color: rgb(109,171,73); }
-h3 { color: #444444; }
+h1 { color: #f7f7f7 !important; }
+h2 { color: rgb(116,179,96) !important; }
+h3 { color: #f7f7f7 !important; }
 
-a.special { background-color: #7cd17c; }
+a.special { background-color: #7cd17c !important; }
 
 .menu .active > a,
 .tag,
 .tabs-title > a:hover,
 .button,
 .button.primary {
-  background-color: rgb(109,171,73);
+  background-color: rgb(116,179,96) !important;
 }
 a.tag:hover { color: #fff; }
 
 .tabs-title > a:hover,
 .button.primary:hover,
-.button.primary:focus { background: rgba(109,171,73,.9); }
-
+.button.primary:focus { background: rgba(116,179,96,.9) !important; }
 .tabs-title > a:focus,
 .tabs-title > a[aria-selected='true'] {
-  color: #fff;
-  background: #666; }
+  color: #fff !important;
+  background: #666 !important; }
 
-.masthead { background-color: rgb(109,171,73); }
+.masthead { background-color: rgb(116,179,96) !important; }
 
 /* end */
